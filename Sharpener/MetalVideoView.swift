@@ -10,7 +10,7 @@ import Foundation
 import MetalKit
 
 class MetalVideoView: MTKView {
-    var filter: MXNImageFilter?
+    var filter: MXNImageFilter!
     
     init(frame frameRect: CGRect, device: MTLDevice, filter: MXNImageFilter) {
         super.init(frame: frameRect, device: device)

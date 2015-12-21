@@ -104,12 +104,12 @@
 			children = (
 				13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */,
 				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
-				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
 				13835D691C2013850047F0C0 /* AppDelegate.swift */,
-				13835D6D1C2013850047F0C0 /* Main.storyboard */,
 				133E0A591C26EF640058B103 /* Filters */,
 				133E0A5A1C26EF7D0058B103 /* Image Proccessing */,
 				13835D701C2013850047F0C0 /* Assets.xcassets */,
+				13835D6D1C2013850047F0C0 /* Main.storyboard */,
+				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
 				133E0A5B1C26EFB50058B103 /* Supporting Files */,
 			);
 			path = Sharpener;
