@@ -9,7 +9,7 @@
 import Foundation
 import MetalKit
 
-class RedOnlyFilter: MXNImageFilter, MXNDrawablePresentable {
+class RedOnlyFilter: MXNImageFilter {
     
     convenience init?(context: MXNContext) {
         self.init(functionName: "red_only", context: context)

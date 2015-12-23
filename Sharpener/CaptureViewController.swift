@@ -13,18 +13,12 @@ import MetalKit
 
 class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    // MARK: Properties
-    let context: MXNContext = MXNContext()
-    var redOnlyFilter: RedOnlyFilter!
-    var ycbcrFilter: YCbCrConvertFilter!
-    
-    var backCamera: AVCaptureDevice!
-    var frontCamera: AVCaptureDevice!
-    var currentCamera: AVCaptureDevicePosition = .Back
-    
-    let videoOutput = AVCaptureVideoDataOutput()
-    let stillImageOutput = AVCaptureStillImageOutput()
-    
+    // MARK: UI
+    @IBOutlet weak var ToolBar: UIView!
+    @IBOutlet weak var imageView: CaptureImageView!
+    @IBOutlet weak var controlPanel: UIView!
+    @IBOutlet weak var shutterButton: ShutterButton!
+    @IBOutlet weak var torchSwitch: UIView!
     var metalView: MetalVideoView! {
         didSet {
             guard context.device != nil else { return }
@@ -35,8 +29,26 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, context.device!, nil, &videoTextureCache)
         }
     }
+    
+    // MARK: Properties
+    let context: MXNContext = MXNContext()
+    var thresholdingFilter: ThresholdingFilter!
+    var ycbcrFilter: YCbCrConvertFilter!
+    
+    var backCamera: AVCaptureDevice!
+    var frontCamera: AVCaptureDevice!
+    var currentCamera: AVCaptureDevicePosition = .Back
+    
+    let videoOutput = AVCaptureVideoDataOutput()
+    let stillImageOutput = AVCaptureStillImageOutput()
+    
     var videoTextureCache: Unmanaged<CVMetalTextureCacheRef>?
     let captureSession = AVCaptureSession()
+    var torchOn: Bool = false {
+        didSet {
+            letThereBeLight(torchOn)
+        }
+    }
     
     
     // MARK: Life Cycle
@@ -46,53 +58,11 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         prepareCameras()
         prepareMetalView()
         prepareCaptureSession()
+        prepareGestures()
     }
     
-    func prepareFilters() {
-        redOnlyFilter = RedOnlyFilter(context: context)
-        ycbcrFilter = YCbCrConvertFilter(context: context)
-        redOnlyFilter.provider = ycbcrFilter
-    }
-    
-    func prepareCameras() {
-        let availableDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
-        for device in availableDevices as! [AVCaptureDevice] {
-            if device.position == .Front {
-                frontCamera = device
-            } else if device.position == .Back {
-                backCamera = device
-            }
-        }
-    }
-    
-    func prepareMetalView() {
-        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: redOnlyFilter)
-        view.addSubview(metalView)
-    }
-    
-    func prepareCaptureSession() {
-        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
-        do {
-            let input = try AVCaptureDeviceInput(device: backCamera)
-            captureSession.addInput(input)
-        } catch {
-            print("Can't Access Camera")
-            return
-        }
-        
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        view.layer.addSublayer(previewLayer)
-        
-        videoOutput.setSampleBufferDelegate(self, queue: dispatch_queue_create("sample_buffer_delegate", DISPATCH_QUEUE_SERIAL))
-        
-        if captureSession.canAddOutput(videoOutput) {
-            captureSession.addOutput(videoOutput)
-        }
-        if captureSession.canAddOutput(stillImageOutput) {
-            captureSession.addOutput(stillImageOutput)
-        }
-        
-        captureSession.startRunning()
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
@@ -132,8 +102,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     
     override func viewDidLayoutSubviews() {
-        metalView.frame = view.bounds
-        metalView.drawableSize = CGSizeMake(view.bounds.width*2, view.bounds.height*2)
+        metalView.frame = imageView.bounds
+        metalView.drawableSize = CGSizeMake(imageView.bounds.width*2, imageView.bounds.height*2)
     }
     
     
@@ -155,5 +125,75 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         captureSession.removeInput(removeInput)
         captureSession.addInput(addInput)
         currentCamera = currentCamera == .Front ? .Back : .Front
+    }
+    
+    func letThereBeLight(light: Bool) {
+        guard backCamera.hasTorch else { return }
+        do {
+            try backCamera.lockForConfiguration()
+            backCamera.torchMode = light ? .On : .Off
+            backCamera.unlockForConfiguration()
+        } catch {
+            print("Can't Lock Camera Configuration")
+        }
+    }
+    
+    func takePhoto() {
+        // grab image, segue to next view
+    }
+}
+
+
+// MARK: - ViewDidLoad Details
+extension CaptureViewController {
+    private func prepareFilters() {
+        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.7)
+        ycbcrFilter = YCbCrConvertFilter(context: context)
+        thresholdingFilter.provider = ycbcrFilter
+    }
+    
+    private func prepareCameras() {
+        let availableDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
+        for device in availableDevices as! [AVCaptureDevice] {
+            if device.position == .Front {
+                frontCamera = device
+            } else if device.position == .Back {
+                backCamera = device
+            }
+        }
+    }
+    
+    private func prepareMetalView() {
+        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: thresholdingFilter)
+        imageView.addSubview(metalView)
+    }
+    
+    private func prepareCaptureSession() {
+        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        do {
+            let input = try AVCaptureDeviceInput(device: backCamera)
+            captureSession.addInput(input)
+        } catch {
+            print("Can't Access Camera")
+            return
+        }
+        
+        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        view.layer.addSublayer(previewLayer)
+        
+        videoOutput.setSampleBufferDelegate(self, queue: dispatch_queue_create("sample_buffer_delegate", DISPATCH_QUEUE_SERIAL))
+        
+        if captureSession.canAddOutput(videoOutput) {
+            captureSession.addOutput(videoOutput)
+        }
+        if captureSession.canAddOutput(stillImageOutput) {
+            captureSession.addOutput(stillImageOutput)
+        }
+        
+        captureSession.startRunning()
+    }
+    
+    private func prepareGestures() {
+        shutterButton.addTarget(self, action: "takePhoto", forControlEvents: .TouchUpInside)
     }
 }

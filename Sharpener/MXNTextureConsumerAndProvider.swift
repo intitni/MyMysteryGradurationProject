@@ -18,5 +18,5 @@ protocol MXNTextureConsumer {
 }
 
 protocol MXNDrawablePresentable {
-    func presentDrawable(drawable: CAMetalDrawable)
+    func presentToDrawable(drawable: CAMetalDrawable)
 }

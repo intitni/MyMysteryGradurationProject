@@ -23,6 +23,6 @@ class MetalVideoView: MTKView {
     
     override func drawRect(rect: CGRect) {
         guard let drawable = currentDrawable else { return }
-        (filter as? MXNDrawablePresentable)?.presentDrawable(drawable)
+        filter.presentToDrawable(drawable)
     }
 }
