@@ -15,12 +15,21 @@
 		133E0A5D1C26F0260058B103 /* RedOnlyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A5C1C26F0260058B103 /* RedOnlyFilter.swift */; };
 		133E0A611C26FB160058B103 /* YCbCrConvert.metal in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A601C26FB160058B103 /* YCbCrConvert.metal */; };
 		133E0A631C26FC1F0058B103 /* YCbCrConvertFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A621C26FC1F0058B103 /* YCbCrConvertFilter.swift */; };
+		13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C4D1C296450006CB39A /* ThresholdingFilter.swift */; };
+		13416C501C296470006CB39A /* Thresholding.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13416C4F1C296470006CB39A /* Thresholding.metal */; };
+		13416C521C297803006CB39A /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C511C297803006CB39A /* ShutterButton.swift */; };
+		13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C541C297981006CB39A /* UIColor+Custom.swift */; };
+		13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C561C299C6A006CB39A /* CaptureImageView.swift */; };
+		13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C591C29A401006CB39A /* TorchSwitcher.swift */; };
 		13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13835D691C2013850047F0C0 /* AppDelegate.swift */; };
 		13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D6D1C2013850047F0C0 /* Main.storyboard */; };
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
 		13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */; };
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
+		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
+		13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilters.swift */; };
+		8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB5EA983D3116ADF305711E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +41,12 @@
 		133E0A5C1C26F0260058B103 /* RedOnlyFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedOnlyFilter.swift; sourceTree = "<group>"; };
 		133E0A601C26FB160058B103 /* YCbCrConvert.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = YCbCrConvert.metal; sourceTree = "<group>"; };
 		133E0A621C26FC1F0058B103 /* YCbCrConvertFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YCbCrConvertFilter.swift; sourceTree = "<group>"; };
+		13416C4D1C296450006CB39A /* ThresholdingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdingFilter.swift; sourceTree = "<group>"; };
+		13416C4F1C296470006CB39A /* Thresholding.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Thresholding.metal; sourceTree = "<group>"; };
+		13416C511C297803006CB39A /* ShutterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShutterButton.swift; sourceTree = "<group>"; };
+		13416C541C297981006CB39A /* UIColor+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
+		13416C561C299C6A006CB39A /* CaptureImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
+		13416C591C29A401006CB39A /* TorchSwitcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchSwitcher.swift; sourceTree = "<group>"; };
 		13835D661C2013850047F0C0 /* Sharpener.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharpener.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13835D691C2013850047F0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13835D6E1C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,6 +55,11 @@
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalVideoView.swift; sourceTree = "<group>"; };
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
+		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilters.swift; sourceTree = "<group>"; };
+		2AB5EA983D3116ADF305711E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +77,10 @@
 		133E0A591C26EF640058B103 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
+				13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */,
+				13416C4F1C296470006CB39A /* Thresholding.metal */,
+				13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilters.swift */,
+				13416C4D1C296450006CB39A /* ThresholdingFilter.swift */,
 				133E0A511C269F3C0058B103 /* RedOnly.metal */,
 				133E0A5C1C26F0260058B103 /* RedOnlyFilter.swift */,
 				133E0A531C26D50D0058B103 /* MXNImageFilter.swift */,
@@ -83,11 +108,30 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		13416C531C297810006CB39A /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				13416C591C29A401006CB39A /* TorchSwitcher.swift */,
+				13416C511C297803006CB39A /* ShutterButton.swift */,
+			);
+			name = Widgets;
+			sourceTree = "<group>";
+		};
+		13416C581C299C70006CB39A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				13416C561C299C6A006CB39A /* CaptureImageView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		13835D5D1C2013850047F0C0 = {
 			isa = PBXGroup;
 			children = (
 				13835D681C2013850047F0C0 /* Sharpener */,
 				13835D671C2013850047F0C0 /* Products */,
+				6EDEEB3F7785A6D3A44FB657 /* Pods */,
+				F20416152BEEAC4CA9C832B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,14 +149,34 @@
 				13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */,
 				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
 				13835D691C2013850047F0C0 /* AppDelegate.swift */,
+				13416C581C299C70006CB39A /* Views */,
+				13416C531C297810006CB39A /* Widgets */,
 				133E0A591C26EF640058B103 /* Filters */,
 				133E0A5A1C26EF7D0058B103 /* Image Proccessing */,
 				13835D701C2013850047F0C0 /* Assets.xcassets */,
 				13835D6D1C2013850047F0C0 /* Main.storyboard */,
 				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
 				133E0A5B1C26EFB50058B103 /* Supporting Files */,
+				13416C541C297981006CB39A /* UIColor+Custom.swift */,
 			);
 			path = Sharpener;
+			sourceTree = "<group>";
+		};
+		6EDEEB3F7785A6D3A44FB657 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */,
+				B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F20416152BEEAC4CA9C832B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2AB5EA983D3116ADF305711E /* Pods.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,9 +186,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13835D781C2013850047F0C0 /* Build configuration list for PBXNativeTarget "Sharpener" */;
 			buildPhases = (
+				5E464CCEA84C0B5D688D5783 /* Check Pods Manifest.lock */,
 				13835D621C2013850047F0C0 /* Sources */,
 				13835D631C2013850047F0C0 /* Frameworks */,
 				13835D641C2013850047F0C0 /* Resources */,
+				344A966D54F6944D9AA1F48B /* Embed Pods Frameworks */,
+				18CE7DD8C614A576816764CB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,6 +249,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		18CE7DD8C614A576816764CB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		344A966D54F6944D9AA1F48B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E464CCEA84C0B5D688D5783 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		13835D621C2013850047F0C0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -193,11 +308,19 @@
 				133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */,
 				133E0A611C26FB160058B103 /* YCbCrConvert.metal in Sources */,
 				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
+				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilters.swift in Sources */,
 				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
+				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
+				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
+				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
+				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
+				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
+				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
 				133E0A631C26FC1F0058B103 /* YCbCrConvertFilter.swift in Sources */,
+				13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +431,7 @@
 		};
 		13835D791C2013850047F0C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Sharpener/Info.plist;
@@ -320,6 +444,7 @@
 		};
 		13835D7A1C2013850047F0C0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Sharpener/Info.plist;
