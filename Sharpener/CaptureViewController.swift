@@ -18,7 +18,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     @IBOutlet weak var imageView: CaptureImageView!
     @IBOutlet weak var controlPanel: UIView!
     @IBOutlet weak var shutterButton: ShutterButton!
-    @IBOutlet weak var torchSwitch: UIView!
+    @IBOutlet weak var torchSwitch: TorchSwitcher!
     var metalView: MetalVideoView! {
         didSet {
             guard context.device != nil else { return }
@@ -133,12 +133,20 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             try backCamera.lockForConfiguration()
             backCamera.torchMode = light ? .On : .Off
             backCamera.unlockForConfiguration()
+            
         } catch {
             print("Can't Lock Camera Configuration")
         }
     }
     
-    func takePhoto() {
+    // MARK: Gesture Handlers
+    
+    func torchSwitchClicked() {
+        torchSwitch.onOffState.toggle()
+        letThereBeLight(torchSwitch.onOffState.isOn())
+    }
+    
+    func shutterClicked() {
         // grab image, segue to next view
     }
 }
@@ -194,6 +202,7 @@ extension CaptureViewController {
     }
     
     private func prepareGestures() {
-        shutterButton.addTarget(self, action: "takePhoto", forControlEvents: .TouchUpInside)
+        shutterButton.addTarget(self, action: "shutterClicked", forControlEvents: .TouchUpInside)
+        torchSwitch.addTarget(self, action: "torchSwitchClicked", forControlEvents: .TouchUpInside)
     }
 }

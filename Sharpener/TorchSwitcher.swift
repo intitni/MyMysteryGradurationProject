@@ -10,11 +10,10 @@ import UIKit
 import SnapKit
 
 class TorchSwitcher: UIControl {
-    enum State { case On, Off }
-    var onOffState: State = .Off {
+    var onOffState: OnOff = .Off {
         didSet {
-            stateLabel.text = onOffState == .On ? "ON" : "OFF"
-            icon.state = onOffState == .On ? .On : .Off
+            stateLabel.text = onOffState.descriptionUpperCased
+            icon.state = onOffState
         }
     }
     
@@ -22,8 +21,8 @@ class TorchSwitcher: UIControl {
         didSet {
             self.addSubview(icon)
             icon.snp_makeConstraints { make in
-                make.size.equalTo(CGSize(width: 50, height: 50))
-                make.left.equalTo(5)
+                make.size.equalTo(CGSize(width: 20, height: 50))
+                make.left.equalTo(10)
                 make.centerY.equalTo(self)
             }
         }
@@ -32,6 +31,8 @@ class TorchSwitcher: UIControl {
         didSet {
             self.addSubview(stateLabel)
             stateLabel.text = "OFF"
+            stateLabel.font = UIFont.systemFontOfSize(12)
+            stateLabel.textColor = UIColor.spOutlineColor()
             stateLabel.snp_makeConstraints { make in
                 make.centerY.equalTo(self)
                 make.left.equalTo(self.icon.snp_right).offset(5)
@@ -50,19 +51,19 @@ class TorchSwitcher: UIControl {
     }
     
     func setup() {
+        backgroundColor = UIColor.clearColor()
         icon = LightningIcon()
         stateLabel = UILabel()
     }
 }
 
 class LightningIcon: UIView {
-    enum State { case On, Off }
-    let defaultSize: CGSize = CGSize(width: 50, height: 50)
+    let defaultSize: CGSize = CGSize(width: 20, height: 50)
     var scaleFactor: CGFloat {
-        return frame.width / defaultSize.width
+        return bounds.width / defaultSize.width
     }
     
-    var state: State = .Off {
+    var state: OnOff = .Off {
         didSet {
             lightning.fillColor = fillColor.CGColor
             lightning.strokeColor = borderColor.CGColor
@@ -83,25 +84,30 @@ class LightningIcon: UIView {
     var lightning: CAShapeLayer! {
         didSet {
             let path = UIBezierPath()
-            path.moveToPoint(CGPoint(x: 25*scaleFactor, y: 16*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 25*scaleFactor, y: 23*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 31*scaleFactor, y: 23*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 25*scaleFactor, y: 27*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 19*scaleFactor, y: 27*scaleFactor))
+            path.moveToPoint(CGPoint(x: 10*scaleFactor, y: 15*scaleFactor))
+            path.addLineToPoint(CGPoint(x: 10*scaleFactor, y: 23*scaleFactor))
+            path.addLineToPoint(CGPoint(x: 16*scaleFactor, y: 23*scaleFactor))
+            path.addLineToPoint(CGPoint(x: 10*scaleFactor, y: 35*scaleFactor))
+            path.addLineToPoint(CGPoint(x: 10*scaleFactor, y: 27*scaleFactor))
+            path.addLineToPoint(CGPoint(x: 4*scaleFactor, y: 27*scaleFactor))
             path.closePath()
             lightning.path = path.CGPath
             lightning.lineWidth = 1
+            layer.addSublayer(lightning)
         }
+    }
+    
+    override func layoutSubviews() {
+        setup()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
     }
     
     func setup() {
