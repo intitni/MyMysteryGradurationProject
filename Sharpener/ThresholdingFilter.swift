@@ -8,6 +8,7 @@
 
 import Foundation
 import MetalKit
+import MetalPerformanceShaders
 
 struct ThresholdingUniforms {
     var thresholdingFactor: Float

@@ -32,6 +32,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     // MARK: Properties
     let context: MXNContext = MXNContext()
+    var medianFilter: MedianFilter!
     var thresholdingFilter: ThresholdingFilter!
     var ycbcrFilter: YCbCrConvertFilter!
     
@@ -155,9 +156,11 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
 // MARK: - ViewDidLoad Details
 extension CaptureViewController {
     private func prepareFilters() {
+        medianFilter = MedianFilter(context: context, radius: 3)
         thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.7)
         ycbcrFilter = YCbCrConvertFilter(context: context)
         thresholdingFilter.provider = ycbcrFilter
+        medianFilter.provider = ycbcrFilter
     }
     
     private func prepareCameras() {
@@ -172,7 +175,7 @@ extension CaptureViewController {
     }
     
     private func prepareMetalView() {
-        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: thresholdingFilter)
+        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: medianFilter)
         imageView.addSubview(metalView)
     }
     

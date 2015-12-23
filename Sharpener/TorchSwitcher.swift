@@ -12,7 +12,7 @@ import SnapKit
 class TorchSwitcher: UIControl {
     var onOffState: OnOff = .Off {
         didSet {
-            stateLabel.text = onOffState.descriptionUpperCased
+            stateLabel.setText(onOffState.descriptionUpperCased, withAnimation: true)
             icon.state = onOffState
         }
     }
@@ -30,7 +30,7 @@ class TorchSwitcher: UIControl {
     var stateLabel: UILabel! {
         didSet {
             self.addSubview(stateLabel)
-            stateLabel.text = "OFF"
+            stateLabel.text = OnOff.Off.descriptionUpperCased
             stateLabel.font = UIFont.systemFontOfSize(12)
             stateLabel.textColor = UIColor.spOutlineColor()
             stateLabel.snp_makeConstraints { make in

@@ -32,5 +32,5 @@ kernel void YCbCrColorConversion(texture2d<float, access::read> yTexture [[textu
     
     float3 rgb = colorMatrix * (ycbcr + colorOffset);
     
-    outTexture.write(float4(float3(rgb), 1.0), gid);
+    outTexture.write(float4(rgb, 1.0), gid);
 }

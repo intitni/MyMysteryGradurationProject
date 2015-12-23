@@ -41,6 +41,7 @@ class MXNImageFilter: MXNTextureProvider, MXNTextureConsumer, MXNDrawablePresent
     }
     
     func configureArgumentTableWithCommandEncoder(commandEncoder: MTLComputeCommandEncoder) {}
+    func configurePerformanceShaders(commandBuffer: MTLCommandBuffer) {}
     
     func applyFilter() {
         guard let inputTexture = self.provider?.texture else { return } // one should always have provider
