@@ -29,7 +29,7 @@ kernel void medianFilter(texture2d<float, access::read> inTexture [[texture(0)]]
             array[i*size + j] = current.rgb;
         }
     }
-
+    
     for (int i = 0; i <= size; i++) {
         for (int j = 0; j <= size-1; j++) {
             float3 temp = array[i*size + j];
@@ -38,7 +38,7 @@ kernel void medianFilter(texture2d<float, access::read> inTexture [[texture(0)]]
             array[i*size + j + 1] = mix(temp, array[i*size + j + 1], 1-factor);
         }
     }
-
+    
     input = array[size*size/2].rgb;
     outTexture.write(float4(input, 1.0), gid);
 }

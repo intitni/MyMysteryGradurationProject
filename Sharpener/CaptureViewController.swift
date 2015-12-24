@@ -141,9 +141,10 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
 extension CaptureViewController {
     private func prepareFilters() {
         medianFilter = MedianFilter(context: context, radius: 3)
-        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.7)
+        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.5)
         videoProvider = MXNVideoProvider()
-        thresholdingFilter.provider = videoProvider
+        
+        thresholdingFilter.provider = medianFilter
         medianFilter.provider = videoProvider
     }
     

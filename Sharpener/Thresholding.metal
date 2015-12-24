@@ -18,7 +18,9 @@ kernel void thresholding(texture2d<float, access::read> inTexture [[texture(0)]]
                          constant ThresholdingUniforms &uniforms [[buffer(0)]],
                          uint2 gid [[thread_position_in_grid]]) {
     float factor = uniforms.thresholdFactor;
-    float brightness = inTexture.read(gid).g;
+    float3 input = inTexture.read(gid).rgb;
+    // (0.2126*R + 0.7152*G + 0.0722*B)
+    float brightness = 0.2126*input.r + 0.7152*input.g + 0.0722*input.b;
     float newValue = step(factor, brightness);
-    outTexture.write(float4(newValue), gid);
+    outTexture.write(float4(newValue, newValue, newValue, 1.0), gid);
 }

@@ -51,7 +51,7 @@ class MXNImageFilter: MXNTextureProvider, MXNTextureConsumer, MXNDrawablePresent
             internalTexture = context.device?.newTextureWithDescriptor(textureDescriptor)
         }
         
-        let threadgroupCounts = MTLSizeMake(8, 8, 1)
+        let threadgroupCounts = MTLSizeMake(4, 4, 1)
         let threadgroups = MTLSizeMake(inputTexture.width / threadgroupCounts.width, inputTexture.height / threadgroupCounts.height, 1)
         
         guard let commandBuffer = context.commandQueue?.commandBuffer() else { return }
@@ -85,8 +85,7 @@ class MXNImageFilter: MXNTextureProvider, MXNTextureConsumer, MXNDrawablePresent
                 width: inputTexture.width, height: inputTexture.height, mipmapped: false)
             internalTexture = context.device?.newTextureWithDescriptor(textureDescriptor)
         }
-        
-        let threadgroupCounts = MTLSizeMake(8, 8, 1)
+        let threadgroupCounts = MTLSizeMake(10, 10, 1)
         let threadgroups = MTLSizeMake(inputTexture.width / threadgroupCounts.width, inputTexture.height / threadgroupCounts.height, 1)
         
         guard let commandBuffer = context.commandQueue?.commandBuffer() else { return }
