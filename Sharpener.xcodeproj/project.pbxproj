@@ -11,8 +11,6 @@
 		133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A531C26D50D0058B103 /* MXNImageFilter.swift */; };
 		133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */; };
 		133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A571C26E19F0058B103 /* MXNImageProvider.swift */; };
-		133E0A611C26FB160058B103 /* YCbCrConvert.metal in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A601C26FB160058B103 /* YCbCrConvert.metal */; };
-		133E0A631C26FC1F0058B103 /* YCbCrConvertFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A621C26FC1F0058B103 /* YCbCrConvertFilter.swift */; };
 		13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C4D1C296450006CB39A /* ThresholdingFilter.swift */; };
 		13416C501C296470006CB39A /* Thresholding.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13416C4F1C296470006CB39A /* Thresholding.metal */; };
 		13416C521C297803006CB39A /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C511C297803006CB39A /* ShutterButton.swift */; };
@@ -27,6 +25,7 @@
 		13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D6D1C2013850047F0C0 /* Main.storyboard */; };
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
+		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
 		13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */; };
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
@@ -39,8 +38,6 @@
 		133E0A531C26D50D0058B103 /* MXNImageFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNImageFilter.swift; sourceTree = "<group>"; };
 		133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureConsumerAndProvider.swift; sourceTree = "<group>"; };
 		133E0A571C26E19F0058B103 /* MXNImageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNImageProvider.swift; sourceTree = "<group>"; };
-		133E0A601C26FB160058B103 /* YCbCrConvert.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = YCbCrConvert.metal; sourceTree = "<group>"; };
-		133E0A621C26FC1F0058B103 /* YCbCrConvertFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YCbCrConvertFilter.swift; sourceTree = "<group>"; };
 		13416C4D1C296450006CB39A /* ThresholdingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdingFilter.swift; sourceTree = "<group>"; };
 		13416C4F1C296470006CB39A /* Thresholding.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Thresholding.metal; sourceTree = "<group>"; };
 		13416C511C297803006CB39A /* ShutterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShutterButton.swift; sourceTree = "<group>"; };
@@ -57,6 +54,7 @@
 		13835D701C2013850047F0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13835D731C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNVideoProvider.swift; sourceTree = "<group>"; };
 		13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalVideoView.swift; sourceTree = "<group>"; };
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 				13416C4D1C296450006CB39A /* ThresholdingFilter.swift */,
 				13772AF71C2AEC710086CAB3 /* MedianFilter.swift */,
 				133E0A531C26D50D0058B103 /* MXNImageFilter.swift */,
-				133E0A621C26FC1F0058B103 /* YCbCrConvertFilter.swift */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -95,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */,
+				139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */,
 				133E0A571C26E19F0058B103 /* MXNImageProvider.swift */,
 				133E0A4F1C269D350058B103 /* MXNContext.swift */,
 			);
@@ -131,7 +129,6 @@
 			children = (
 				13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */,
 				13416C4F1C296470006CB39A /* Thresholding.metal */,
-				133E0A601C26FB160058B103 /* YCbCrConvert.metal */,
 				13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */,
 			);
 			name = "Metal Shaders";
@@ -320,12 +317,12 @@
 				13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */,
 				133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */,
 				13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */,
-				133E0A611C26FB160058B103 /* YCbCrConvert.metal in Sources */,
 				13772AF11C2ABF530086CAB3 /* UILabel+Sharpener.swift in Sources */,
 				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
 				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilters.swift in Sources */,
 				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
+				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,
 				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
@@ -335,7 +332,6 @@
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
 				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
-				133E0A631C26FC1F0058B103 /* YCbCrConvertFilter.swift in Sources */,
 				13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

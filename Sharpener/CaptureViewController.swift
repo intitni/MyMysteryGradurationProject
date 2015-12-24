@@ -25,8 +25,6 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             metalView.framebufferOnly = false
             // Texture for Y
             CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, context.device!, nil, &videoTextureCache)
-            // Texture for CbCr
-            CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, context.device!, nil, &videoTextureCache)
         }
     }
     
@@ -34,7 +32,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     let context: MXNContext = MXNContext()
     var medianFilter: MedianFilter!
     var thresholdingFilter: ThresholdingFilter!
-    var ycbcrFilter: YCbCrConvertFilter!
+    var videoProvider: MXNVideoProvider!
     
     var backCamera: AVCaptureDevice!
     var frontCamera: AVCaptureDevice!
@@ -71,35 +69,21 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         
         connection.videoOrientation = .Portrait
         
-        var yTextureRef : Unmanaged<CVMetalTextureRef>?
-        defer { yTextureRef?.release() }
-        let yWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 0)
-        let yHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 0)
+        var textureRef : Unmanaged<CVMetalTextureRef>?
+        defer { textureRef?.release() }
+        let width = CVPixelBufferGetWidth(pixelBuffer)
+        let height = CVPixelBufferGetHeight(pixelBuffer)
         CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
             videoTextureCache!.takeUnretainedValue(),
             pixelBuffer,
             nil,
-            MTLPixelFormat.R8Unorm,
-            yWidth, yHeight, 0,
-            &yTextureRef)
+            MTLPixelFormat.BGRA8Unorm,
+            width, height, 0,
+            &textureRef)
         
-        var cbcrTextureRef: Unmanaged<CVMetalTextureRef>?
-        defer { cbcrTextureRef?.release() }
-        let cbcrWidth = CVPixelBufferGetWidthOfPlane(pixelBuffer, 1)
-        let cbcrHeight = CVPixelBufferGetHeightOfPlane(pixelBuffer, 1)
-        CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
-            videoTextureCache!.takeUnretainedValue(),
-            pixelBuffer,
-            nil,
-            MTLPixelFormat.RG8Unorm,
-            cbcrWidth, cbcrHeight, 1,
-            &cbcrTextureRef)
+        let texture = CVMetalTextureGetTexture((textureRef?.takeUnretainedValue())!)
         
-        let yTexture = CVMetalTextureGetTexture((yTextureRef?.takeUnretainedValue())!)
-        let cbcrTexture = CVMetalTextureGetTexture((cbcrTextureRef?.takeUnretainedValue())!)
-        
-        ycbcrFilter.yTexture = yTexture
-        ycbcrFilter.cbcrTexture = cbcrTexture
+        videoProvider.texture = texture
     }
     
     override func viewDidLayoutSubviews() {
@@ -158,9 +142,9 @@ extension CaptureViewController {
     private func prepareFilters() {
         medianFilter = MedianFilter(context: context, radius: 3)
         thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.7)
-        ycbcrFilter = YCbCrConvertFilter(context: context)
-        thresholdingFilter.provider = ycbcrFilter
-        medianFilter.provider = ycbcrFilter
+        videoProvider = MXNVideoProvider()
+        thresholdingFilter.provider = videoProvider
+        medianFilter.provider = videoProvider
     }
     
     private func prepareCameras() {
@@ -175,7 +159,7 @@ extension CaptureViewController {
     }
     
     private func prepareMetalView() {
-        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: medianFilter)
+        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: thresholdingFilter)
         imageView.addSubview(metalView)
     }
     
@@ -191,7 +175,8 @@ extension CaptureViewController {
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         view.layer.addSublayer(previewLayer)
-        
+        videoOutput.alwaysDiscardsLateVideoFrames = true
+        videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey : NSNumber(unsignedInt: kCVPixelFormatType_32BGRA)]
         videoOutput.setSampleBufferDelegate(self, queue: dispatch_queue_create("sample_buffer_delegate", DISPATCH_QUEUE_SERIAL))
         
         if captureSession.canAddOutput(videoOutput) {
