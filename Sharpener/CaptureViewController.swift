@@ -32,6 +32,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     let context: MXNContext = MXNContext()
     var medianFilter: MedianFilter!
     var thresholdingFilter: ThresholdingFilter!
+    var lineShapeFilteringFilter: LineShapeFilterFilteringFilter!
     var videoProvider: MXNVideoProvider!
     
     var backCamera: AVCaptureDevice!
@@ -53,11 +54,16 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.sharedApplication().idleTimerDisabled = true
         prepareFilters()
         prepareCameras()
         prepareMetalView()
         prepareCaptureSession()
         prepareGestures()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        UIApplication.sharedApplication().idleTimerDisabled = false
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -141,11 +147,13 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
 extension CaptureViewController {
     private func prepareFilters() {
         medianFilter = MedianFilter(context: context, radius: 3)
-        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.5)
+        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.4)
+        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 3)
         videoProvider = MXNVideoProvider()
         
-        thresholdingFilter.provider = medianFilter
-        medianFilter.provider = videoProvider
+        lineShapeFilteringFilter.provider = medianFilter
+        thresholdingFilter.provider = videoProvider
+        medianFilter.provider = thresholdingFilter
     }
     
     private func prepareCameras() {
@@ -160,7 +168,7 @@ extension CaptureViewController {
     }
     
     private func prepareMetalView() {
-        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: thresholdingFilter)
+        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeFilteringFilter)
         imageView.addSubview(metalView)
     }
     
