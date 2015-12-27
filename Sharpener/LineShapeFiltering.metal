@@ -41,7 +41,7 @@ kernel void lineShapeFiltering(texture2d<float, access::read> inTexture [[textur
     
     // when it's close enough to weights computator, it's a texel in a shape
     float factor = step(accumulation, uniforms.threshold);
-    float3 newValue = float3(0.43, 0.62, 0.91) * factor + float3(0.82, 0.46, 0.47) * (1-factor);
+    float3 newValue = float3(0.42, 0.71, 0.63) * factor + float3(0.82, 0.46, 0.47) * (1-factor);
     outTexture.write(float4(float3(newValue), 1), gid);
 }
 

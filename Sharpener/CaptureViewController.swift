@@ -148,7 +148,7 @@ extension CaptureViewController {
     private func prepareFilters() {
         medianFilter = MedianFilter(context: context, radius: 1)
         thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.4)
-        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 3)
+        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 8, radius: 4)
         videoProvider = MXNVideoProvider()
         
         lineShapeFilteringFilter.provider = medianFilter
