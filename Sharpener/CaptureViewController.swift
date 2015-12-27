@@ -27,6 +27,11 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, context.device!, nil, &videoTextureCache)
         }
     }
+    var filterControlView: FilterControlView! {
+        didSet {
+            
+        }
+    }
     
     // MARK: Properties
     let context: MXNContext = MXNContext()
@@ -147,8 +152,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
 extension CaptureViewController {
     private func prepareFilters() {
         medianFilter = MedianFilter(context: context, radius: 1)
-        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.4)
-        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 8, radius: 4)
+        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.2)
+        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 4)
         videoProvider = MXNVideoProvider()
         
         lineShapeFilteringFilter.provider = medianFilter
