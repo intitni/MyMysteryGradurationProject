@@ -19,7 +19,7 @@ extension UIColor {
     }
     
     class func spLightBorderColor() -> UIColor {
-        return UIColor(red:218/255, green:218/255, blue:218/255, alpha:1)
+        return UIColor(red:196/255, green:196/255, blue:196/255, alpha:1)
     }
     
     class func spYellowColor() -> UIColor {

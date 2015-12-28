@@ -21,10 +21,19 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     @IBOutlet weak var torchSwitch: TorchSwitcher!
     var metalView: MetalVideoView! {
         didSet {
+            imageView.addSubview(metalView)
             guard context.device != nil else { return }
             metalView.framebufferOnly = false
             // Texture for Y
             CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, context.device!, nil, &videoTextureCache)
+        }
+    }
+    var filterControlView: FilterControlView! {
+        didSet {
+            imageView.addSubview(filterControlView)
+            filterControlView.snp_makeConstraints { make in
+                make.edges.equalTo(imageView)
+            }
         }
     }
     
@@ -124,7 +133,6 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             try backCamera.lockForConfiguration()
             backCamera.torchMode = light ? .On : .Off
             backCamera.unlockForConfiguration()
-            
         } catch {
             print("Can't Lock Camera Configuration")
         }
@@ -147,8 +155,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
 extension CaptureViewController {
     private func prepareFilters() {
         medianFilter = MedianFilter(context: context, radius: 1)
-        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.4)
-        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 8, radius: 4)
+        thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.2)
+        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 4)
         videoProvider = MXNVideoProvider()
         
         lineShapeFilteringFilter.provider = medianFilter
@@ -169,11 +177,13 @@ extension CaptureViewController {
     
     private func prepareMetalView() {
         metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeFilteringFilter)
-        imageView.addSubview(metalView)
+        filterControlView = FilterControlView(frame: imageView.bounds, threshold: 0.2, lineWidth: 3, gearCount: 5)
+        filterControlView.delegate = self
     }
     
     private func prepareCaptureSession() {
         captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        
         do {
             let input = try AVCaptureDeviceInput(device: backCamera)
             captureSession.addInput(input)
@@ -195,11 +205,38 @@ extension CaptureViewController {
             captureSession.addOutput(stillImageOutput)
         }
         
+        do {
+            try backCamera.lockForConfiguration()
+            backCamera.activeVideoMinFrameDuration = CMTimeMake(1, 20)
+            backCamera.unlockForConfiguration()
+        } catch {
+            print("Can't Lock Camera Configuration")
+        }
+        
         captureSession.startRunning()
     }
     
     private func prepareGestures() {
         shutterButton.addTarget(self, action: "shutterClicked", forControlEvents: .TouchUpInside)
         torchSwitch.addTarget(self, action: "torchSwitchClicked", forControlEvents: .TouchUpInside)
+    }
+}
+
+extension CaptureViewController: SPSliderDelegate {
+    
+    private func lineWidthFromValue(value: Double) -> Int {
+        let gearCount = 5.0
+        let step = 1.0 / gearCount
+        return Int(value / step) + 1
+    }
+    
+    func sliderValueDidChangedTo(value: Double, forTag tag: String) {
+        switch tag {
+        case "threshold":
+            thresholdingFilter.thresholdingFactor = Float(value)
+        case "lineWidth":
+            lineShapeFilteringFilter.radius = lineWidthFromValue(value)
+        default: break
+        }
     }
 }

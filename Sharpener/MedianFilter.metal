@@ -31,7 +31,7 @@ kernel void medianFilter(texture2d<float, access::read> inTexture [[texture(0)]]
         }
     }
     
-    float factor = step(float(space)*0.8, float(oneCount));
+    float factor = step(float(space)*0.85, float(oneCount));
     float newValue = factor;
 
     outTexture.write(float4(float3(newValue), 1.0), gid);
