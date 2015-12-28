@@ -193,11 +193,29 @@
                         <outlet property="imageView" destination="Fil-4h-b8F" id="Hdd-E7-Q2a"/>
                         <outlet property="shutterButton" destination="r05-4B-iRH" id="YNE-DC-ZHv"/>
                         <outlet property="torchSwitch" destination="Nqu-rX-ycN" id="Nj9-7u-zyQ"/>
+                        <segue destination="0MF-Hl-BNX" kind="show" identifier="CaptureToRefine" id="qln-BQ-WrU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="303" y="365.25"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="3Fp-Vp-wEf">
+            <objects>
+                <viewController id="0MF-Hl-BNX" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cC7-WJ-MEq"/>
+                        <viewControllerLayoutGuide type="bottom" id="UrX-jL-rEf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vXi-qg-mEn">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aHX-Ka-vm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1158" y="365.25"/>
         </scene>
     </scenes>
 </document>

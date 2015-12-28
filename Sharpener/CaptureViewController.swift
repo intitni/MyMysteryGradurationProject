@@ -51,6 +51,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     let videoOutput = AVCaptureVideoDataOutput()
     let stillImageOutput = AVCaptureStillImageOutput()
     
+    var stillImage: UIImage?
+    
     var videoTextureCache: Unmanaged<CVMetalTextureCacheRef>?
     let captureSession = AVCaptureSession()
     var torchOn: Bool = false {
@@ -147,6 +149,24 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     func shutterClicked() {
         // grab image, segue to next view
+        var videoConnection : AVCaptureConnection?
+        for connection in stillImageOutput.connections {
+            for port in connection.inputPorts! {
+                if port.mediaType == AVMediaTypeVideo {
+                    videoConnection = connection as? AVCaptureConnection
+                    break
+                }
+            }
+            if videoConnection != nil { break }
+        }
+        stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+            (imageSampleBuffer, _) in
+            
+            let imageDataJpeg = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
+            self.stillImage = UIImage(data: imageDataJpeg)
+        }
+        self.captureSession.stopRunning()
+        performSegueWithIdentifier("CaptureToRefine", sender: self)
     }
 }
 

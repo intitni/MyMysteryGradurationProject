@@ -137,6 +137,14 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		13481C9B1C3173FE00EE9525 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		13772AF21C2AC0760086CAB3 /* Metal Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,8 +176,7 @@
 		13835D681C2013850047F0C0 /* Sharpener */ = {
 			isa = PBXGroup;
 			children = (
-				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
-				13835D691C2013850047F0C0 /* AppDelegate.swift */,
+				13481C9B1C3173FE00EE9525 /* View Controllers */,
 				13416C581C299C70006CB39A /* Views */,
 				13416C531C297810006CB39A /* Widgets */,
 				133E0A591C26EF640058B103 /* Filters */,
@@ -177,6 +184,7 @@
 				13835D701C2013850047F0C0 /* Assets.xcassets */,
 				13835D6D1C2013850047F0C0 /* Main.storyboard */,
 				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
+				13835D691C2013850047F0C0 /* AppDelegate.swift */,
 				13416C541C297981006CB39A /* UIColor+Custom.swift */,
 				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
 				13772AF01C2ABF530086CAB3 /* UILabel+Sharpener.swift */,
