@@ -32,6 +32,11 @@ class SPStepSlider: SPSlider {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutIcons() {
+        topIcon = Icon(iconType: .LineWidthHigh)
+        bottomIcon = Icon(iconType: .LineWidthLow)
+    }
+    
     override func setupGestures() {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: "swipeOnHandleViewUp:")
         swipeUp.delegate = self

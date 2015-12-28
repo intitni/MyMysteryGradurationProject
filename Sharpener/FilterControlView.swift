@@ -20,7 +20,7 @@ class FilterControlView: UIView {
             addSubview(thresholdSlider)
             thresholdSlider.snp_makeConstraints { make in
                 make.bottom.equalTo(self)
-                make.width.equalTo(18)
+                make.width.equalTo(20)
                 make.left.equalTo(4)
                 make.top.equalTo(self)
             }
@@ -31,7 +31,7 @@ class FilterControlView: UIView {
             addSubview(lineWidthSlilder)
             lineWidthSlilder.snp_makeConstraints { make in
                 make.bottom.equalTo(self)
-                make.width.equalTo(18)
+                make.width.equalTo(20)
                 make.right.equalTo(-4)
                 make.top.equalTo(self)
             }

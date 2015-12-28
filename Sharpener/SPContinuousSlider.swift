@@ -19,6 +19,11 @@ class SPContinuousSlider: SPSlider {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutIcons() {
+        topIcon = Icon(iconType: .ContrastHigh)
+        bottomIcon = Icon(iconType: .ContrastLow)
+    }
+    
     override func setupGestures() {
         let pan = UIPanGestureRecognizer(target: self, action: "panOnHandleView:")
         pan.delegate = self
