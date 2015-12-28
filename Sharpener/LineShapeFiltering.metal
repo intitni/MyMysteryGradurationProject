@@ -36,6 +36,12 @@ kernel void lineShapeFiltering(texture2d<float, access::read> inTexture [[textur
             float current = inTexture.read(textureIndex).r;
             float currentWeight = weights.read(weightIndex).r;
             accumulation += abs(current - currentWeight);
+            if (accumulation > uniforms.threshold) {
+                break;
+            }
+        }
+        if (accumulation > uniforms.threshold) {
+            break;
         }
     }
     

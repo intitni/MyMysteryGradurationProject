@@ -133,7 +133,6 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             try backCamera.lockForConfiguration()
             backCamera.torchMode = light ? .On : .Off
             backCamera.unlockForConfiguration()
-            
         } catch {
             print("Can't Lock Camera Configuration")
         }
@@ -183,6 +182,7 @@ extension CaptureViewController {
     
     private func prepareCaptureSession() {
         captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        
         do {
             let input = try AVCaptureDeviceInput(device: backCamera)
             captureSession.addInput(input)
@@ -202,6 +202,14 @@ extension CaptureViewController {
         }
         if captureSession.canAddOutput(stillImageOutput) {
             captureSession.addOutput(stillImageOutput)
+        }
+        
+        do {
+            try backCamera.lockForConfiguration()
+            backCamera.activeVideoMinFrameDuration = CMTimeMake(1, 20)
+            backCamera.unlockForConfiguration()
+        } catch {
+            print("Can't Lock Camera Configuration")
         }
         
         captureSession.startRunning()
