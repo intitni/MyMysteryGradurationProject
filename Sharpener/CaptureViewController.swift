@@ -21,6 +21,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     @IBOutlet weak var torchSwitch: TorchSwitcher!
     var metalView: MetalVideoView! {
         didSet {
+            imageView.addSubview(metalView)
             guard context.device != nil else { return }
             metalView.framebufferOnly = false
             // Texture for Y
@@ -29,7 +30,10 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     var filterControlView: FilterControlView! {
         didSet {
-            
+            imageView.addSubview(filterControlView)
+            filterControlView.snp_makeConstraints { make in
+                make.edges.equalTo(imageView)
+            }
         }
     }
     
@@ -174,7 +178,7 @@ extension CaptureViewController {
     
     private func prepareMetalView() {
         metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeFilteringFilter)
-        imageView.addSubview(metalView)
+        filterControlView = FilterControlView(frame: imageView.bounds, threshold: 0.2, lineWidth: 3, gearCount: 5)
     }
     
     private func prepareCaptureSession() {

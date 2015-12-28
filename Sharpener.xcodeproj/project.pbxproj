@@ -26,6 +26,10 @@
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
 		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
+		139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20C1C2FC6B500E3464F /* FilterControlView.swift */; };
+		139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */; };
+		139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2101C2FDDA600E3464F /* SPStepSlider.swift */; };
+		139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2121C2FDE3C00E3464F /* SPSlider.swift */; };
 		13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */; };
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
@@ -55,6 +59,10 @@
 		13835D731C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNVideoProvider.swift; sourceTree = "<group>"; };
+		139EE20C1C2FC6B500E3464F /* FilterControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterControlView.swift; sourceTree = "<group>"; };
+		139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPContinuousSlider.swift; sourceTree = "<group>"; };
+		139EE2101C2FDDA600E3464F /* SPStepSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStepSlider.swift; sourceTree = "<group>"; };
+		139EE2121C2FDE3C00E3464F /* SPSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSlider.swift; sourceTree = "<group>"; };
 		13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalVideoView.swift; sourceTree = "<group>"; };
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
@@ -110,6 +118,9 @@
 		13416C531C297810006CB39A /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */,
+				139EE2101C2FDDA600E3464F /* SPStepSlider.swift */,
+				139EE2121C2FDE3C00E3464F /* SPSlider.swift */,
 				13416C591C29A401006CB39A /* TorchSwitcher.swift */,
 				13416C511C297803006CB39A /* ShutterButton.swift */,
 			);
@@ -119,6 +130,8 @@
 		13416C581C299C70006CB39A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */,
+				139EE20C1C2FC6B500E3464F /* FilterControlView.swift */,
 				13416C561C299C6A006CB39A /* CaptureImageView.swift */,
 			);
 			name = Views;
@@ -155,7 +168,6 @@
 		13835D681C2013850047F0C0 /* Sharpener */ = {
 			isa = PBXGroup;
 			children = (
-				13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */,
 				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
 				13835D691C2013850047F0C0 /* AppDelegate.swift */,
 				13416C581C299C70006CB39A /* Views */,
@@ -317,6 +329,7 @@
 				13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */,
 				133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */,
 				13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */,
+				139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */,
 				13772AF11C2ABF530086CAB3 /* UILabel+Sharpener.swift in Sources */,
 				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
 				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilters.swift in Sources */,
@@ -326,6 +339,7 @@
 				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
+				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
@@ -333,6 +347,8 @@
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
 				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
 				13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */,
+				139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */,
+				139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
