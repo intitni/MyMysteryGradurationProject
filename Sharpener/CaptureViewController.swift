@@ -223,12 +223,19 @@ extension CaptureViewController {
 }
 
 extension CaptureViewController: SPSliderDelegate {
+    
+    private func lineWidthFromValue(value: Double) -> Int {
+        let gearCount = 5.0
+        let step = 1.0 / gearCount
+        return Int(value / step) + 1
+    }
+    
     func sliderValueDidChangedTo(value: Double, forTag tag: String) {
         switch tag {
         case "threshold":
             thresholdingFilter.thresholdingFactor = Float(value)
         case "lineWidth":
-            break
+            lineShapeFilteringFilter.radius = lineWidthFromValue(value)
         default: break
         }
     }
