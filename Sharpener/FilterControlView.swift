@@ -9,6 +9,12 @@
 import UIKit
 
 class FilterControlView: UIView {
+    var delegate: SPSliderDelegate? {
+        didSet {
+            thresholdSlider.delegate = delegate
+            lineWidthSlilder.delegate = delegate
+        }
+    }
     var thresholdSlider: SPContinuousSlider! {
         didSet {
             addSubview(thresholdSlider)

@@ -25,6 +25,7 @@ class SPStepSlider: SPSlider {
         self.gearCount = gearCount
         super.init(currentValue: Double(currentGear) / Double(gearCount - 1))
         animate = true
+        sliderTag = "lineWidth"
     }
 
     required init?(coder aDecoder: NSCoder) {

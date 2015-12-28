@@ -52,6 +52,7 @@ class SPSlider: UIControl {
     }
     let maxValue: Double = 1
     let minValue: Double = 0
+    var sliderTag = "default"
     var currentValue: Double = 0.5 {
         didSet {
             if currentValue < 0 { currentValue = 0 }
@@ -63,6 +64,7 @@ class SPSlider: UIControl {
             } else {
                 sliderValueIndicator.transform.ty = CGFloat((1.0-currentValue) * valueBoundHeight)
             }
+            delegate?.sliderValueDidChangedTo(currentValue, forTag: sliderTag)
         }
     }
     var valueBoundHeight: Double = 0
@@ -93,7 +95,7 @@ class SPSlider: UIControl {
 
 
 protocol SPSliderDelegate: class {
-    func sliderValueDidChangedTo(value: Float)
+    func sliderValueDidChangedTo(value: Double, forTag tag: String)
 }
 
 

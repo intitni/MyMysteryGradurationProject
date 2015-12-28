@@ -178,6 +178,7 @@ extension CaptureViewController {
     private func prepareMetalView() {
         metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeFilteringFilter)
         filterControlView = FilterControlView(frame: imageView.bounds, threshold: 0.2, lineWidth: 3, gearCount: 5)
+        filterControlView.delegate = self
     }
     
     private func prepareCaptureSession() {
@@ -218,5 +219,17 @@ extension CaptureViewController {
     private func prepareGestures() {
         shutterButton.addTarget(self, action: "shutterClicked", forControlEvents: .TouchUpInside)
         torchSwitch.addTarget(self, action: "torchSwitchClicked", forControlEvents: .TouchUpInside)
+    }
+}
+
+extension CaptureViewController: SPSliderDelegate {
+    func sliderValueDidChangedTo(value: Double, forTag tag: String) {
+        switch tag {
+        case "threshold":
+            thresholdingFilter.thresholdingFactor = Float(value)
+        case "lineWidth":
+            break
+        default: break
+        }
     }
 }

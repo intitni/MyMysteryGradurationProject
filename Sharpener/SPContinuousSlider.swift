@@ -10,6 +10,15 @@ import UIKit
 
 class SPContinuousSlider: SPSlider {
     
+    override init(currentValue: Double) {
+        super.init(currentValue: currentValue)
+        sliderTag = "threshold"
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setupGestures() {
         let pan = UIPanGestureRecognizer(target: self, action: "panOnHandleView:")
         pan.delegate = self
