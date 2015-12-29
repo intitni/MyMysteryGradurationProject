@@ -17,6 +17,8 @@
 		13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C541C297981006CB39A /* UIColor+Custom.swift */; };
 		13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C561C299C6A006CB39A /* CaptureImageView.swift */; };
 		13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C591C29A401006CB39A /* TorchSwitcher.swift */; };
+		13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9C1C324F0700EE9525 /* RefineViewController.swift */; };
+		13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */; };
 		13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */; };
 		13772AF11C2ABF530086CAB3 /* UILabel+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF01C2ABF530086CAB3 /* UILabel+Sharpener.swift */; };
 		13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */; };
@@ -48,6 +50,8 @@
 		13416C541C297981006CB39A /* UIColor+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
 		13416C561C299C6A006CB39A /* CaptureImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
 		13416C591C29A401006CB39A /* TorchSwitcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchSwitcher.swift; sourceTree = "<group>"; };
+		13481C9C1C324F0700EE9525 /* RefineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefineViewController.swift; sourceTree = "<group>"; };
+		13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingNavigationBar.swift; sourceTree = "<group>"; };
 		13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalEnums.swift; sourceTree = "<group>"; };
 		13772AF01C2ABF530086CAB3 /* UILabel+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Sharpener.swift"; sourceTree = "<group>"; };
 		13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MedianFilter.metal; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 		13416C531C297810006CB39A /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */,
 				139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */,
 				139EE2101C2FDDA600E3464F /* SPStepSlider.swift */,
 				139EE2121C2FDE3C00E3464F /* SPSlider.swift */,
@@ -141,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
+				13481C9C1C324F0700EE9525 /* RefineViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -339,6 +345,7 @@
 				13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */,
 				139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */,
 				13772AF11C2ABF530086CAB3 /* UILabel+Sharpener.swift in Sources */,
+				13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */,
 				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
 				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilters.swift in Sources */,
 				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
@@ -348,6 +355,7 @@
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
+				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,

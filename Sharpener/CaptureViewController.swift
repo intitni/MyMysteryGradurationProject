@@ -168,6 +168,16 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         self.captureSession.stopRunning()
         performSegueWithIdentifier("CaptureToRefine", sender: self)
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let identifier = segue.identifier else { return }
+        switch identifier {
+        case "CaptureToRefine":
+            let destination = segue.destinationViewController as? RefineViewController
+            destination?.incomeImage = stillImage
+        default: break
+        }
+    }
 }
 
 
