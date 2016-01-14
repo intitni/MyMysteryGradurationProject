@@ -58,11 +58,9 @@ class FilterControlView: UIView {
     
     override func drawRect(rect: CGRect) {
         let topBorder = UIBezierPath()
-        topBorder.moveToPoint(CGPointMake(0, 0))
-        topBorder.addLineToPoint(CGPointMake(bounds.width, 0))
+        topBorder ==> CGPointMake(0, 0) --> CGPointMake(bounds.width, 0)
         let bottomBorder = UIBezierPath()
-        bottomBorder.moveToPoint(CGPointMake(0, bounds.height))
-        bottomBorder.addLineToPoint(CGPointMake(bounds.width, bounds.height))
+        bottomBorder ==> CGPointMake(0, bounds.height) --> CGPointMake(bounds.width, bounds.height)
         topBorder.lineWidth = 1
         bottomBorder.lineWidth = 1
         
