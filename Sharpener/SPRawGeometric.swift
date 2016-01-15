@@ -6,12 +6,13 @@
 //  Copyright © 2016 Inti Guo. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
 struct SPRawGeometric {
     var type: SPGeometricType
+    var isHidden: Bool = false
     var raw = [CGPoint]()
-    var rectSize: Int
+    var lineSize: Int
     var shapeSize: Int
-    var shapeWieght: Int { return shapeSize / rectSize }
+    var shapeWieght: Int { return shapeSize / lineSize }
 }

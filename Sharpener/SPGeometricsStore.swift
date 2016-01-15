@@ -8,14 +8,14 @@
 
 import Foundation
 
-// MARK: - Properties
+/// SPGeometricsStore is used to store SPGeometrics
 class SPGeometricsStore {
     
     /// Singleton for proccessing
     static var universalStore = SPGeometricsStore()
     
     var shapeStore = [SPShape]()
-    var lineStore = [SPLine]()
+    var lineStore = [SPLineGroup]()
     var shapeCount: Int { return shapeStore.count }
     var lineCount: Int { return lineStore.count }
     var geometricsCount: Int { return shapeCount + lineCount }
@@ -32,7 +32,7 @@ extension SPGeometricsStore {
         shapeStore.append(shape)
     }
     
-    func append(line: SPLine) {
+    func append(line: SPLineGroup) {
         lineStore.append(line)
     }
 }

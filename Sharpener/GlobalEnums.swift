@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum OnOff: Int, CustomStringConvertible {
+enum OnOff: Int, CustomStringConvertible, BooleanType {
     case Off, On
     
     func isOn() -> Bool { return self == .On ? true : false }
@@ -23,5 +23,9 @@ enum OnOff: Int, CustomStringConvertible {
     
     var descriptionUpperCased: String {
         return self == .On ? "ON" : "OFF"
+    }
+    
+    var boolValue: Bool {
+        return isOn()
     }
 }

@@ -6,11 +6,12 @@
 //  Copyright © 2016 Inti Guo. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
 struct SPLine {
     enum Guess {
         case Straight(start: CGPoint, end: CGPoint)
+        case PartialStraight(straightLines: [(start: CGPoint, end: CGPoint)])
         case Circle(center: CGPoint, radius: CGFloat)
         case Triangle(a: CGPoint, b: CGPoint, c: CGPoint)
         case Rectangle(a: CGPoint, b: CGPoint, c: CGPoint, d: CGPoint)
@@ -20,23 +21,19 @@ struct SPLine {
     }
     
     var raw = [CGPoint]()
-    var vectorized = [SPAnchorPoint]()
-    
     var guesses = [Guess]()
     var applied = [Guess]()
-    
-    mutating func appendRaw(point: CGPoint) { raw.append(point) }
+    var vectorized = [SPAnchorPoint]()
     mutating func appendVectorized(point: SPAnchorPoint) { vectorized.append(point) }
+    mutating func appendRaw(point: CGPoint) { raw.append(point) }
 }
-
 
 func <--(inout left: SPLine, right: CGPoint) {
     left.appendRaw(right)
 }
 
-func <--(inout left: SPLine, right: (anchor: CGPoint, controlA: CGPoint?, controlB: CGPoint?)) {
-    let point = SPAnchorPoint(anchorPoint: right.anchor, controlPointA: right.controlA, controlPointB: right.controlB)
-    left.appendVectorized(point)
+func <--(inout left: SPLine, right: SPAnchorPoint) {
+    left.appendVectorized(right)
 }
 
 struct SPAnchorPoint {
