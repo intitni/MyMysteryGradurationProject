@@ -30,7 +30,25 @@ func ~~>(path: UIBezierPath, point: (anchorPoint: CGPoint, controlPoint1: CGPoin
 }
 
 /// Close path
-postfix operator =>! {}
-postfix func =>!(path: UIBezierPath) {
+postfix operator -><- {}
+postfix func -><-(path: UIBezierPath) {
     path.closePath()
+}
+
+extension CGPoint {
+    func scaled(scale: CGFloat) -> CGPoint {
+        return CGPoint(x: x * scale, y: y * scale)
+    }
+}
+
+extension CGRect {
+    func scaled(scale: CGFloat) -> CGRect {
+        return CGRect(x: origin.x * scale, y: origin.y * scale, width: width * scale, height: height * scale)
+    }
+}
+
+extension CGSize {
+    func scaled(scale: CGFloat) -> CGSize {
+        return CGSize(width: width * scale, height: height * scale)
+    }
 }
