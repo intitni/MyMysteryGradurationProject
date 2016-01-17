@@ -20,13 +20,24 @@
 		13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9C1C324F0700EE9525 /* RefineViewController.swift */; };
 		13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */; };
 		13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */; };
-		13772AF11C2ABF530086CAB3 /* UILabel+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF01C2ABF530086CAB3 /* UILabel+Sharpener.swift */; };
 		13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */; };
 		13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF71C2AEC710086CAB3 /* MedianFilter.swift */; };
 		13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13835D691C2013850047F0C0 /* AppDelegate.swift */; };
 		13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D6D1C2013850047F0C0 /* Main.storyboard */; };
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
+		13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EE91C478538000CE61B /* SPGeometricsStore.swift */; };
+		13988EED1C478694000CE61B /* SPGeometrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EEC1C478694000CE61B /* SPGeometrics.swift */; };
+		13988EEF1C478788000CE61B /* SPShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EEE1C478788000CE61B /* SPShape.swift */; };
+		13988EF11C478951000CE61B /* SPLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF01C478951000CE61B /* SPLine.swift */; };
+		13988EF31C479A66000CE61B /* SPLineGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF21C479A66000CE61B /* SPLineGroup.swift */; };
+		13988EF51C479B06000CE61B /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF41C479B06000CE61B /* CustomOperators.swift */; };
+		13988EF71C47A1D6000CE61B /* SPRawGeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF61C47A1D6000CE61B /* SPRawGeometric.swift */; };
+		13988EFB1C47F802000CE61B /* SPRawGeometricsFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */; };
+		13988EFE1C492613000CE61B /* GeometricsFilteringFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EFD1C492613000CE61B /* GeometricsFilteringFilter.swift */; };
+		13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */; };
+		13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */; };
+		13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13988F041C494CE6000CE61B /* LineShapeRefining.metal */; };
 		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
 		139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20C1C2FC6B500E3464F /* FilterControlView.swift */; };
 		139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */; };
@@ -35,7 +46,8 @@
 		13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */; };
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
-		13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilters.swift */; };
+		13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */; };
+		13DDCDF81C4B906000072492 /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDF71C4B906000072492 /* XNUsefuls.swift */; };
 		8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB5EA983D3116ADF305711E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +65,6 @@
 		13481C9C1C324F0700EE9525 /* RefineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefineViewController.swift; sourceTree = "<group>"; };
 		13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingNavigationBar.swift; sourceTree = "<group>"; };
 		13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalEnums.swift; sourceTree = "<group>"; };
-		13772AF01C2ABF530086CAB3 /* UILabel+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Sharpener.swift"; sourceTree = "<group>"; };
 		13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MedianFilter.metal; sourceTree = "<group>"; };
 		13772AF71C2AEC710086CAB3 /* MedianFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedianFilter.swift; sourceTree = "<group>"; };
 		13835D661C2013850047F0C0 /* Sharpener.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharpener.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +73,18 @@
 		13835D701C2013850047F0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13835D731C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		13988EE91C478538000CE61B /* SPGeometricsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsStore.swift; sourceTree = "<group>"; };
+		13988EEC1C478694000CE61B /* SPGeometrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometrics.swift; sourceTree = "<group>"; };
+		13988EEE1C478788000CE61B /* SPShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShape.swift; sourceTree = "<group>"; };
+		13988EF01C478951000CE61B /* SPLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLine.swift; sourceTree = "<group>"; };
+		13988EF21C479A66000CE61B /* SPLineGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroup.swift; sourceTree = "<group>"; };
+		13988EF41C479B06000CE61B /* CustomOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOperators.swift; sourceTree = "<group>"; };
+		13988EF61C47A1D6000CE61B /* SPRawGeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRawGeometric.swift; sourceTree = "<group>"; };
+		13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRawGeometricsFinder.swift; sourceTree = "<group>"; };
+		13988EFD1C492613000CE61B /* GeometricsFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometricsFilteringFilter.swift; sourceTree = "<group>"; };
+		13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNCompositionFilters.swift; sourceTree = "<group>"; };
+		13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeRefiningFilter.swift; sourceTree = "<group>"; };
+		13988F041C494CE6000CE61B /* LineShapeRefining.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeRefining.metal; sourceTree = "<group>"; };
 		139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNVideoProvider.swift; sourceTree = "<group>"; };
 		139EE20C1C2FC6B500E3464F /* FilterControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterControlView.swift; sourceTree = "<group>"; };
 		139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPContinuousSlider.swift; sourceTree = "<group>"; };
@@ -70,7 +93,8 @@
 		13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalVideoView.swift; sourceTree = "<group>"; };
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
-		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilters.swift; sourceTree = "<group>"; };
+		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilter.swift; sourceTree = "<group>"; };
+		13DDCDF71C4B906000072492 /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNUsefuls.swift; sourceTree = "<group>"; };
 		2AB5EA983D3116ADF305711E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -92,10 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				13772AF21C2AC0760086CAB3 /* Metal Shaders */,
-				13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilters.swift */,
-				13416C4D1C296450006CB39A /* ThresholdingFilter.swift */,
-				13772AF71C2AEC710086CAB3 /* MedianFilter.swift */,
-				133E0A531C26D50D0058B103 /* MXNImageFilter.swift */,
+				13988EFF1C4928B1000CE61B /* Filters */,
+				13988EFC1C4925D4000CE61B /* Composition Filters */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -155,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */,
+				13988F041C494CE6000CE61B /* LineShapeRefining.metal */,
 				13416C4F1C296470006CB39A /* Thresholding.metal */,
 				13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */,
 			);
@@ -182,6 +205,8 @@
 		13835D681C2013850047F0C0 /* Sharpener */ = {
 			isa = PBXGroup;
 			children = (
+				13988EEB1C478686000CE61B /* Models */,
+				13988EE41C463418000CE61B /* Managers */,
 				13481C9B1C3173FE00EE9525 /* View Controllers */,
 				13416C581C299C70006CB39A /* Views */,
 				13416C531C297810006CB39A /* Widgets */,
@@ -192,11 +217,54 @@
 				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
 				13835D691C2013850047F0C0 /* AppDelegate.swift */,
 				13416C541C297981006CB39A /* UIColor+Custom.swift */,
+				13DDCDF71C4B906000072492 /* XNUsefuls.swift */,
 				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
-				13772AF01C2ABF530086CAB3 /* UILabel+Sharpener.swift */,
 				133E0A5B1C26EFB50058B103 /* Supporting Files */,
+				13988EF41C479B06000CE61B /* CustomOperators.swift */,
 			);
 			path = Sharpener;
+			sourceTree = "<group>";
+		};
+		13988EE41C463418000CE61B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
+				13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		13988EEB1C478686000CE61B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				13988EF01C478951000CE61B /* SPLine.swift */,
+				13988EF61C47A1D6000CE61B /* SPRawGeometric.swift */,
+				13988EEC1C478694000CE61B /* SPGeometrics.swift */,
+				13988EEE1C478788000CE61B /* SPShape.swift */,
+				13988EF21C479A66000CE61B /* SPLineGroup.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		13988EFC1C4925D4000CE61B /* Composition Filters */ = {
+			isa = PBXGroup;
+			children = (
+				13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */,
+				13988EFD1C492613000CE61B /* GeometricsFilteringFilter.swift */,
+			);
+			name = "Composition Filters";
+			sourceTree = "<group>";
+		};
+		13988EFF1C4928B1000CE61B /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				133E0A531C26D50D0058B103 /* MXNImageFilter.swift */,
+				13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */,
+				13416C4D1C296450006CB39A /* ThresholdingFilter.swift */,
+				13772AF71C2AEC710086CAB3 /* MedianFilter.swift */,
+				13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */,
+			);
+			name = Filters;
 			sourceTree = "<group>";
 		};
 		6EDEEB3F7785A6D3A44FB657 /* Pods */ = {
@@ -343,15 +411,24 @@
 				13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */,
 				133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */,
 				13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */,
+				13988EF71C47A1D6000CE61B /* SPRawGeometric.swift in Sources */,
 				139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */,
-				13772AF11C2ABF530086CAB3 /* UILabel+Sharpener.swift in Sources */,
+				13988EEF1C478788000CE61B /* SPShape.swift in Sources */,
+				13DDCDF81C4B906000072492 /* XNUsefuls.swift in Sources */,
+				13988EF11C478951000CE61B /* SPLine.swift in Sources */,
+				13988EF31C479A66000CE61B /* SPLineGroup.swift in Sources */,
+				13988EFE1C492613000CE61B /* GeometricsFilteringFilter.swift in Sources */,
 				13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */,
+				13988EF51C479B06000CE61B /* CustomOperators.swift in Sources */,
 				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
-				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilters.swift in Sources */,
+				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */,
 				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
+				13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
 				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,
+				13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */,
 				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
+				13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
@@ -359,11 +436,14 @@
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
+				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
 				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
+				13988EFB1C47F802000CE61B /* SPRawGeometricsFinder.swift in Sources */,
 				13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */,
 				139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */,
+				13988EED1C478694000CE61B /* SPGeometrics.swift in Sources */,
 				139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

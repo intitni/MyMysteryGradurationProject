@@ -11,6 +11,7 @@ import MetalKit
 
 class MetalVideoView: MTKView {
     var filter: MXNImageFilter!
+    var shouldDraw: Bool = true
     
     init(frame frameRect: CGRect, device: MTLDevice, filter: MXNImageFilter) {
         super.init(frame: frameRect, device: device)
@@ -23,6 +24,8 @@ class MetalVideoView: MTKView {
     
     override func drawRect(rect: CGRect) {
         guard let drawable = currentDrawable else { return }
-        filter.presentToDrawable(drawable)
+        if shouldDraw {
+            filter.presentToDrawable(drawable)
+        }
     }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Inti Guo. All rights reserved.
 //
 
-import CoreGraphics
+import UIKit
 
 struct SPRawGeometric {
     var type: SPGeometricType
@@ -14,5 +14,6 @@ struct SPRawGeometric {
     var raw = [CGPoint]()
     var lineSize: Int
     var shapeSize: Int
-    var shapeWieght: Int { return shapeSize / lineSize }
+    var shapeWeight: Int { return shapeSize / lineSize }
+    var simplePath: UIBezierPath?
 }

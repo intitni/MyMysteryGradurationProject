@@ -35,7 +35,7 @@ class GeometricsFilteringFilter: MXNCompositionFilters, MXNDrawablePresentable {
         lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context,
             threshold: lineShapeFilteringFilterAttributes.threshold,
             radius: lineShapeFilteringFilterAttributes.radius)
-        lineShapeRefiningFilter = LineShapeRefiningFilter(context: context, radius: lineShapeFilteringFilterAttributes.radius + 2)
+        lineShapeRefiningFilter = LineShapeRefiningFilter(context: context, radius: lineShapeFilteringFilterAttributes.radius + 1)
         
         lineShapeFilteringFilter.provider = medianFilter
         medianFilter.provider = thresholdingFilter

@@ -20,3 +20,11 @@ protocol MXNTextureConsumer {
 protocol MXNDrawablePresentable {
     func presentToDrawable(drawable: CAMetalDrawable)
 }
+
+class MXNSimpleTextureProvider: MXNTextureProvider {
+    var texture: MTLTexture!
+    
+    init(texture: MTLTexture) {
+        self.texture = texture
+    }
+}

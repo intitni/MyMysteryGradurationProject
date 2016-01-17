@@ -42,6 +42,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     var medianFilter: MedianFilter!
     var thresholdingFilter: ThresholdingFilter!
     var lineShapeFilteringFilter: LineShapeFilterFilteringFilter!
+    var lineShapeRe: LineShapeRefiningFilter!
     var videoProvider: MXNVideoProvider!
     
     var backCamera: AVCaptureDevice!
@@ -75,6 +76,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     override func viewWillDisappear(animated: Bool) {
         UIApplication.sharedApplication().idleTimerDisabled = false
+        metalView.shouldDraw = false
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -189,6 +191,9 @@ extension CaptureViewController {
         lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 4)
         videoProvider = MXNVideoProvider()
         
+        lineShapeRe = LineShapeRefiningFilter(context: context, radius: 8)
+        
+        lineShapeRe.provider = lineShapeFilteringFilter
         lineShapeFilteringFilter.provider = medianFilter
         thresholdingFilter.provider = videoProvider
         medianFilter.provider = thresholdingFilter
@@ -206,7 +211,7 @@ extension CaptureViewController {
     }
     
     private func prepareMetalView() {
-        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeFilteringFilter)
+        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeRe)
         filterControlView = FilterControlView(frame: imageView.bounds, threshold: 0.2, lineWidth: 3, gearCount: 5)
         filterControlView.delegate = self
     }

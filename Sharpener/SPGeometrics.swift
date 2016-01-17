@@ -25,7 +25,7 @@ extension SPGeometrics {
     var geometric: SPGeometrics { return self }
 }
 
-func <--(inout left: SPGeometrics, right: SPLines) {
+func <--(inout left: SPGeometrics, right: SPLine) {
     left.lines.append(right)
 }
 

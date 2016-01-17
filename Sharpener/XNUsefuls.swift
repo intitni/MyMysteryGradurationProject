@@ -1,12 +1,36 @@
 //
-//  UIBezierPath+Shapener.swift
+//  XNUsefuls.swift
 //  Sharpener
 //
-//  Created by Inti Guo on 1/14/16.
+//  Created by Inti Guo on 1/17/16.
 //  Copyright © 2016 Inti Guo. All rights reserved.
 //
 
+import Foundation
 import UIKit
+
+//  MARK: - UILabel Text Change Animation
+
+extension UILabel {
+    static var textChangeAnimation = CATransition() {
+        didSet {
+            textChangeAnimation.duration = 0.15;
+            textChangeAnimation.type = kCATransitionFade;
+        }
+    }
+    
+    func setText(text: String, withAnimation: Bool) {
+        if withAnimation {
+            layer.addAnimation(UILabel.textChangeAnimation, forKey: "changeTextTransition")
+            self.text = text
+        } else {
+            self.text = text
+        }
+    }
+}
+
+
+//  MARK: - UIBezierPath Operators
 
 /// Move to
 infix operator ==> { associativity left precedence 140 }
@@ -34,6 +58,8 @@ postfix operator -><- {}
 postfix func -><-(path: UIBezierPath) {
     path.closePath()
 }
+
+// MARK: - CGPoint CGRect CGSize  Scaled Property
 
 extension CGPoint {
     func scaled(scale: CGFloat) -> CGPoint {
