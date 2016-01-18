@@ -34,9 +34,8 @@ class SPRawGeometricsFinder {
         dispatch_async(dispatch_queue_create("rawgeometrics_finding", DISPATCH_QUEUE_SERIAL)) {
             self.geometricsFilteringFilter.applyFilter()
             if self.geometricsFilteringFilter.texture == nil { return }
-            dispatch_async(GCD.mainQueue) {
-                self.extractSeperatedTextureForm()
-            }
+            
+            self.extractSeperatedTextureForm()
         }
     }
     
@@ -49,7 +48,6 @@ class SPRawGeometricsFinder {
     /// Used to create a first version of rawGeometrics to seperate them into different parts. Called in extractTextureFrom(). Runs in Queue_Piority_High.
     func extractSeperatedTextureForm() {
         textureData = MXNTextureData(texture: texture)
-        
         for i in 0..<texture.width {
             for j in 0..<texture.height {
                 guard textureData[(i,j)]!.isNotWhiteAndBlack else { continue }
@@ -59,7 +57,6 @@ class SPRawGeometricsFinder {
                 rawGeometrics.append(rawG)
             }
         }
-        print(textureData)
         extractGeometrics()
     }
     
@@ -131,12 +128,12 @@ class SPRawGeometricsFinder {
                 guard !topFound || !bottomFound else { break }
                 let thisPos = CGPoint(x: x, y: Int(rightPos.y))
                 // check upper line
-                if let c = textureData[thisPos.up] where c.isNotWhiteAndBlack && c.isTransparent && !topFound {
+                if let c = textureData[thisPos.up] where c.isNotWhiteAndBlack && !c.isTransparent && !topFound {
                     stack.push(thisPos.up)
                     topFound = true
                 }
                 // check lower line
-                if let c = textureData[thisPos.down] where c.isNotWhiteAndBlack && c.isTransparent && !bottomFound {
+                if let c = textureData[thisPos.down] where c.isNotWhiteAndBlack && !c.isTransparent && !bottomFound {
                     stack.push(thisPos.down)
                     bottomFound = true
                 }

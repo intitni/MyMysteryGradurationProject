@@ -75,9 +75,15 @@ struct MXNTextureData {
 
 extension MXNTextureData.RGBAPixel {
     var isNotWhiteAndBlack: Bool { return self.r != 255 && self.r != 0 }
-    var isInShape: Bool { return self.r == 40 }
-    var isInShapeBorder: Bool { return self.r == 50 }
-    var isInLine: Bool { return self.r == 60 }
+    var isInShape: Bool { return self.r == 107 }
+    var isInShapeBorder: Bool { return self.r == 66 }
+    var isInLine: Bool { return self.r == 209 }
     var isTransparent: Bool { return self.a == 0 }
+    
+    /* 
+            66, 133, 214 0.25 b
+            209, 117, 120 0.82 r
+            107, 181, 161 0.42 g
+        */
 }
 
