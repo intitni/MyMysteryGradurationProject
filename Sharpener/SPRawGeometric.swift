@@ -14,6 +14,6 @@ struct SPRawGeometric {
     var raw = [CGPoint]()
     var lineSize: Int
     var shapeSize: Int
-    var shapeWeight: Int { return shapeSize / lineSize }
+    var shapeWeight: Int { return shapeSize / (lineSize + shapeSize + 1) }
     var simplePath: UIBezierPath?
 }
