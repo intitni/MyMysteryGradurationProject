@@ -70,12 +70,14 @@ struct MXNTextureData {
         var g: UInt8
         var b: UInt8
         var a: UInt8
-        
-        var isNotWhiteAndBlack: Bool { return self.r != 255 && self.r != 0 }
-        var isInShape: Bool { return self.r == 40 }
-        var isInShapeBorder: Bool { return self.r == 50 }
-        var isInLine: Bool { return self.r == 60 }
-        var isTransparent: Bool { return self.a == 0 }
     }
+}
+
+extension MXNTextureData.RGBAPixel {
+    var isNotWhiteAndBlack: Bool { return self.r != 255 && self.r != 0 }
+    var isInShape: Bool { return self.r == 40 }
+    var isInShapeBorder: Bool { return self.r == 50 }
+    var isInLine: Bool { return self.r == 60 }
+    var isTransparent: Bool { return self.a == 0 }
 }
 
