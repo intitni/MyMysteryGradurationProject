@@ -10,25 +10,43 @@ import CoreGraphics
 import MetalKit
 
 @objc protocol SPRawGeometricsFinderDelegate {
-    func succefullyExtractedSeperatedTexture()
+    
+    /// Called at the end of extractGeometrics()
+    func succefullyExtractedGeometrics()
 }
 
 /// SPRawGeometricsFinder is used to descriminate shapes and lines from given UIImage.
 /// >  It will firstly apply abunch of filter to filter out shape and lines, then seperate them into different groups, refine them (extracting lines from shape, ignoring small shapes in lines, etc.), and create a final seperation for texture, so user can choose to hide or show individual shape or line group in Refine View.
 class SPRawGeometricsFinder {
+    
+    // MARK: Properties
     let context: MXNContext = MXNContext()
     var geometricsFilteringFilter: GeometricsFilteringFilter!
     weak var delegate: SPRawGeometricsFinderDelegate?
     var texture: MTLTexture { return geometricsFilteringFilter.texture }
     
-    init(medianFilterRadius: Int, thresholdingFilterThreshold: Float, lineShapeFilteringFilterAttributes: (threshold: Float, radius: Int), extractorSize: CGSize) {
+    /// Used to store rawGeometric extracted from texture, for shape seperation use.
+    var rawGeometrics = [SPRawGeometric]()
+    /// Used to store rawGeometric extracted from previous extracted rawGeometrics.
+    var extractedRawGeometrics = [SPRawGeometric]()
+    var textureData: MXNTextureData!
+    
+    // MARK: Initializing
+    
+    init(medianFilterRadius: Int,
+        thresholdingFilterThreshold: Float,
+        lineShapeFilteringFilterAttributes: (threshold: Float, radius: Int),
+        extractorSize: CGSize) {
+            
         geometricsFilteringFilter = GeometricsFilteringFilter(context: context,
             medianFilterRadius: medianFilterRadius,
             thresholdingFilterThreshold: thresholdingFilterThreshold,
             lineShapeFilteringFilterAttributes: (lineShapeFilteringFilterAttributes.threshold, lineShapeFilteringFilterAttributes.radius))
     }
     
-    /// Used to extract texture from UIImage, runs in Queue_Piority_High
+    // MARK: Processes
+    
+    /// Used to extract texture from UIImage, runs in Queue_rawgeometrics_finding.
     func extractTextureFrom(image: UIImage) {
         geometricsFilteringFilter.provider = MXNImageProvider(image: image, context: context)
         dispatch_async(dispatch_queue_create("rawgeometrics_finding", DISPATCH_QUEUE_SERIAL)) {
@@ -39,20 +57,14 @@ class SPRawGeometricsFinder {
         }
     }
     
-    /// Used to store rawGeometric extracted from texture, for shape seperation use.
-    var rawGeometrics = [SPRawGeometric]()
-    /// Used to store rawGeometric extracted from previous extracted rawGeometrics.
-    var extractedRawGeometrics = [SPRawGeometric]()
-    var textureData: MXNTextureData!
-    
-    /// Used to create a first version of rawGeometrics to seperate them into different parts. Called in extractTextureFrom(). Runs in Queue_Piority_High.
-    func extractSeperatedTextureForm() {
+    /// Used to create a first version of rawGeometrics to seperate them into different parts. Called in extractTextureFrom(). Runs in Queue_rawgeometrics_finding.
+    private func extractSeperatedTextureForm() {
         textureData = MXNTextureData(texture: texture)
         for i in 0..<texture.width {
             for j in 0..<texture.height {
                 guard textureData[(i,j)]!.isNotWhiteAndBlack else { continue }
                 var points = [CGPoint]()
-                flood(i, y: j, into: &points)
+                flood(i, j, into: &points)
                 let rawG = SPRawGeometric(type: .Shape, isHidden: false, raw: points, lineSize: 0, shapeSize: 0, simplePath: nil)
                 rawGeometrics.append(rawG)
             }
@@ -60,8 +72,8 @@ class SPRawGeometricsFinder {
         extractGeometrics()
     }
     
-    /// Used to refine seperations. Called in extractSeperatedTextureForm(). Runs in Queue_Piority_High.
-    func extractGeometrics() {
+    /// Used to refine seperations. Called in extractSeperatedTextureForm(). Runs in Queue_rawgeometrics_finding.
+    private func extractGeometrics() {
         for var g in rawGeometrics {
             for point in g.raw {
                 guard let c = textureData[point] else { continue }
@@ -85,10 +97,15 @@ class SPRawGeometricsFinder {
                 // clean all green and blue parts
             }
         }
+        dispatch_async(GCD.mainQueue) {
+            self.delegate?.succefullyExtractedGeometrics()
+        }
     }
     
+    // MARK: Utility Methods
+    
     /// Used to find a shape based on a seed point, line-scanning version.
-    private func flood(x: Int, y: Int, inout into points: [CGPoint]) {
+    private func flood(x: Int, _ y: Int, inout into points: [CGPoint]) {
         guard let c = textureData[(x,y)] else { return }
         guard c.isNotWhiteAndBlack else { return }
         
@@ -131,15 +148,21 @@ class SPRawGeometricsFinder {
                 if let c = textureData[thisPos.up] where c.isNotWhiteAndBlack && !c.isTransparent && !topFound {
                     stack.push(thisPos.up)
                     topFound = true
+                } else if let c = textureData[thisPos.up] where !c.isNotWhiteAndBlack && topFound {
+                    // when such pixels found, reset topFound to let it check for next area
+                    topFound = false
                 }
                 // check lower line
                 if let c = textureData[thisPos.down] where c.isNotWhiteAndBlack && !c.isTransparent && !bottomFound {
                     stack.push(thisPos.down)
                     bottomFound = true
+                } else if let c = textureData[thisPos.down] where !c.isNotWhiteAndBlack && bottomFound {
+                    bottomFound = false
                 }
             }
         }
     }
+    
 }
 
 
