@@ -144,7 +144,8 @@ class SPRawGeometricsFinder {
             for x in CGPoint.horizontalRangeFrom(leftPos, to: rightPos) {
                 guard !topFound || !bottomFound else { break }
                 let thisPos = CGPoint(x: x, y: Int(rightPos.y))
-                // check upper line
+                
+                // check upper line, push leftmost point of each area found into stack
                 if let c = textureData[thisPos.up] where c.isNotWhiteAndBlack && !c.isTransparent && !topFound {
                     stack.push(thisPos.up)
                     topFound = true
@@ -152,6 +153,7 @@ class SPRawGeometricsFinder {
                     // when such pixels found, reset topFound to let it check for next area
                     topFound = false
                 }
+                
                 // check lower line
                 if let c = textureData[thisPos.down] where c.isNotWhiteAndBlack && !c.isTransparent && !bottomFound {
                     stack.push(thisPos.down)
@@ -165,19 +167,29 @@ class SPRawGeometricsFinder {
     
 }
 
-
-
 extension CGPoint  {
     var right: CGPoint { return CGPoint(x: self.x + 1, y: self.y) }
     var left: CGPoint { return CGPoint(x: self.x - 1, y: self.y) }
-    var up: CGPoint { return CGPoint(x: self.x, y: self.y + 1) }
-    var down: CGPoint { return CGPoint(x: self.x, y: self.y - 1) }
+    var up: CGPoint { return CGPoint(x: self.x, y: self.y - 1) }
+    var down: CGPoint { return CGPoint(x: self.x, y: self.y + 1) }
+
+    var upleft: CGPoint { return CGPoint(x: self.x - 1, y: self.y - 1) }
+    var downleft: CGPoint { return CGPoint(x: self.x + 1, y: self.y - 1) }
+    var upright: CGPoint { return CGPoint(x: self.x - 1, y: self.y + 1) }
+    var downright: CGPoint { return CGPoint(x: self.x + 1, y: self.y + 1) }
+    
+    /// Move this point 1pt away to given Direction2D.
+    /// > Up, Down, Left, Right are supported.
     mutating func move(direction: Direction2D) {
         switch direction {
-        case .Up: self.y += 1
-        case .Down: self.y -= 1
+        case .Up: self.y -= 1
+        case .Down: self.y += 1
         case .Left: self.x -= 1
         case .Right: self.x += 1
+        case .UpLeft: self.x -= 1; self.y -= 1
+        case .DownLeft: self.x += 1; self.y -= 1
+        case .UpRight: self.x -= 1; self.y += 1
+        case .DownRight: self.x += 1; self.y += 1
         default: break
         }
     }
