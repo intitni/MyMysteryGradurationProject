@@ -9,11 +9,15 @@
 import UIKit
 
 struct SPRawGeometric {
-    var type: SPGeometricType
+    var type: SPGeometricType = .Shape
     var isHidden: Bool = false
     var raw = [CGPoint]()
-    var lineSize: Int
-    var shapeSize: Int
+    var lineSize: Int = 0
+    var shapeSize: Int = 0
     var shapeWeight: Int { return shapeSize / (lineSize + shapeSize + 1) }
-    var simplePath: UIBezierPath?
+    var borders = [SPLine]()
+    
+    init(raw: [CGPoint] = [CGPoint]()) {
+        self.raw = raw
+    }
 }

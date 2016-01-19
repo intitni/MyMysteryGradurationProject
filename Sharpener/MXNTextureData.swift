@@ -65,6 +65,33 @@ struct MXNTextureData {
         data[pos + 3] = 0
     }
     
+    mutating func toShapeBorderAt(point: CGPoint) {
+        let x = Int(point.x), y = Int(point.y)
+        guard y < height && x < width && x >= 0 && y >= 0 else { return }
+        let pos = (x + y * width) * 4
+        data[pos] = 66
+        data[pos+1] = 133
+        data[pos+2] = 214
+    }
+    
+    mutating func toLineAt(point: CGPoint) {
+        let x = Int(point.x), y = Int(point.y)
+        guard y < height && x < width && x >= 0 && y >= 0 else { return }
+        let pos = (x + y * width) * 4
+        data[pos] = 209
+        data[pos+1] = 117
+        data[pos+2] = 120
+    }
+    
+    mutating func toShapeAt(point: CGPoint) {
+        let x = Int(point.x), y = Int(point.y)
+        guard y < height && x < width && x >= 0 && y >= 0 else { return }
+        let pos = (x + y * width) * 4
+        data[pos] = 107
+        data[pos+1] = 181
+        data[pos+2] = 161
+    }
+    
     struct RGBAPixel {
         var r: UInt8
         var g: UInt8

@@ -30,13 +30,3 @@ enum OnOff: Int, CustomStringConvertible, BooleanType {
     }
 }
 
-enum Direction2D {
-    case Up, Down, Left, Right
-    case North, South, West, East
-    
-    case UpLeft, DownLeft, UpRight, DownRight
-    case Northwest, Southwest, Northeast, Southeast
-    
-    case Clockwise(degree: Double)
-    case CounterClockwise(degree: Double)
-}

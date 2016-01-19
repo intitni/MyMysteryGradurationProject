@@ -7,6 +7,7 @@
 //
 
 import CoreGraphics
+import UIKit
 
 struct SPLine {
     enum Guess {
@@ -40,4 +41,22 @@ struct SPAnchorPoint {
     var anchorPoint: CGPoint
     var controlPointA: CGPoint?
     var controlPointB: CGPoint?
+}
+
+
+extension SPLine {
+    var bezierPath: UIBezierPath {
+        
+        let path = UIBezierPath()
+        for (n, point) in vectorized.enumerate() {
+            switch n {
+            case 0:
+                path==>point
+            default:
+                path~~>point
+            }
+        }
+        
+        return path
+    }
 }
