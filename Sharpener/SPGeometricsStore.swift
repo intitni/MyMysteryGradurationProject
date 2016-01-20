@@ -11,7 +11,7 @@ import Foundation
 /// SPGeometricsStore is used to store SPGeometrics
 class SPGeometricsStore {
     
-    /// Singleton for proccessing
+    /// Singleton for proccessing progress
     static var universalStore = SPGeometricsStore()
     
     var shapeStore = [SPShape]()

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */; };
 		133E0A501C269D350058B103 /* MXNContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A4F1C269D350058B103 /* MXNContext.swift */; };
 		133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A531C26D50D0058B103 /* MXNImageFilter.swift */; };
 		133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */; };
@@ -47,6 +48,8 @@
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
 		13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */; };
+		13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */; };
+		13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */; };
 		13DDCDFA1C4BA1F000072492 /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDF91C4BA1F000072492 /* XNUsefuls.swift */; };
 		13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFB1C4BCB9800072492 /* Async.swift */; };
 		13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */; };
@@ -55,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Sharpener.swift"; sourceTree = "<group>"; };
 		133E0A4F1C269D350058B103 /* MXNContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNContext.swift; sourceTree = "<group>"; };
 		133E0A531C26D50D0058B103 /* MXNImageFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNImageFilter.swift; sourceTree = "<group>"; };
 		133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureConsumerAndProvider.swift; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
 		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilter.swift; sourceTree = "<group>"; };
+		13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsVectorizor.swift; sourceTree = "<group>"; };
+		13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Sharpener.swift"; sourceTree = "<group>"; };
 		13DDCDF91C4BA1F000072492 /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XNUsefuls.swift; path = "../../../Documents/Xcode Projects/XNUsefuls/XNUsefuls.swift"; sourceTree = "<group>"; };
 		13DDCDFB1C4BCB9800072492 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureData.swift; sourceTree = "<group>"; };
@@ -227,9 +233,11 @@
 				13DDCDF91C4BA1F000072492 /* XNUsefuls.swift */,
 				13DDCDFB1C4BCB9800072492 /* Async.swift */,
 				13416C541C297981006CB39A /* UIColor+Custom.swift */,
+				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
 				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
-				133E0A5B1C26EFB50058B103 /* Supporting Files */,
+				13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */,
 				13988EF41C479B06000CE61B /* CustomOperators.swift */,
+				133E0A5B1C26EFB50058B103 /* Supporting Files */,
 			);
 			path = Sharpener;
 			sourceTree = "<group>";
@@ -239,6 +247,7 @@
 			children = (
 				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
 				13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */,
+				13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -441,13 +450,16 @@
 				13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */,
 				13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
+				13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
 				13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */,
 				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
+				13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
+				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
 				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,

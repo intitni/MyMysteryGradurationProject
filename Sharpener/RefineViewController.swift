@@ -36,7 +36,7 @@ class RefineViewController: UIViewController {
             
         }
         finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: newSize)
-        finder.extractTextureFrom(newImage)
+        finder.process(newImage)
     }
     
 
