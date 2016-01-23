@@ -36,8 +36,38 @@ extension CGPoint  {
         }
     }
     
+    func pointAt(direction: Direction2D) -> CGPoint {
+        switch direction {
+        case .Up:        return self.up
+        case .Down:      return self.down
+        case .Left:      return self.left
+        case .Right:     return self.right
+        case .UpLeft:    return self.upleft
+        case .DownLeft:  return self.downleft
+        case .UpRight:   return self.upright
+        case .DownRight: return self.downright
+        default:         return self
+        }
+    }
+    
     static func horizontalRangeFrom(pointA: CGPoint, to pointB: CGPoint) -> Range<Int> {
         return Int(pointA.x)...Int(pointB.x)
+    }
+    
+    func nearbyPointIn(points: [CGPoint], clockwise: Bool) -> CGPoint? {
+        let directions = [Direction2D]()
+        if clockwise {
+            directions = [.Up, .UpRight, .Right, .DownRight, .Down, .DownLeft, .Left, .UpLeft]
+        } else {
+            directions = [.Up, .UpLeft, .Left, .DownLeft, .Down, .DownRight, .Right, .UpRight]
+        }
+        
+        for d in directions {
+            if let p = pointAt(d) where points.contains(p) {
+                return pointAt(d)
+            }
+        }
+        return nil
     }
 }
 

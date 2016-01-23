@@ -174,6 +174,7 @@ class SPRawGeometricsFinder {
     /// - Parameter x: x-position of seed point
     /// - Parameter y: y-position of seed point
     /// - Parameter from: the textureData that needs process
+    /// - Parameter into:
     /// - Parameter match: points' pattern that should be flooded
     private func flood(x: Int, _ y: Int, inout from textureData: MXNTextureData, inout into points: [CGPoint], match checkIfShouldFlood: (MXNTextureData.RGBAPixel) -> Bool) {
         guard let c = textureData[(x,y)] else { return }
@@ -238,11 +239,38 @@ class SPRawGeometricsFinder {
     /// Find borders from given CGPoints, here, it return SPLines with all points of borders and simplified(polygon approximation) vector paths.
     private func findBordersFrom(points: [CGPoint]) -> [SPLine] {
         let lines = [SPLine]()
+        
+        let borderPoints = points.filter { point in
+            textureData.isBorderAtPoint(point)
+        }
+        
+        for point in borderPoints {
+            let line = SPLine()
+            let l = trackLineStartFrom(point, searchingIn: &borderPoints)
+            line.raw = l
+            line = polygonApproximateThenVectorize(line)
+        }
+        
         return lines
     }
     
+    private func trackLineStartFrom(point: CGPoint, inout searchingIn points: [CGPoint]) -> [CGPoint] {
+        var linePoints = [point]
+        var startPoint = point
+        while let startPoint = startPoint.nearbyPointIn(points, clockwise: true) {
+            linePoints.append(startPoint)
+            if let index = points.indexOf(point) {
+                points.removeAtIndex(index)
+            }
+        }
+        
+        return linePoints
+    }
+    
     /// Used to get polygon-approximated SPLine.
-    private func polygonApproximate(line: SPLine) -> SPLine {
+    private func polygonApproximateThenVectorize(line: SPLine) -> SPLine {
+        
+        
         return line
     }
     

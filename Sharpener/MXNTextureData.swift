@@ -92,6 +92,20 @@ struct MXNTextureData {
         data[pos+2] = 161
     }
     
+    /// Check if this point is border of this data, 4-way version
+    func isBorderAtPoint(point: CGPoint) -> Bool {
+        let shouldCheckPoints = [point.up, point.down, point.left, point.right]
+        for point in shouldCheckPoints {
+            if let c = self[point] {
+                if !c.isNotWhiteAndBlack { return true }
+            } else { // when it's border of texture, it's border of shape
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     struct RGBAPixel {
         var r: UInt8
         var g: UInt8
@@ -99,6 +113,7 @@ struct MXNTextureData {
         var a: UInt8
     }
 }
+
 
 extension MXNTextureData.RGBAPixel {
     var isNotWhiteAndBlack: Bool { return self.r != 255 && self.r != 0 }
