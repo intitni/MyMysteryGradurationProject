@@ -14,6 +14,7 @@ class SPGeometricsStore {
     /// Singleton for proccessing progress
     static var universalStore = SPGeometricsStore()
     
+    var rawStore = [SPRawGeometric]()
     var shapeStore = [SPShape]()
     var lineStore = [SPLineGroup]()
     var shapeCount: Int { return shapeStore.count }

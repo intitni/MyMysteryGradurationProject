@@ -49,4 +49,22 @@ extension UIImage {
         let imageRef = CGImageCreate(Int(t.width), Int(t.height), 8, 8 * 4, bytesPerRow, colorSpace, bitmapInfo, providerRef, nil, false, renderingIntent)
         self.init(CGImage: imageRef!)
     }
+    
+    convenience init(textureData: MXNTextureData) {
+        let rawData = textureData.data
+        
+        let providerRef = CGDataProviderCreateWithCFData(
+            NSData(bytes: &rawData, length: rawData.count * sizeof(UInt8))
+        )
+        
+        let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.ByteOrder32Big.rawValue | CGImageAlphaInfo.PremultipliedLast.rawValue)
+        
+        let renderingIntent = CGColorRenderingIntent.RenderingIntentDefault
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bytesPerPixel = 4
+        let bytesPerRow = t.width * bytesPerPixel
+        
+        let imageRef = CGImageCreate(Int(t.width), Int(t.height), 8, 8 * 4, bytesPerRow, colorSpace, bitmapInfo, providerRef, nil, false, renderingIntent)
+        self.init(CGImage: imageRef!)
+    }
 }

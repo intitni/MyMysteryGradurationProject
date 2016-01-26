@@ -40,6 +40,9 @@
 		13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */; };
 		13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13988F041C494CE6000CE61B /* LineShapeRefining.metal */; };
 		139D56201C5210DE006106D4 /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D561F1C5210DE006106D4 /* XNUsefuls.swift */; };
+		139D563D1C5769DF006106D4 /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 139D563C1C5769DF006106D4 /* UIImage+OpenCV.mm */; };
+		139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 139D563E1C5776BC006106D4 /* CVWrapper.mm */; };
+		139D56481C579BF7006106D4 /* SPCVLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 139D56471C579BF7006106D4 /* SPCVLine.m */; };
 		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
 		139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20C1C2FC6B500E3464F /* FilterControlView.swift */; };
 		139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */; };
@@ -93,6 +96,13 @@
 		13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeRefiningFilter.swift; sourceTree = "<group>"; };
 		13988F041C494CE6000CE61B /* LineShapeRefining.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeRefining.metal; sourceTree = "<group>"; };
 		139D561F1C5210DE006106D4 /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XNUsefuls.swift; path = ../../XNUsefuls/XNUsefuls.swift; sourceTree = "<group>"; };
+		139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sharpener-Bridging-Header.h"; sourceTree = "<group>"; };
+		139D563B1C5769DF006106D4 /* UIImage+OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+OpenCV.h"; sourceTree = "<group>"; };
+		139D563C1C5769DF006106D4 /* UIImage+OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIImage+OpenCV.mm"; sourceTree = "<group>"; };
+		139D563E1C5776BC006106D4 /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
+		139D56401C5776D1006106D4 /* CVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVWrapper.h; sourceTree = "<group>"; };
+		139D56461C579BF7006106D4 /* SPCVLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCVLine.h; sourceTree = "<group>"; };
+		139D56471C579BF7006106D4 /* SPCVLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCVLine.m; sourceTree = "<group>"; };
 		139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNVideoProvider.swift; sourceTree = "<group>"; };
 		139EE20C1C2FC6B500E3464F /* FilterControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterControlView.swift; sourceTree = "<group>"; };
 		139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPContinuousSlider.swift; sourceTree = "<group>"; };
@@ -225,6 +235,8 @@
 				13416C531C297810006CB39A /* Widgets */,
 				133E0A591C26EF640058B103 /* Filters */,
 				133E0A5A1C26EF7D0058B103 /* Image Proccessing */,
+				139D563A1C5769C7006106D4 /* OpenCV */,
+				139D56391C5769B7006106D4 /* Extensions */,
 				13835D701C2013850047F0C0 /* Assets.xcassets */,
 				13835D6D1C2013850047F0C0 /* Main.storyboard */,
 				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
@@ -232,10 +244,7 @@
 				13DDCDFF1C4CE66700072492 /* XNStack.swift */,
 				13DDCDFB1C4BCB9800072492 /* Async.swift */,
 				139D561F1C5210DE006106D4 /* XNUsefuls.swift */,
-				13416C541C297981006CB39A /* UIColor+Custom.swift */,
-				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
 				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
-				13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */,
 				13988EF41C479B06000CE61B /* CustomOperators.swift */,
 				133E0A5B1C26EFB50058B103 /* Supporting Files */,
 			);
@@ -283,6 +292,30 @@
 				13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */,
 			);
 			name = Filters;
+			sourceTree = "<group>";
+		};
+		139D56391C5769B7006106D4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				13416C541C297981006CB39A /* UIColor+Custom.swift */,
+				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
+				13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		139D563A1C5769C7006106D4 /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */,
+				139D563B1C5769DF006106D4 /* UIImage+OpenCV.h */,
+				139D563C1C5769DF006106D4 /* UIImage+OpenCV.mm */,
+				139D56401C5776D1006106D4 /* CVWrapper.h */,
+				139D563E1C5776BC006106D4 /* CVWrapper.mm */,
+				139D56461C579BF7006106D4 /* SPCVLine.h */,
+				139D56471C579BF7006106D4 /* SPCVLine.m */,
+			);
+			name = OpenCV;
 			sourceTree = "<group>";
 		};
 		6EDEEB3F7785A6D3A44FB657 /* Pods */ = {
@@ -451,11 +484,14 @@
 				13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
 				13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */,
+				139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */,
+				139D56481C579BF7006106D4 /* SPCVLine.m in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
 				13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */,
 				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
+				139D563D1C5769DF006106D4 /* UIImage+OpenCV.mm in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
 				13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
@@ -582,10 +618,13 @@
 			baseConfigurationReference = FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sharpener/Sharpener-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -595,10 +634,12 @@
 			baseConfigurationReference = B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sharpener/Sharpener-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

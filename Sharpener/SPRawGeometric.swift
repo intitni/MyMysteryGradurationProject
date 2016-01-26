@@ -20,4 +20,19 @@ struct SPRawGeometric {
     init(raw: [CGPoint] = [CGPoint]()) {
         self.raw = raw
     }
+    
+    func imageInTextureData(textureData: MXNTextureData, shouldThreshold threshold: Bool = true, shouldInvert invert: Bool = true) -> UIImage {
+        var newRaw = [UInt8](count: width*height*4, repeatedValue: invert ? 0 : 255)
+        textureData.data = newRaw
+        for i in 0..<width*height*4 where i % 3 == 0 { // setting alphas to 255
+            textureData[i] = 255
+        }
+        raw.forEach {
+            textureData[$0]?.a = invert ? 255 : 0
+            textureData[$0]?.b = invert ? 255 : 0
+            textureData[$0]?.c = invert ? 255 : 0
+        }
+        
+        return UIImage(textureData: newRaw)
+    }
 }

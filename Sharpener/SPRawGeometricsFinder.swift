@@ -152,9 +152,7 @@ class SPRawGeometricsFinder {
         defer { rawGeometrics = newGeometrics }
         
         for raw in rawGeometrics {
-            var r = SPRawGeometric(raw: raw.raw)
-            r.borders = findBordersFrom(raw.raw)
-            newGeometrics.append(r)
+            fetchContoursOfRawGeometric(raw)
         }
     }
     
@@ -236,6 +234,23 @@ class SPRawGeometricsFinder {
         }
     }
     
+    private func fetchContoursOfRawGeometric(raw: SPRawGeometric) {
+        let cvlines = CVWrapper.findContoursFromImage(raw.imageInTextureData(textureData))
+        for cvline in cvlines as! SPCVLine {
+            var line = SPLine()
+            for rawPointValue in cvline.raw as NSValue {
+                let p = rawPointValue.CGPointValue()
+                SPLine<--p
+            }
+            for appPointValue in cvline.approx as NSValue {
+                let p = appPointValue.CGPointValue()
+                let vp = SPAnchorPoint(point: p)
+                SPLine<--vp
+            }
+        }
+    }
+    
+    /*
     /// Find borders from given CGPoints, here, it return SPLines with all points of borders and simplified(polygon approximation) vector paths.
     private func findBordersFrom(points: [CGPoint]) -> [SPLine] {
         let lines = [SPLine]()
@@ -273,6 +288,7 @@ class SPRawGeometricsFinder {
         
         return line
     }
+*/
     
 }
 

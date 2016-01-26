@@ -41,6 +41,10 @@ struct SPAnchorPoint {
     var anchorPoint: CGPoint
     var controlPointA: CGPoint?
     var controlPointB: CGPoint?
+    
+    init(point: CGPoint) {
+        self.anchorPoint = point
+    }
 }
 
 
