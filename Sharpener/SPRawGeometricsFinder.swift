@@ -234,18 +234,14 @@ class SPRawGeometricsFinder {
         }
     }
     
-    private func fetchContoursOfRawGeometric(raw: SPRawGeometric) {
+    /// Finds contours of a given SPRawGeometric with OpenCV and casts them back to SPLines, then perform polygon-approximation on them
+    private func fetchContoursOfRawGeometric(inout raw: SPRawGeometric) {
         let cvlines = CVWrapper.findContoursFromImage(raw.imageInTextureData(textureData))
-        for cvline in cvlines as! SPCVLine {
+        for cvline in cvlines as! SPCVLine { // fetch contours
             var line = SPLine()
             for rawPointValue in cvline.raw as NSValue {
                 let p = rawPointValue.CGPointValue()
                 SPLine<--p
-            }
-            for appPointValue in cvline.approx as NSValue {
-                let p = appPointValue.CGPointValue()
-                let vp = SPAnchorPoint(point: p)
-                SPLine<--vp
             }
         }
     }

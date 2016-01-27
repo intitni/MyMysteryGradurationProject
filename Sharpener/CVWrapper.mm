@@ -31,18 +31,6 @@
             [raw addObject:[NSValue valueWithCGPoint:p]];
         }
         line.raw = raw;
-        
-        CvSeq *appC = cvApproxPoly(c, sizeof(CvContour), storage, CV_POLY_APPROX_DP, 3, 1);
-        
-        NSMutableArray *approx;
-        for (int i = 0; i < c->total; i++) {
-            CvPoint *pt = (CvPoint *)cvGetSeqElem(appC, i);
-            CGPoint p = CGPointMake(pt->x, pt->y);
-            [approx addObject:[NSValue valueWithCGPoint:p]];
-        }
-        line.approx = approx;
-        
-        [linegroup addObject:line];
     }
 
     cvReleaseMemStorage(&storage);

@@ -52,6 +52,7 @@
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
 		13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */; };
+		13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */; };
 		13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */; };
 		13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */; };
 		13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFB1C4BCB9800072492 /* Async.swift */; };
@@ -112,6 +113,7 @@
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
 		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilter.swift; sourceTree = "<group>"; };
+		13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPolygonApproximator.swift; sourceTree = "<group>"; };
 		13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsVectorizor.swift; sourceTree = "<group>"; };
 		13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Sharpener.swift"; sourceTree = "<group>"; };
 		13DDCDFB1C4BCB9800072492 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			children = (
 				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
 				13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */,
+				13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */,
 				13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */,
 			);
 			name = Managers;
@@ -497,6 +500,7 @@
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
 				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
 				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
+				13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */,
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
 				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
