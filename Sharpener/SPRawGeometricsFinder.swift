@@ -243,6 +243,9 @@ class SPRawGeometricsFinder {
                 let p = rawPointValue.CGPointValue()
                 SPLine<--p
             }
+            let polygonApproximator = SPPolygonApproximator(threshold: 10)
+            polygonApproximator.polygonApproximateSPLine(&line)
+            raw.borders.append(line)
         }
     }
     

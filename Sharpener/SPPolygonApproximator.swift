@@ -13,22 +13,9 @@ struct SPPolygonApproximator {
     /// If distance if longer than or equal to threshold, such point should be a characteristic point of line.
     var threshold: CGFloat
     
-    var points: [CGPoint] {
-        didSet {
-            manipPoints = (points.last == points.first ? {
-                ()->[CGPoint] in
-                self.points.removeLast()
-                return self.points
-                }() : points)
-                .map { CharacteristicPoint(point: $0) }
-        }
-    }
-    var manipPoints: [CharacteristicPoint]
-    
     init(threshold: CGFloat) {
         self.threshold = threshold
-        points = [CGPoint]()
-        manipPoints = [CharacteristicPoint]()
+        
     }
     
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on the raw values of a SPLine and then put the polygon-approximated ones in SPLine's vectorized.
@@ -37,8 +24,14 @@ struct SPPolygonApproximator {
     }
     
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on an array of CGPoint and returns the result.
-    mutating func polygonApproximate(inputPoints: [CGPoint]) -> [CGPoint] {
-        points = inputPoints
+    func polygonApproximate(points: [CGPoint]) -> [CGPoint] {
+        var manipPoints = (points.last == points.first ? { ()->[CGPoint] in
+            var p = points
+            p.removeLast()
+            return p
+            }() : points)
+            .map { CharacteristicPoint(point: $0) }
+        
         var stack = Stack(storage: [Int]())
         
         var a: Int? = 0
@@ -50,7 +43,7 @@ struct SPPolygonApproximator {
         repeat {
             guard a != nil && b != nil else { break }
             let line = Line(endA: manipPoints[a!].point, endB: manipPoints[b!].point)
-            guard let index = farthestPointForLine(line, indexA: a!, indexB: b!) else {
+            guard let index = farthestPointForLine(line, indexA: a!, indexB: b!, manipPoints: &manipPoints) else {
                 a = stack.pop()
                 b = stack.top
                 continue
@@ -82,7 +75,7 @@ struct SPPolygonApproximator {
     /// Find the farthest point in manipPoints to given line, returning the index of it.
     /// - parameter line: The line to calculate
     /// - returns: The index of the point in manipPoints. If no point sits between, returns nil.
-    mutating func farthestPointForLine(var line: Line, indexA: Int, indexB: Int ) -> Int? {
+    func farthestPointForLine(var line: Line, indexA: Int, indexB: Int, inout manipPoints: [CharacteristicPoint] ) -> Int? {
         guard abs(indexA - indexB) > 1 else { return nil }
         var index = 0
         var max: CGFloat = 0
