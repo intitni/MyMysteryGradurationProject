@@ -54,7 +54,7 @@ extension UIImage {
         let rawData = textureData.data
         
         let providerRef = CGDataProviderCreateWithCFData(
-            NSData(bytes: &rawData, length: rawData.count * sizeof(UInt8))
+            NSData(bytes: rawData, length: rawData.count * sizeof(UInt8))
         )
         
         let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.ByteOrder32Big.rawValue | CGImageAlphaInfo.PremultipliedLast.rawValue)
@@ -62,9 +62,9 @@ extension UIImage {
         let renderingIntent = CGColorRenderingIntent.RenderingIntentDefault
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bytesPerPixel = 4
-        let bytesPerRow = t.width * bytesPerPixel
+        let bytesPerRow = textureData.width * bytesPerPixel
         
-        let imageRef = CGImageCreate(Int(t.width), Int(t.height), 8, 8 * 4, bytesPerRow, colorSpace, bitmapInfo, providerRef, nil, false, renderingIntent)
+        let imageRef = CGImageCreate(Int(textureData.width), Int(textureData.height), 8, 8 * 4, bytesPerRow, colorSpace, bitmapInfo, providerRef, nil, false, renderingIntent)
         self.init(CGImage: imageRef!)
     }
 }

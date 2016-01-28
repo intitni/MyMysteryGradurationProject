@@ -11,12 +11,13 @@ import MetalKit
 
 @objc protocol SPRawGeometricsFinderDelegate {
     
-    /// Called at the end of process()
-    func succefullyExtractedGeometrics()
+    /// Called at the end of process(), after SPRawGeometrics done its work.
+    func succefullyFoundRawGeometrics()
 }
 
 /// SPRawGeometricsFinder is used to descriminate shapes and lines from given UIImage.
-/// >  It will firstly apply abunch of filter to filter out shape and lines, then seperate them into different groups, refine them (extracting lines from shape, ignoring small shapes in lines, etc.), and create a final seperation for texture, so user can choose to hide or show individual shape or line group in Refine View.
+///
+/// It will firstly apply abunch of filter to filter out shape and lines, then seperate them into different groups, refine them (extracting lines from shape, ignoring small shapes in lines, etc.), and create a final seperation for texture, so user can choose to hide or show individual shape or line group in Refine View.
 class SPRawGeometricsFinder {
     
     // MARK: Properties
@@ -56,9 +57,10 @@ class SPRawGeometricsFinder {
             self.extractSeperatedTexture()
             self.extractGeometrics()
             self.simpleVectorization()
+            SPGeometricsStore.universalStore.rawStore = self.rawGeometrics
             
             dispatch_async(GCD.mainQueue) {
-                self.delegate?.succefullyExtractedGeometrics()
+                self.delegate?.succefullyFoundRawGeometrics()
             }
         }
     }
@@ -86,7 +88,8 @@ class SPRawGeometricsFinder {
     /// Used to refine seperations. Called in extractSeperatedTexture(). Runs in Queue_rawgeometrics_finding.
     private func extractGeometrics() {
         var tempTextureData: MXNTextureData = textureData
-        defer { textureData = tempTextureData }
+        var newGeometrics = [SPRawGeometric]()
+        defer { textureData = tempTextureData; rawGeometrics = newGeometrics }
         
         for var g in rawGeometrics {
             
@@ -142,17 +145,19 @@ class SPRawGeometricsFinder {
                     }
                 }
             }
+            newGeometrics.append(g)
         }
     }
-    
+    // FIXME: struct passing.
     /// Used to create simple vector borders for each SPRawGeometrics to display.
     private func simpleVectorization() {
         rawGeometrics += extractedRawGeometrics // put them together
         var newGeometrics = [SPRawGeometric]()
         defer { rawGeometrics = newGeometrics }
         
-        for raw in rawGeometrics {
-            fetchContoursOfRawGeometric(raw)
+        for var raw in rawGeometrics {
+            fetchContoursOfRawGeometric(&raw)
+            newGeometrics.append(raw)
         }
     }
     
@@ -160,7 +165,7 @@ class SPRawGeometricsFinder {
     
     /// Used to find a shape based on a seed point, line-scanning version. 
     /// > It calls a generic version of flood().
-    private func flood(point: CGPoint, inout from textureData: MXNTextureData, inout into points: [CGPoint], which checkIfShouldFlood: (MXNTextureData.RGBAPixel) -> Bool) {
+    private func flood(point: CGPoint, inout from textureData: MXNTextureData, inout into points: [CGPoint], which checkIfShouldFlood: (RGBAPixel) -> Bool) {
         flood(Int(point.x), Int(point.y), from: &textureData, into: &points, match: checkIfShouldFlood)
     }
     
@@ -174,7 +179,7 @@ class SPRawGeometricsFinder {
     /// - Parameter from: the textureData that needs process
     /// - Parameter into:
     /// - Parameter match: points' pattern that should be flooded
-    private func flood(x: Int, _ y: Int, inout from textureData: MXNTextureData, inout into points: [CGPoint], match checkIfShouldFlood: (MXNTextureData.RGBAPixel) -> Bool) {
+    private func flood(x: Int, _ y: Int, inout from textureData: MXNTextureData, inout into points: [CGPoint], match checkIfShouldFlood: (RGBAPixel) -> Bool) {
         guard let c = textureData[(x,y)] else { return }
         guard checkIfShouldFlood(c) && !c.isTransparent else { return }
         
@@ -237,11 +242,11 @@ class SPRawGeometricsFinder {
     /// Finds contours of a given SPRawGeometric with OpenCV and casts them back to SPLines, then perform polygon-approximation on them
     private func fetchContoursOfRawGeometric(inout raw: SPRawGeometric) {
         let cvlines = CVWrapper.findContoursFromImage(raw.imageInTextureData(textureData))
-        for cvline in cvlines as! SPCVLine { // fetch contours
+        for cvline in cvlines as! [SPCVLine] { // fetch contours
             var line = SPLine()
-            for rawPointValue in cvline.raw as NSValue {
+            for rawPointValue in cvline.raw as! [NSValue] {
                 let p = rawPointValue.CGPointValue()
-                SPLine<--p
+                line<--p
             }
             let polygonApproximator = SPPolygonApproximator(threshold: 10)
             polygonApproximator.polygonApproximateSPLine(&line)
@@ -249,7 +254,7 @@ class SPRawGeometricsFinder {
         }
     }
     
-    /*
+/*
     /// Find borders from given CGPoints, here, it return SPLines with all points of borders and simplified(polygon approximation) vector paths.
     private func findBordersFrom(points: [CGPoint]) -> [SPLine] {
         let lines = [SPLine]()

@@ -57,3 +57,9 @@ class RefineViewController: UIViewController {
     */
 
 }
+
+extension RefineViewController: SPRawGeometricsFinderDelegate {
+    func succefullyFoundRawGeometrics() {
+        print(SPGeometricsStore.universalStore.rawStore.count)
+    }
+}

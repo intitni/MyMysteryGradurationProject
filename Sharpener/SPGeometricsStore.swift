@@ -9,7 +9,7 @@
 import Foundation
 
 /// SPGeometricsStore is used to store SPGeometrics
-class SPGeometricsStore {
+struct SPGeometricsStore {
     
     /// Singleton for proccessing progress
     static var universalStore = SPGeometricsStore()
@@ -24,16 +24,16 @@ class SPGeometricsStore {
 
 // MARK: - Methods
 extension SPGeometricsStore {
-    func removeAll() {
+    mutating func removeAll() {
         shapeStore.removeAll()
         lineStore.removeAll()
     }
     
-    func append(shape: SPShape) {
+    mutating func append(shape: SPShape) {
         shapeStore.append(shape)
     }
     
-    func append(line: SPLineGroup) {
+    mutating func append(line: SPLineGroup) {
         lineStore.append(line)
     }
 }

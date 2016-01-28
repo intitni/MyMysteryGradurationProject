@@ -12,7 +12,7 @@ import UIKit
 struct SPLine {
     enum Guess {
         case Straight(start: CGPoint, end: CGPoint)
-        case PartialStraight(straightLines: [(start: CGPoint, end: CGPoint)])
+        case PartialStraight(straightLines: [(startIndex: Int, endIndex: Int)])
         case Circle(center: CGPoint, radius: CGFloat)
         case Triangle(a: CGPoint, b: CGPoint, c: CGPoint)
         case Rectangle(a: CGPoint, b: CGPoint, c: CGPoint, d: CGPoint)

@@ -20,7 +20,7 @@ struct SPPolygonApproximator {
     
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on the raw values of a SPLine and then put the polygon-approximated ones in SPLine's vectorized.
     func polygonApproximateSPLine(inout line: SPLine) {
-        line.vectorized = SPPolygonApproximator.polygonApproximate(line.raw)
+        line.vectorized = polygonApproximate(line.raw).map { SPAnchorPoint(point: $0) }
     }
     
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on an array of CGPoint and returns the result.
@@ -123,7 +123,6 @@ struct SPPolygonApproximator {
         /// For distance between point(x,y) and line((a,b)->(c,d)) should be <br> **|(d-b)x + (a-c)y + cb - ad| / √((d-b)^2 + (a-c)^2)**.
         mutating func distanceToPoint(point: CGPoint) -> CGFloat {
             let numerator = (endB.y - endA.y) * point.x + (endA.x - endB.x) * point.y + endB.x * endA.y - endA.x * endB.y
-            abs(numerator) / eruclideanDistance
             return abs(numerator) / eruclideanDistance
         }
     }

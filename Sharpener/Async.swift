@@ -37,4 +37,8 @@ class GCD {
     static var piorityDefaultQueue: dispatch_queue_t {
         return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     }
+    
+    static func newSerialQueue(name: String) -> dispatch_queue_t {
+        return dispatch_queue_create(name, DISPATCH_QUEUE_SERIAL)
+    }
 }

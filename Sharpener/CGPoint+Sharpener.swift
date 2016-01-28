@@ -55,7 +55,7 @@ extension CGPoint  {
     }
     
     func nearbyPointIn(points: [CGPoint], clockwise: Bool) -> CGPoint? {
-        let directions = [Direction2D]()
+        var directions = [Direction2D]()
         if clockwise {
             directions = [.Up, .UpRight, .Right, .DownRight, .Down, .DownLeft, .Left, .UpLeft]
         } else {
@@ -63,7 +63,8 @@ extension CGPoint  {
         }
         
         for d in directions {
-            if let p = pointAt(d) where points.contains(p) {
+            let p = pointAt(d)
+            if points.contains(p) {
                 return pointAt(d)
             }
         }

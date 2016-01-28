@@ -53,6 +53,10 @@
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
 		13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */; };
 		13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */; };
+		13BCAC891C5921B90029DD9F /* SPShapeVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */; };
+		13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */; };
+		13BCAC8D1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift */; };
+		13BCAC8F1C5922090029DD9F /* XNSVGGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8E1C5922090029DD9F /* XNSVGGenerator.swift */; };
 		13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */; };
 		13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */; };
 		13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFB1C4BCB9800072492 /* Async.swift */; };
@@ -114,6 +118,10 @@
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
 		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilter.swift; sourceTree = "<group>"; };
 		13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPolygonApproximator.swift; sourceTree = "<group>"; };
+		13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeVectorizor.swift; sourceTree = "<group>"; };
+		13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroupVectorizor.swift; sourceTree = "<group>"; };
+		13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerFileGenerator.swift; sourceTree = "<group>"; };
+		13BCAC8E1C5922090029DD9F /* XNSVGGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNSVGGenerator.swift; sourceTree = "<group>"; };
 		13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsVectorizor.swift; sourceTree = "<group>"; };
 		13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Sharpener.swift"; sourceTree = "<group>"; };
 		13DDCDFB1C4BCB9800072492 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
@@ -260,6 +268,10 @@
 				13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */,
 				13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */,
 				13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */,
+				13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */,
+				13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */,
+				13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift */,
+				13BCAC8E1C5922090029DD9F /* XNSVGGenerator.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -476,6 +488,7 @@
 				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
 				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */,
 				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
+				13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */,
 				13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */,
 				13DDCE001C4CE66700072492 /* XNStack.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
@@ -492,6 +505,7 @@
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
 				13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */,
+				13BCAC8F1C5922090029DD9F /* XNSVGGenerator.swift in Sources */,
 				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				139D563D1C5769DF006106D4 /* UIImage+OpenCV.mm in Sources */,
@@ -509,6 +523,8 @@
 				139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */,
 				13988EED1C478694000CE61B /* SPGeometrics.swift in Sources */,
 				139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */,
+				13BCAC891C5921B90029DD9F /* SPShapeVectorizor.swift in Sources */,
+				13BCAC8D1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +639,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;
@@ -639,6 +656,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;

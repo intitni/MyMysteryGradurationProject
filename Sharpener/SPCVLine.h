@@ -10,9 +10,7 @@
 
 @interface SPCVLine : NSObject
 
-/** 
-Storing NSValues created from CGPoints that make up this line. Cast it back to CGPoints for use.
- */
+///Storing NSValues created from CGPoints that make up this line. Cast it back to CGPoints for use.
 @property (nonatomic, strong) NSArray * raw;
 
 @end

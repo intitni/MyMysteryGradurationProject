@@ -38,10 +38,21 @@ struct MXNTextureData {
     }
     
     subscript(position: CGPoint) -> RGBAPixel? {
-        let x = Int(position.x), y = Int(position.y)
-        guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
-        let pos = (x + y * width) * bytesPerPixel
-        return RGBAPixel(r:data[pos], g:data[pos+1], b:data[pos+2], a:data[pos+3])
+        get {
+            let x = Int(position.x), y = Int(position.y)
+            guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
+            let pos = (x + y * width) * bytesPerPixel
+            return RGBAPixel(r:data[pos], g:data[pos+1], b:data[pos+2], a:data[pos+3])
+        }
+        set {
+            let x = Int(position.x), y = Int(position.y)
+            guard y < height && x < width && x >= 0 && y >= 0 && newValue != nil else { return }
+            let pos = (x + y * width) * bytesPerPixel
+            data[pos] = newValue!.r
+            data[pos+1] = newValue!.g
+            data[pos+2] = newValue!.b
+            data[pos+3] = newValue!.a
+        }
     }
     
     mutating func eraseAt(x: Int, _ y: Int) {
@@ -106,16 +117,17 @@ struct MXNTextureData {
         return false
     }
     
-    struct RGBAPixel {
-        var r: UInt8
-        var g: UInt8
-        var b: UInt8
-        var a: UInt8
-    }
+    
 }
 
+struct RGBAPixel {
+    var r: UInt8
+    var g: UInt8
+    var b: UInt8
+    var a: UInt8
+}
 
-extension MXNTextureData.RGBAPixel {
+extension RGBAPixel {
     var isNotWhiteAndBlack: Bool { return self.r != 255 && self.r != 0 }
     var isInShape: Bool { return self.r == 107 }
     var isInShapeBorder: Bool { return self.r == 66 }
