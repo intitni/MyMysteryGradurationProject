@@ -25,6 +25,11 @@ extension SPGeometrics {
     var geometric: SPGeometrics { return self }
 }
 
+// MARK: - Where SPLineRepresentable
+extension SPGeometrics where Self: SPLineRepresentable {
+    var representingLines: [SPLine] { return lines }
+}
+
 func <--(inout left: SPGeometrics, right: SPLine) {
     left.lines.append(right)
 }

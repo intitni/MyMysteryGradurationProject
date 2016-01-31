@@ -10,6 +10,8 @@ import UIKit
 
 class RefineViewController: UIViewController {
     
+    var imageTest: Bool { return true }
+    
     var incomeImage: UIImage!
     var finder: SPRawGeometricsFinder!
     
@@ -21,6 +23,7 @@ class RefineViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        if imageTest { incomeImage = UIImage(named: "TestImage") }
         let newSize = CGSize(width: 200, height: 300)
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
         incomeImage.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
@@ -33,9 +36,10 @@ class RefineViewController: UIViewController {
             make.center.equalTo(self.view)
             make.width.equalTo(200)
             make.height.equalTo(300)
-            
         }
+
         finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: newSize)
+        finder.delegate = self
         finder.process(newImage)
     }
     
@@ -60,6 +64,8 @@ class RefineViewController: UIViewController {
 
 extension RefineViewController: SPRawGeometricsFinderDelegate {
     func succefullyFoundRawGeometrics() {
-        print(SPGeometricsStore.universalStore.rawStore.count)
+        for i in SPGeometricsStore.universalStore.rawStore {
+            print(i.bezierPath.empty)
+        }
     }
 }

@@ -9,6 +9,21 @@
 import CoreGraphics
 import UIKit
 
+protocol SPLineRepresentable {
+    var representingLines: [SPLine] { get }
+    var bezierPath: UIBezierPath { get }
+}
+
+extension SPLineRepresentable {
+    var bezierPath: UIBezierPath {
+        let path = UIBezierPath()
+        representingLines.forEach { border in
+            path.appendPath(border.bezierPath)
+        }
+        return path
+    }
+}
+
 struct SPLine {
     enum Guess {
         case Straight(start: CGPoint, end: CGPoint)
@@ -47,20 +62,19 @@ struct SPAnchorPoint {
     }
 }
 
-
 extension SPLine {
     var bezierPath: UIBezierPath {
-        
         let path = UIBezierPath()
-        for (n, point) in vectorized.enumerate() {
-            switch n {
+        for (i, p) in vectorized.enumerate() {
+            switch i {
             case 0:
-                path==>point
+                path==>p
+            case vectorized.endIndex where p.anchorPoint == vectorized.first?.anchorPoint:
+                path-><-
             default:
-                path~~>point
+                path~~>p
             }
         }
-        
         return path
     }
 }

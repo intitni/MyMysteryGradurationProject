@@ -15,7 +15,6 @@ struct SPPolygonApproximator {
     
     init(threshold: CGFloat) {
         self.threshold = threshold
-        
     }
     
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on the raw values of a SPLine and then put the polygon-approximated ones in SPLine's vectorized.
@@ -24,13 +23,13 @@ struct SPPolygonApproximator {
     }
     
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on an array of CGPoint and returns the result.
-    func polygonApproximate(points: [CGPoint]) -> [CGPoint] {
+    private func polygonApproximate(points: [CGPoint]) -> [CGPoint] {
         var manipPoints = (points.last == points.first ? { ()->[CGPoint] in
             var p = points
             p.removeLast()
             return p
-            }() : points)
-            .map { CharacteristicPoint(point: $0) }
+        }() : points)
+        .map { CharacteristicPoint(point: $0) }
         
         var stack = Stack(storage: [Int]())
         

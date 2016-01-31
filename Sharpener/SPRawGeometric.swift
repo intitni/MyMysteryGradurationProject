@@ -38,3 +38,7 @@ struct SPRawGeometric {
         return UIImage(textureData: textureData)
     }
 }
+
+extension SPRawGeometric: SPLineRepresentable {
+    var representingLines: [SPLine] { return borders }
+}

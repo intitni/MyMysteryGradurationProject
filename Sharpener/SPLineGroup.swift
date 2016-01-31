@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SPLineGroup: SPGeometrics {
+struct SPLineGroup: SPGeometrics, SPLineRepresentable {
     var type: SPGeometricType { return .Line }
     var lines = [SPLine]()
 }
