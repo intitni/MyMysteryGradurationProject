@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "SPCVLine.h"
-#import <opencv2/opencv.hpp>
 
 @interface CVWrapper : NSObject
 
@@ -17,7 +16,6 @@
 ///@param image The UIImage to be processed, it should be thresholded, shape in white, background in black.
 ///@return Returns an NSArray containing SPCVLines
 + (NSArray<SPCVLine *> *)findContoursFromImage:(UIImage *)image;
-+ (cv::Mat)cvMatFromBytesArray:(NSArray *)bytes width:(NSInteger)width height:(NSInteger)height;
 + (NSArray<SPCVLine *> *)findContoursFromBytes:(NSArray *)bytes width:(NSInteger)width height:(NSInteger)height;
 
 @end

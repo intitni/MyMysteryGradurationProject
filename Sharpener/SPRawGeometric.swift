@@ -37,6 +37,26 @@ struct SPRawGeometric {
         
         return UIImage(textureData: textureData)
     }
+    
+    func bytesData(textureData: MXNTextureData, shouldThreshold threshold: Bool = true, shouldInvert invert: Bool = true) -> NSArray {
+        let width = textureData.width
+        let height = textureData.height
+        var bytes = [UInt8](count: width*height, repeatedValue: invert ? 0 : 255)
+        
+        raw.forEach {
+            let c: UInt8 = invert ? 255 : 0
+            guard let index = textureData.indexOfPoint($0) else { return }
+            bytes[index] = c
+        }
+        
+        let array = NSMutableArray()
+        for byte in bytes {
+            let value = NSNumber(unsignedChar: byte)
+            array.addObject(value)
+        }
+        
+        return array
+    }
 }
 
 extension SPRawGeometric: SPLineRepresentable {

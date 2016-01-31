@@ -9,6 +9,7 @@
 
 #import "CVWrapper.h"
 #import "UIImage+OpenCV.h"
+#import <opencv2/opencv.hpp>
 
 @implementation CVWrapper
 
@@ -68,9 +69,9 @@
     CGFloat rows = height;
     cv::Mat cvMat = cv::Mat(rows, cols, CV_8UC1);
     
-    for (NSNumber *byte in bytes) {
-        uint8_t value = (uint8_t)byte.unsignedCharValue;
-        cvMat.push_back(value);
+    for (int i = 0; i < width * height; i++) {
+        uchar value = (uchar)((NSNumber *)[bytes objectAtIndex:i]).unsignedCharValue;
+        cvMat.data[i] = value;
     }
     
     return cvMat;

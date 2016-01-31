@@ -158,7 +158,7 @@ extension SPRawGeometricsFinder {
     
     /// Finds contours of a given SPRawGeometric with OpenCV and casts them back to SPLines, then perform polygon-approximation on them
     private func fetchContoursOfRawGeometric(inout raw: SPRawGeometric) {
-        let cvlines = CVWrapper.findContoursFromImage(raw.imageInTextureData(textureData))
+        let cvlines = CVWrapper.findContoursFromBytes(raw.bytesData(textureData) as! [NSNumber], width:textureData.width, height:textureData.height)
         for cvline in cvlines { // fetch contours
             var line = SPLine()
             for rawPointValue in cvline.raw as! [NSValue] {

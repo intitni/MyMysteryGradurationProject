@@ -55,6 +55,12 @@ struct MXNTextureData {
         }
     }
     
+    func indexOfPoint(position: CGPoint) -> Int? {
+        let x = Int(position.x), y = Int(position.y)
+        guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
+        return x + y * width
+    }
+    
     mutating func eraseAt(x: Int, _ y: Int) {
         guard y < height && x < width && x >= 0 && y >= 0 else { return }
         let pos = (x + y * width) * 4
@@ -116,8 +122,6 @@ struct MXNTextureData {
         
         return false
     }
-    
-    
 }
 
 struct RGBAPixel {
