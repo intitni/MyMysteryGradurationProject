@@ -24,11 +24,9 @@
     cv::findContours(greyMat, contours, hierarchy, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
     
     for(int i= 0; i < contours.size(); i++) {
-        NSLog(@"line: %d",i);
         SPCVLine *line;
         NSMutableArray *raw;
         for(int j= 0; j < contours[i].size();j++) {
-            NSLog(@"point: %d",j);
             CvPoint pt = contours[i][j];
             CGPoint p = CGPointMake(pt.x, pt.y);
             [raw addObject:[NSValue valueWithCGPoint:p]];
@@ -48,16 +46,15 @@
     cv::findContours(cvMat, contours, hierarchy, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
     
     for(int i= 0; i < contours.size(); i++) {
-        NSLog(@"line: %d",i);
-        SPCVLine *line;
-        NSMutableArray *raw;
+        SPCVLine *line = [[SPCVLine alloc] init];
+        NSMutableArray *raw = [[NSMutableArray alloc] init];
         for(int j= 0; j < contours[i].size();j++) {
-            NSLog(@"point: %d",j);
             CvPoint pt = contours[i][j];
             CGPoint p = CGPointMake(pt.x, pt.y);
             [raw addObject:[NSValue valueWithCGPoint:p]];
         }
         line.raw = raw;
+        [linegroup addObject:line];
     }
     
     return linegroup;

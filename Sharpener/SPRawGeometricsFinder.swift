@@ -9,8 +9,9 @@
 import CoreGraphics
 import MetalKit
 
+/// Delegate of SPRawGeometricsFinder
 public protocol SPRawGeometricsFinderDelegate: class {
-    /// Called at the end of process(), after SPRawGeometrics done its work.
+    /// Called at the end of `process()`, after SPRawGeometricsFinder done its work.
     func succefullyFoundRawGeometrics()
 }
 
@@ -56,7 +57,7 @@ public class SPRawGeometricsFinder {
             
             self.extractTexture()
             self.extractSeperatedTexture()
-            self.extractGeometrics()
+            self.extractRawGeometrics()
             self.findContoursOfEachAndPerformSimpleVectorization()
             
             dispatch_async(GCD.mainQueue) {
@@ -86,32 +87,32 @@ public class SPRawGeometricsFinder {
     }
     
     /// Used to refine seperations.
-    private func extractGeometrics() {
+    private func extractRawGeometrics() {
         var tempTextureData: MXNTextureData = textureData
         var newGeometrics = [SPRawGeometric]()
         defer { textureData = tempTextureData; rawGeometrics = newGeometrics }
         
-        for var g in rawGeometrics {
+        for var raw in rawGeometrics {
             
             // calculate size
-            for point in g.raw {
+            for point in raw.raw {
                 guard let c = textureData[point] else { continue }
                 switch c {
                 case let c where c.isInLine: // red for lines
-                    g.lineSize += 1
+                    raw.lineSize += 1
                 case let c where c.isInShape || c.isInShapeBorder: // for shape
-                    g.shapeSize += 1
+                    raw.shapeSize += 1
                 default: break
                 }
             }
-            
-            if Double(g.shapeWeight) >= 0.1 { // probably, it's a shape, but may have some lines in it
-                g.type = .Shape
+
+            if checkIfIsShape(raw) { // probably, it's a shape, but may have some lines in it
+                raw.type = .Shape
                 
                 // clean tiny red parts
                 // extract big red parts to another rawGeometics
                 // turn blue parts into green
-                for point in g.raw {
+                for point in raw.raw {
                     if let c = tempTextureData[point] where c.isInLine {
                         tempTextureData.toShapeAt(point)
                     } else if let c = tempTextureData[point] where c.isInShapeBorder {
@@ -120,16 +121,16 @@ public class SPRawGeometricsFinder {
                 }
                 
             } else { // should be linegroup
-                g.type = .Line
+                raw.type = .Line
                 
                 // clean all green and blue parts
-                for point in g.raw {
+                for point in raw.raw {
                     if let c = tempTextureData[point] where c.isInShape || c.isInShapeBorder {
                         tempTextureData.toLineAt(point)
                     }
                 }
             }
-            newGeometrics.append(g)
+            newGeometrics.append(raw)
         }
     }
 
@@ -151,7 +152,7 @@ public class SPRawGeometricsFinder {
 extension SPRawGeometricsFinder {
     /// Used to find a shape based on a seed point, line-scanning version.
     ///
-    /// It calls a generic version of flood().
+    /// It calls a generic version of `flood()`.
     private func flood(point: CGPoint, inout from textureData: MXNTextureData, matching checkIfShouldFlood: (RGBAPixel) -> Bool) -> [CGPoint] {
         return flood(Int(point.x), Int(point.y), from: &textureData, matching: checkIfShouldFlood)
     }
@@ -165,7 +166,7 @@ extension SPRawGeometricsFinder {
                 let p = rawPointValue.CGPointValue()
                 line<--p
             }
-            let polygonApproximator = SPPolygonApproximator(threshold: 10)
+            let polygonApproximator = SPPolygonApproximator(threshold: 1)
             polygonApproximator.polygonApproximateSPLine(&line)
             raw.borders.append(line)
         }
@@ -176,10 +177,13 @@ extension SPRawGeometricsFinder {
     /// 2. Then checks for upper/lower lines if there exists some points that need to be fill.
     /// 3. Mark the left most point of each areas found above, and do the same things on them(go to 1).
     /// 4. End when no more such points found.
-    /// - Parameter x: x-position of seed point
-    /// - Parameter y: y-position of seed point
-    /// - Parameter from: the textureData that needs process
-    /// - Parameter matching: points' pattern that should be flooded
+    ///
+    /// - Parameters:
+    ///     - x: x-position of seed point
+    ///     - y: y-position of seed point
+    ///     - from: the textureData that needs process
+    ///     - matching: points' pattern that should be flooded
+    ///
     /// - Returns: flood result
     private func flood(x: Int, _ y: Int, inout from textureData: MXNTextureData, matching checkIfShouldFlood: (RGBAPixel) -> Bool) -> [CGPoint] {
         guard let c = textureData[(x,y)] else { return [CGPoint]() }
@@ -244,6 +248,12 @@ extension SPRawGeometricsFinder {
         return points
     }
     
+    func checkIfIsShape(raw: SPRawGeometric) -> Bool {
+        if raw.shapeWeight > 0.01 {
+            return true
+        }
+        return false
+    }
 }
 
 

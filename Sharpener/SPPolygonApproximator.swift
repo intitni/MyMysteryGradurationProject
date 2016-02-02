@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SPPolygonApproximator {
+class SPPolygonApproximator {
     
     /// If distance if longer than or equal to threshold, such point should be a characteristic point of line.
     var threshold: CGFloat
@@ -17,43 +17,40 @@ struct SPPolygonApproximator {
         self.threshold = threshold
     }
     
-    /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on the raw values of a SPLine and then put the polygon-approximated ones in SPLine's vectorized.
+    /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on the raw values of a SPLine and 
+    /// then put the polygon-approximated ones in SPLine's vectorized.
     func polygonApproximateSPLine(inout line: SPLine) {
         line.vectorized = polygonApproximate(line.raw).map { SPAnchorPoint(point: $0) }
     }
     
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on an array of CGPoint and returns the result.
     private func polygonApproximate(points: [CGPoint]) -> [CGPoint] {
-        var manipPoints = (points.last == points.first ? { ()->[CGPoint] in
-            var p = points
-            p.removeLast()
-            return p
-        }() : points)
-        .map { CharacteristicPoint(point: $0) }
+        var manipPoints = (points.last == points.first ? points.dropLast(1) : points.dropLast(0))
+                          .map { CharacteristicPoint(point: $0) }
         
         var stack = Stack(storage: [Int]())
         
-        var a: Int? = 0
-        var b: Int? = manipPoints.count - 1
-        manipPoints[a!].isCharacteristicPoint = true
-        manipPoints[b!].isCharacteristicPoint = true
-        stack.push(b!)
+        var endA: Int? = 0
+        var endB: Int? = manipPoints.count - 1
+        manipPoints[endA!].isCharacteristicPoint = true
+        manipPoints[endB!].isCharacteristicPoint = true
+        stack.push(endB!)
         
         repeat {
-            guard a != nil && b != nil else { break }
-            let line = Line(endA: manipPoints[a!].point, endB: manipPoints[b!].point)
-            guard let index = farthestPointForLine(line, indexA: a!, indexB: b!, manipPoints: &manipPoints) else {
-                a = stack.pop()
-                b = stack.top
+            guard endA != nil && endB != nil else { break }
+            let line = Line(endA: manipPoints[endA!].point, endB: manipPoints[endB!].point)
+            guard let index = farthestPointForLine(line, indexA: endA!, indexB: endB!, manipPoints: &manipPoints) else {
+                endA = stack.pop()
+                endB = stack.top
                 continue
             }
             if manipPoints[index].distance >= threshold {
                 manipPoints[index].isCharacteristicPoint = true
-                b = index
+                endB = index
                 stack.push(index)
             } else {
-                a = stack.pop()
-                b = stack.top
+                endA = stack.pop()
+                endB = stack.top
             }
         } while !stack.isEmpty
         
@@ -64,8 +61,8 @@ struct SPPolygonApproximator {
         
         let newPoints = manipPoints.filter { point in
             point.isCharacteristicPoint
-            }.map { (point: CharacteristicPoint)->CGPoint in
-                return point.point
+        }.map { (point: CharacteristicPoint)->CGPoint in
+            return point.point
         }
         
         return newPoints
@@ -92,7 +89,7 @@ struct SPPolygonApproximator {
     }
     
     
-    // MARK: Structs
+    // MARK: Internal Structs
     
     struct CharacteristicPoint {
         let point: CGPoint
@@ -115,13 +112,15 @@ struct SPPolygonApproximator {
         init(endA: CGPoint, endB: CGPoint) {
             self.endA = endA
             self.endB = endB
-            let denominator = pow((self.endB.y - self.endA.y), 2) + pow((self.endA.x - self.endB.x), 2)
+            let denominator = pow((self.endB.y - self.endA.y), 2)
+                            + pow((self.endA.x - self.endB.x), 2)
             eruclideanDistance = sqrt(denominator)
         }
         
         /// For distance between point(x,y) and line((a,b)->(c,d)) should be <br> **|(d-b)x + (a-c)y + cb - ad| / √((d-b)^2 + (a-c)^2)**.
         mutating func distanceToPoint(point: CGPoint) -> CGFloat {
-            let numerator = (endB.y - endA.y) * point.x + (endA.x - endB.x) * point.y + endB.x * endA.y - endA.x * endB.y
+            let numerator = (endB.y - endA.y) * point.x + (endA.x - endB.x) * point.y
+                          + endB.x * endA.y - endA.x * endB.y
             return abs(numerator) / eruclideanDistance
         }
     }

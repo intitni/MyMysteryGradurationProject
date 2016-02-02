@@ -1,5 +1,5 @@
 //
-//  XNSVGGenerator.swift
+//  SPSVGGenerator.swift
 //  Sharpener
 //
 //  Created by Inti Guo on 1/28/16.

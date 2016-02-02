@@ -6,23 +6,7 @@
 //  Copyright © 2016 Inti Guo. All rights reserved.
 //
 
-import CoreGraphics
 import UIKit
-
-protocol SPLineRepresentable {
-    var representingLines: [SPLine] { get }
-    var bezierPath: UIBezierPath { get }
-}
-
-extension SPLineRepresentable {
-    var bezierPath: UIBezierPath {
-        let path = UIBezierPath()
-        representingLines.forEach { border in
-            path.appendPath(border.bezierPath)
-        }
-        return path
-    }
-}
 
 struct SPLine {
     enum Guess {
@@ -52,13 +36,17 @@ func <--(inout left: SPLine, right: SPAnchorPoint) {
     left.appendVectorized(right)
 }
 
-struct SPAnchorPoint {
+struct SPAnchorPoint: CustomStringConvertible {
     var anchorPoint: CGPoint
     var controlPointA: CGPoint?
     var controlPointB: CGPoint?
     
     init(point: CGPoint) {
         self.anchorPoint = point
+    }
+    
+    var description: String {
+        return "\(anchorPoint)"
     }
 }
 

@@ -14,7 +14,7 @@ struct SPRawGeometric {
     var raw = [CGPoint]()
     var lineSize: Int = 0
     var shapeSize: Int = 0
-    var shapeWeight: Int { return shapeSize / (lineSize + shapeSize + 1) }
+    var shapeWeight: Double { return Double(shapeSize) / Double(lineSize + shapeSize + 1) }
     var borders = [SPLine]()
     
     init(raw: [CGPoint] = [CGPoint]()) {
@@ -61,4 +61,12 @@ struct SPRawGeometric {
 
 extension SPRawGeometric: SPLineRepresentable {
     var representingLines: [SPLine] { return borders }
+    var fillColor: UIColor {
+        switch type {
+        case .Shape:
+            return UIColor.greenColor()
+        case .Line:
+            return UIColor.redColor()
+        }
+    }
 }

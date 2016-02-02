@@ -28,6 +28,14 @@ extension SPGeometrics {
 // MARK: - Where SPLineRepresentable
 extension SPGeometrics where Self: SPLineRepresentable {
     var representingLines: [SPLine] { return lines }
+    var fillColor: UIColor {
+        switch type {
+        case .Shape:
+            return UIColor.greenColor()
+        case .Line:
+            return UIColor.redColor()
+        }
+    }
 }
 
 func <--(inout left: SPGeometrics, right: SPLine) {
