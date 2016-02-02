@@ -18,7 +18,7 @@ import Foundation
 ///
 /// Shape detection will be applied too.
 class SPGeometricsVectorizor {
-    class func vectorize(store: SPGeometricsStore) {
+    func vectorize(store: SPGeometricsStore) {
         var shapes = [SPShape]()
         var linegroups = [SPLineGroup]()
         

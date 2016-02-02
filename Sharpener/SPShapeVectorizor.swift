@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class SPShapeVectorizor {
+    
+    /// It use bezierpath-approximation to vectorize a SPRawGeometric
+    func vectorizer(raw: SPRawGeometric) -> SPShape {
+        var shape = SPShape()
+        
+        return shape
+    }
+}

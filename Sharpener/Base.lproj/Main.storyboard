@@ -114,47 +114,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DSz-of-Qq9" customClass="ProcessingNavigationBar" customModule="Sharpener" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="5JR-3R-mFx"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="5JR-3R-mFx"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="5JR-3R-mFx"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EuN-Ub-3nE">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="EuN-Ub-3nE" secondAttribute="height" multiplier="3:4" id="LNd-ob-4xA"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="LNd-ob-4xA"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="LNd-ob-4xA"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q2U-Is-Ffh">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="70" y="632" width="240" height="128"/>
-                                </variation>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VGd-uL-c4f" customClass="ProcessingNavigationBar" customModule="Sharpener" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -165,46 +124,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="EuN-Ub-3nE" firstAttribute="top" secondItem="DSz-of-Qq9" secondAttribute="bottom" id="67K-gQ-HDo"/>
-                            <constraint firstItem="DSz-of-Qq9" firstAttribute="leading" secondItem="vXi-qg-mEn" secondAttribute="leading" id="6Za-Un-D65"/>
                             <constraint firstItem="VGd-uL-c4f" firstAttribute="top" secondItem="cC7-WJ-MEq" secondAttribute="bottom" id="OGE-Jz-Myk"/>
-                            <constraint firstAttribute="trailing" secondItem="DSz-of-Qq9" secondAttribute="trailing" id="Rw6-hr-YNh"/>
                             <constraint firstItem="VGd-uL-c4f" firstAttribute="leading" secondItem="vXi-qg-mEn" secondAttribute="leading" id="TMW-pU-q8r"/>
-                            <constraint firstAttribute="trailing" secondItem="EuN-Ub-3nE" secondAttribute="trailing" id="WPx-IT-WkD"/>
-                            <constraint firstItem="EuN-Ub-3nE" firstAttribute="leading" secondItem="vXi-qg-mEn" secondAttribute="leading" id="ZZ4-4L-jqj"/>
-                            <constraint firstItem="DSz-of-Qq9" firstAttribute="top" secondItem="cC7-WJ-MEq" secondAttribute="bottom" id="qYv-Wj-PGl"/>
                             <constraint firstAttribute="trailing" secondItem="VGd-uL-c4f" secondAttribute="trailing" id="zXf-zO-Fug"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="DSz-of-Qq9"/>
-                                <exclude reference="EuN-Ub-3nE"/>
-                                <exclude reference="q2U-Is-Ffh"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="6Za-Un-D65"/>
-                                <exclude reference="Rw6-hr-YNh"/>
-                                <exclude reference="qYv-Wj-PGl"/>
-                                <exclude reference="67K-gQ-HDo"/>
-                                <exclude reference="WPx-IT-WkD"/>
-                                <exclude reference="ZZ4-4L-jqj"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="DSz-of-Qq9"/>
-                                <include reference="EuN-Ub-3nE"/>
-                                <include reference="q2U-Is-Ffh"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="6Za-Un-D65"/>
-                                <include reference="Rw6-hr-YNh"/>
-                                <include reference="qYv-Wj-PGl"/>
-                                <include reference="67K-gQ-HDo"/>
-                                <include reference="WPx-IT-WkD"/>
-                                <include reference="ZZ4-4L-jqj"/>
-                            </mask>
-                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aHX-Ka-vm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
