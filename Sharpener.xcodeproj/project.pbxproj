@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		131337F81C5F5EAE0086C96C /* UIImage+Resizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337F71C5F5EAE0086C96C /* UIImage+Resizing.swift */; };
-		131337FA1C5F99DF0086C96C /* RefineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337F91C5F99DF0086C96C /* RefineView.swift */; };
+		131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337F91C5F99DF0086C96C /* SPRefineView.swift */; };
 		131337FC1C5FBA640086C96C /* SPBezierPathApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */; };
 		131337FE1C5FBA720086C96C /* SPStraightLineApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */; };
 		131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */; };
@@ -46,7 +45,6 @@
 		13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */; };
 		13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13988F041C494CE6000CE61B /* LineShapeRefining.metal */; };
 		139D56201C5210DE006106D4 /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D561F1C5210DE006106D4 /* XNUsefuls.swift */; };
-		139D563D1C5769DF006106D4 /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 139D563C1C5769DF006106D4 /* UIImage+OpenCV.mm */; };
 		139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 139D563E1C5776BC006106D4 /* CVWrapper.mm */; };
 		139D56481C579BF7006106D4 /* SPCVLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 139D56471C579BF7006106D4 /* SPCVLine.m */; };
 		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
@@ -72,8 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		131337F71C5F5EAE0086C96C /* UIImage+Resizing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resizing.swift"; sourceTree = "<group>"; };
-		131337F91C5F99DF0086C96C /* RefineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefineView.swift; sourceTree = "<group>"; };
+		131337F91C5F99DF0086C96C /* SPRefineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRefineView.swift; sourceTree = "<group>"; };
 		131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBezierPathApproximator.swift; sourceTree = "<group>"; };
 		131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStraightLineApproximator.swift; sourceTree = "<group>"; };
 		131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeDetector.swift; sourceTree = "<group>"; };
@@ -114,8 +111,6 @@
 		13988F041C494CE6000CE61B /* LineShapeRefining.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeRefining.metal; sourceTree = "<group>"; };
 		139D561F1C5210DE006106D4 /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XNUsefuls.swift; path = ../../XNUsefuls/XNUsefuls.swift; sourceTree = "<group>"; };
 		139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sharpener-Bridging-Header.h"; sourceTree = "<group>"; };
-		139D563B1C5769DF006106D4 /* UIImage+OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+OpenCV.h"; sourceTree = "<group>"; };
-		139D563C1C5769DF006106D4 /* UIImage+OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIImage+OpenCV.mm"; sourceTree = "<group>"; };
 		139D563E1C5776BC006106D4 /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
 		139D56401C5776D1006106D4 /* CVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVWrapper.h; sourceTree = "<group>"; };
 		139D56461C579BF7006106D4 /* SPCVLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCVLine.h; sourceTree = "<group>"; };
@@ -204,7 +199,7 @@
 			children = (
 				13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */,
 				139EE20C1C2FC6B500E3464F /* FilterControlView.swift */,
-				131337F91C5F99DF0086C96C /* RefineView.swift */,
+				131337F91C5F99DF0086C96C /* SPRefineView.swift */,
 				13416C561C299C6A006CB39A /* CaptureImageView.swift */,
 			);
 			name = Views;
@@ -330,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				13416C541C297981006CB39A /* UIColor+Custom.swift */,
-				131337F71C5F5EAE0086C96C /* UIImage+Resizing.swift */,
 				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
 				13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */,
 			);
@@ -341,8 +335,6 @@
 			isa = PBXGroup;
 			children = (
 				139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */,
-				139D563B1C5769DF006106D4 /* UIImage+OpenCV.h */,
-				139D563C1C5769DF006106D4 /* UIImage+OpenCV.mm */,
 				139D56401C5776D1006106D4 /* CVWrapper.h */,
 				139D563E1C5776BC006106D4 /* CVWrapper.mm */,
 				139D56461C579BF7006106D4 /* SPCVLine.h */,
@@ -509,7 +501,7 @@
 				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
 				13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */,
 				13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */,
-				131337FA1C5F99DF0086C96C /* RefineView.swift in Sources */,
+				131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */,
 				13DDCE001C4CE66700072492 /* XNStack.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
 				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,
@@ -517,7 +509,6 @@
 				13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */,
 				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
 				13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */,
-				131337F81C5F5EAE0086C96C /* UIImage+Resizing.swift in Sources */,
 				13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */,
 				131337FE1C5FBA720086C96C /* SPStraightLineApproximator.swift in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
@@ -530,7 +521,6 @@
 				13BCAC8F1C5922090029DD9F /* SPSVGGenerator.swift in Sources */,
 				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
-				139D563D1C5769DF006106D4 /* UIImage+OpenCV.mm in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
 				13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,

@@ -98,15 +98,16 @@ public class SPRawGeometricsFinder {
             for point in raw.raw {
                 guard let c = textureData[point] else { continue }
                 switch c {
-                case let c where c.isInLine: // red for lines
+                case let c where c.isInLine:
                     raw.lineSize += 1
-                case let c where c.isInShape || c.isInShapeBorder: // for shape
+                case let c where c.isInShape || c.isInShapeBorder:
                     raw.shapeSize += 1
                 default: break
                 }
             }
-
-            if checkIfIsShape(raw) { // probably, it's a shape, but may have some lines in it
+            
+            // TODO: Secondary Geometric Seperation
+            if checkIfIsShape(raw) {
                 raw.type = .Shape
                 
                 // clean tiny red parts
@@ -120,7 +121,7 @@ public class SPRawGeometricsFinder {
                     }
                 }
                 
-            } else { // should be linegroup
+            } else {
                 raw.type = .Line
                 
                 // clean all green and blue parts
@@ -153,6 +154,13 @@ extension SPRawGeometricsFinder {
     /// Used to find a shape based on a seed point, line-scanning version.
     ///
     /// It calls a generic version of `flood()`.
+    ///
+    /// - Parameters:
+    ///     - point: flood starts from
+    ///     - from: the textureData that needs process
+    ///     - matching: points' pattern that should be flooded
+    ///
+    /// - Returns: flood result
     private func flood(point: CGPoint, inout from textureData: MXNTextureData, matching checkIfShouldFlood: (RGBAPixel) -> Bool) -> [CGPoint] {
         return flood(Int(point.x), Int(point.y), from: &textureData, matching: checkIfShouldFlood)
     }
@@ -160,13 +168,13 @@ extension SPRawGeometricsFinder {
     /// Finds contours of a given SPRawGeometric with OpenCV and casts them back to SPLines, then perform polygon-approximation on them
     private func fetchContoursOfRawGeometric(inout raw: SPRawGeometric) {
         let cvlines = CVWrapper.findContoursFromBytes(raw.bytesData(textureData) as! [NSNumber], width:textureData.width, height:textureData.height)
-        for cvline in cvlines { // fetch contours
+        for cvline in cvlines {
             var line = SPLine()
             for rawPointValue in cvline.raw as! [NSValue] {
                 let p = rawPointValue.CGPointValue()
                 line<--p
             }
-            let polygonApproximator = SPPolygonApproximator(threshold: 1)
+            let polygonApproximator = SPPolygonApproximator(threshold: 1.5)
             polygonApproximator.polygonApproximateSPLine(&line)
             raw.borders.append(line)
         }

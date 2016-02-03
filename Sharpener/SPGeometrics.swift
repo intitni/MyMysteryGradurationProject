@@ -31,9 +31,9 @@ extension SPGeometrics where Self: SPLineRepresentable {
     var fillColor: UIColor {
         switch type {
         case .Shape:
-            return UIColor.greenColor()
+            return UIColor.spShapeColor()
         case .Line:
-            return UIColor.redColor()
+            return UIColor.spLineColor()
         }
     }
 }

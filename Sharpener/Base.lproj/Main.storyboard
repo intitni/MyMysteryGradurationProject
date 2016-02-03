@@ -45,6 +45,13 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fil-4h-b8F" customClass="CaptureImageView" customModule="Sharpener" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="600" height="800"/>
+                                <color key="backgroundColor" red="0.94562088820000001" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Fil-4h-b8F" secondAttribute="height" multiplier="3:4" id="4BL-SE-6OP"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heb-3K-LbX">
                                 <rect key="frame" x="0.0" y="484" width="600" height="116"/>
                                 <subviews>
@@ -57,18 +64,11 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="r05-4B-iRH" firstAttribute="centerY" secondItem="heb-3K-LbX" secondAttribute="centerY" id="eY0-82-2cR"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="116" id="u4r-2L-gZi"/>
                                     <constraint firstItem="r05-4B-iRH" firstAttribute="centerX" secondItem="heb-3K-LbX" secondAttribute="centerX" id="y5j-iI-tmh"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fil-4h-b8F" customClass="CaptureImageView" customModule="Sharpener" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="600" height="800"/>
-                                <color key="backgroundColor" red="0.94562088820000001" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Fil-4h-b8F" secondAttribute="height" multiplier="3:4" id="4BL-SE-6OP"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -121,14 +121,48 @@
                                     <constraint firstAttribute="height" constant="50" id="9G1-iZ-eaC"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7QX-Ym-Ixc">
+                                <rect key="frame" x="0.0" y="50" width="600" height="800"/>
+                                <color key="backgroundColor" red="0.92941176470588238" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="7QX-Ym-Ixc" secondAttribute="height" multiplier="3:4" id="oOH-QC-oOE"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Hu-2X-OBn">
+                                <rect key="frame" x="0.0" y="484" width="600" height="116"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="750" constant="116" id="jCZ-lx-1Ma"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dn-z9-jIo">
+                                <rect key="frame" x="0.0" y="50" width="600" height="434"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="7QX-Ym-Ixc" firstAttribute="top" secondItem="VGd-uL-c4f" secondAttribute="bottom" id="4im-Ti-32D"/>
+                            <constraint firstItem="7QX-Ym-Ixc" firstAttribute="centerX" secondItem="vXi-qg-mEn" secondAttribute="centerX" id="5jM-RW-u8c"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="centerX" secondItem="vXi-qg-mEn" secondAttribute="centerX" id="6lr-Jz-bEu"/>
+                            <constraint firstItem="2Dn-z9-jIo" firstAttribute="top" secondItem="VGd-uL-c4f" secondAttribute="bottom" id="BFv-Pg-S0s"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="top" secondItem="2Dn-z9-jIo" secondAttribute="bottom" id="DdT-aZ-QKB"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="width" secondItem="vXi-qg-mEn" secondAttribute="width" id="KrT-Hy-Vb7"/>
                             <constraint firstItem="VGd-uL-c4f" firstAttribute="top" secondItem="cC7-WJ-MEq" secondAttribute="bottom" id="OGE-Jz-Myk"/>
                             <constraint firstItem="VGd-uL-c4f" firstAttribute="leading" secondItem="vXi-qg-mEn" secondAttribute="leading" id="TMW-pU-q8r"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="top" secondItem="7QX-Ym-Ixc" secondAttribute="bottom" priority="250" id="Vpd-75-930"/>
+                            <constraint firstItem="2Dn-z9-jIo" firstAttribute="centerX" secondItem="vXi-qg-mEn" secondAttribute="centerX" id="g7O-nw-PIj"/>
+                            <constraint firstItem="UrX-jL-rEf" firstAttribute="top" secondItem="8Hu-2X-OBn" secondAttribute="bottom" id="gF0-pM-2xh"/>
+                            <constraint firstItem="2Dn-z9-jIo" firstAttribute="width" secondItem="vXi-qg-mEn" secondAttribute="width" id="geP-G0-YwZ"/>
+                            <constraint firstItem="7QX-Ym-Ixc" firstAttribute="width" secondItem="vXi-qg-mEn" secondAttribute="width" id="ham-nj-VT0"/>
                             <constraint firstAttribute="trailing" secondItem="VGd-uL-c4f" secondAttribute="trailing" id="zXf-zO-Fug"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="controlPanel" destination="8Hu-2X-OBn" id="bU7-NT-o3q"/>
+                        <outlet property="navigationBar" destination="VGd-uL-c4f" id="L1h-PO-Edl"/>
+                        <outlet property="scrollView" destination="2Dn-z9-jIo" id="BLn-dG-IPh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aHX-Ka-vm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
