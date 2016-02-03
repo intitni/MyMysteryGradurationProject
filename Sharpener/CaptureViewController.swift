@@ -42,6 +42,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     var medianFilter: MedianFilter!
     var thresholdingFilter: ThresholdingFilter!
     var lineShapeFilteringFilter: LineShapeFilterFilteringFilter!
+    var lineShapeRe: LineShapeRefiningFilter!
     var videoProvider: MXNVideoProvider!
     
     var backCamera: AVCaptureDevice!
@@ -50,6 +51,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     let videoOutput = AVCaptureVideoDataOutput()
     let stillImageOutput = AVCaptureStillImageOutput()
+    
+    var stillImage: UIImage?
     
     var videoTextureCache: Unmanaged<CVMetalTextureCacheRef>?
     let captureSession = AVCaptureSession()
@@ -73,6 +76,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     override func viewWillDisappear(animated: Bool) {
         UIApplication.sharedApplication().idleTimerDisabled = false
+        metalView.shouldDraw = false
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -147,6 +151,34 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     func shutterClicked() {
         // grab image, segue to next view
+        var videoConnection : AVCaptureConnection?
+        for connection in stillImageOutput.connections {
+            for port in connection.inputPorts! {
+                if port.mediaType == AVMediaTypeVideo {
+                    videoConnection = connection as? AVCaptureConnection
+                    break
+                }
+            }
+            if videoConnection != nil { break }
+        }
+        stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+            (imageSampleBuffer, _) in
+            
+            let imageDataJpeg = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
+            self.stillImage = UIImage(data: imageDataJpeg)
+        }
+        self.captureSession.stopRunning()
+        performSegueWithIdentifier("CaptureToRefine", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let identifier = segue.identifier else { return }
+        switch identifier {
+        case "CaptureToRefine":
+            let destination = segue.destinationViewController as? RefineViewController
+            destination?.incomeImage = stillImage
+        default: break
+        }
     }
 }
 
@@ -159,6 +191,9 @@ extension CaptureViewController {
         lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 4)
         videoProvider = MXNVideoProvider()
         
+        lineShapeRe = LineShapeRefiningFilter(context: context, radius: 8)
+        
+        lineShapeRe.provider = lineShapeFilteringFilter
         lineShapeFilteringFilter.provider = medianFilter
         thresholdingFilter.provider = videoProvider
         medianFilter.provider = thresholdingFilter
@@ -176,7 +211,7 @@ extension CaptureViewController {
     }
     
     private func prepareMetalView() {
-        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeFilteringFilter)
+        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeRe)
         filterControlView = FilterControlView(frame: imageView.bounds, threshold: 0.2, lineWidth: 3, gearCount: 5)
         filterControlView.delegate = self
     }

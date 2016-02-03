@@ -127,7 +127,6 @@ class SPSlider: UIControl {
         var scaleFactor: CGFloat {
             return frame.width / defaultSize
         }
-        func sc(value: CGFloat) -> CGFloat { return value * scaleFactor }
         
         init(iconType: IconType) {
             self.iconType = iconType
@@ -143,10 +142,10 @@ class SPSlider: UIControl {
             UIColor.spLightBorderColor().setStroke()
             switch iconType {
             case .ContrastLow:
-                let path = UIBezierPath(roundedRect: CGRectMake(sc(1), sc(3), sc(16), sc(12)), cornerRadius: sc(2))
-                let path2 = UIBezierPath(roundedRect: CGRectMake(sc(1), sc(3), sc(8), sc(12)),
+                let path = UIBezierPath(roundedRect: CGRectMake(1, 3, 16, 12).scaled(scaleFactor), cornerRadius: 2 * scaleFactor)
+                let path2 = UIBezierPath(roundedRect: CGRectMake(1, 3, 8, 12).scaled(scaleFactor),
                                          byRoundingCorners: [.TopLeft, .BottomLeft],
-                                         cornerRadii: CGSizeMake(sc(2), sc(2)))
+                                         cornerRadii: CGSizeMake(2, 2).scaled(scaleFactor))
                 path.lineWidth = 2
                 path2.lineWidth = 2
                 path.stroke()
@@ -154,10 +153,11 @@ class SPSlider: UIControl {
                 UIColor.spLightBorderColor().colorWithAlphaComponent(0.3).setFill()
                 path2.fill()
             case .ContrastHigh:
-                let path = UIBezierPath(roundedRect: CGRectMake(sc(1), sc(3), sc(16), sc(12)), cornerRadius: sc(2))
-                let path2 = UIBezierPath(roundedRect: CGRectMake(sc(1), sc(3), sc(8), sc(12)),
-                    byRoundingCorners: [.TopLeft, .BottomLeft],
-                    cornerRadii: CGSizeMake(sc(2), sc(2)))
+                let path = UIBezierPath(roundedRect: CGRectMake(1, 3, 16, 12).scaled(scaleFactor),
+                                        cornerRadius: 2 * scaleFactor)
+                let path2 = UIBezierPath(roundedRect: CGRectMake(1, 3, 8, 12).scaled(scaleFactor),
+                                         byRoundingCorners: [.TopLeft, .BottomLeft],
+                                         cornerRadii: CGSizeMake(2, 2).scaled(scaleFactor))
                 path.lineWidth = 2
                 path2.lineWidth = 2
                 path.stroke()
@@ -165,11 +165,12 @@ class SPSlider: UIControl {
                 UIColor.spLightBorderColor().setFill()
                 path2.fill()
             case .LineWidthHigh:
-                let path = UIBezierPath(ovalInRect: CGRectMake(sc(1), sc(1), sc(16), sc(16)))
+                let path = UIBezierPath(ovalInRect: CGRectMake(1, 1, 16, 16).scaled(scaleFactor))
                 path.lineWidth = 2
                 path.stroke()
             case .LineWidthLow:
-                let path = UIBezierPath(roundedRect: CGRectMake(sc(1), sc(7), sc(16), sc(4)), cornerRadius: sc(2))
+                let path = UIBezierPath(roundedRect: CGRectMake(1, 7, 16, 4).scaled(scaleFactor),
+                                        cornerRadius: 2 * scaleFactor)
                 path.lineWidth = 2
                 path.stroke()
             }

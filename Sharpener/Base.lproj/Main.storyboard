@@ -18,173 +18,75 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fil-4h-b8F" customClass="CaptureImageView" customModule="Sharpener" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.94562088820000001" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Fil-4h-b8F" secondAttribute="height" multiplier="3:4" id="4BL-SE-6OP"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="4BL-SE-6OP"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="4BL-SE-6OP"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heb-3K-LbX">
-                                <rect key="frame" x="86" y="298" width="240" height="128"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r05-4B-iRH" customClass="ShutterButton" customModule="Sharpener" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="G1P-e1-vfy"/>
-                                            <constraint firstAttribute="width" constant="70" id="mUP-fh-J7Z"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="G1P-e1-vfy"/>
-                                                <exclude reference="mUP-fh-J7Z"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="G1P-e1-vfy"/>
-                                                <include reference="mUP-fh-J7Z"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="r05-4B-iRH" firstAttribute="centerY" secondItem="heb-3K-LbX" secondAttribute="centerY" id="eY0-82-2cR"/>
-                                    <constraint firstItem="r05-4B-iRH" firstAttribute="centerX" secondItem="heb-3K-LbX" secondAttribute="centerX" id="y5j-iI-tmh"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="r05-4B-iRH"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <exclude reference="eY0-82-2cR"/>
-                                        <exclude reference="y5j-iI-tmh"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="subviews">
-                                        <include reference="r05-4B-iRH"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <include reference="eY0-82-2cR"/>
-                                        <include reference="y5j-iI-tmh"/>
-                                    </mask>
-                                </variation>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ho-Xp-l2h">
-                                <rect key="frame" x="275" y="39" width="240" height="128"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nqu-rX-ycN" customClass="TorchSwitcher" customModule="Sharpener" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="50"/>
                                         <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="tkb-av-RHd"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="tkb-av-RHd"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="tkb-av-RHd"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="Nqu-rX-ycN" firstAttribute="leading" secondItem="3ho-Xp-l2h" secondAttribute="leading" id="0Ak-72-uN4"/>
                                     <constraint firstAttribute="height" constant="50" id="256-Ds-0PC"/>
                                     <constraint firstItem="Nqu-rX-ycN" firstAttribute="leading" secondItem="3ho-Xp-l2h" secondAttribute="leading" id="Lco-Yi-HDd"/>
                                     <constraint firstItem="Nqu-rX-ycN" firstAttribute="centerY" secondItem="3ho-Xp-l2h" secondAttribute="centerY" id="Pzg-6t-ehj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nqu-rX-ycN" secondAttribute="trailing" constant="305" id="swb-rj-GeB"/>
                                     <constraint firstItem="Nqu-rX-ycN" firstAttribute="height" secondItem="3ho-Xp-l2h" secondAttribute="height" id="wiq-II-ig6"/>
                                 </constraints>
                                 <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="Nqu-rX-ycN"/>
-                                    </mask>
                                     <mask key="constraints">
-                                        <exclude reference="256-Ds-0PC"/>
                                         <exclude reference="Lco-Yi-HDd"/>
-                                        <exclude reference="Pzg-6t-ehj"/>
-                                        <exclude reference="wiq-II-ig6"/>
+                                        <exclude reference="swb-rj-GeB"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="subviews">
-                                        <include reference="Nqu-rX-ycN"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <include reference="256-Ds-0PC"/>
-                                        <include reference="Lco-Yi-HDd"/>
-                                        <include reference="Pzg-6t-ehj"/>
-                                        <include reference="wiq-II-ig6"/>
-                                    </mask>
-                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fil-4h-b8F" customClass="CaptureImageView" customModule="Sharpener" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="600" height="800"/>
+                                <color key="backgroundColor" red="0.94562088820000001" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Fil-4h-b8F" secondAttribute="height" multiplier="3:4" id="4BL-SE-6OP"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heb-3K-LbX">
+                                <rect key="frame" x="0.0" y="484" width="600" height="116"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r05-4B-iRH" customClass="ShutterButton" customModule="Sharpener" customModuleProvider="target">
+                                        <rect key="frame" x="265" y="23" width="70" height="70"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="8KE-CJ-n47"/>
+                                            <constraint firstAttribute="width" constant="70" id="oxj-UU-Me2"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="r05-4B-iRH" firstAttribute="centerY" secondItem="heb-3K-LbX" secondAttribute="centerY" id="eY0-82-2cR"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="116" id="u4r-2L-gZi"/>
+                                    <constraint firstItem="r05-4B-iRH" firstAttribute="centerX" secondItem="heb-3K-LbX" secondAttribute="centerX" id="y5j-iI-tmh"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="heb-3K-LbX" firstAttribute="top" secondItem="Fil-4h-b8F" secondAttribute="bottom" constant="-0.5" id="57C-Pt-w8o"/>
                             <constraint firstItem="heb-3K-LbX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CCV-in-GK7"/>
                             <constraint firstItem="heb-3K-LbX" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="JZX-64-xvv"/>
                             <constraint firstItem="Fil-4h-b8F" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="RQp-k0-8Iw"/>
                             <constraint firstItem="3ho-Xp-l2h" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="U2n-rI-xzk"/>
-                            <constraint firstItem="3ho-Xp-l2h" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="21" id="U5d-Ez-xou">
+                            <constraint firstItem="3ho-Xp-l2h" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="U5d-Ez-xou">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="Fil-4h-b8F" firstAttribute="top" secondItem="3ho-Xp-l2h" secondAttribute="bottom" id="Ybb-rD-Scw"/>
+                            <constraint firstItem="heb-3K-LbX" firstAttribute="top" secondItem="Fil-4h-b8F" secondAttribute="bottom" priority="250" id="ZVf-Ku-KiQ"/>
                             <constraint firstItem="3ho-Xp-l2h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="flo-nv-wDU"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="heb-3K-LbX" secondAttribute="bottom" id="mmp-Kl-aKl"/>
                             <constraint firstItem="Fil-4h-b8F" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="swG-XI-M48"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="heb-3K-LbX"/>
-                                <exclude reference="3ho-Xp-l2h"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="mmp-Kl-aKl"/>
-                                <exclude reference="U2n-rI-xzk"/>
-                                <exclude reference="U5d-Ez-xou"/>
-                                <exclude reference="flo-nv-wDU"/>
-                                <exclude reference="57C-Pt-w8o"/>
-                                <exclude reference="CCV-in-GK7"/>
-                                <exclude reference="JZX-64-xvv"/>
-                                <exclude reference="RQp-k0-8Iw"/>
-                                <exclude reference="Ybb-rD-Scw"/>
-                                <exclude reference="swG-XI-M48"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="heb-3K-LbX"/>
-                                <include reference="3ho-Xp-l2h"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="mmp-Kl-aKl"/>
-                                <include reference="U2n-rI-xzk"/>
-                                <include reference="U5d-Ez-xou"/>
-                                <include reference="flo-nv-wDU"/>
-                                <include reference="57C-Pt-w8o"/>
-                                <include reference="CCV-in-GK7"/>
-                                <include reference="JZX-64-xvv"/>
-                                <include reference="RQp-k0-8Iw"/>
-                                <include reference="Ybb-rD-Scw"/>
-                                <include reference="swG-XI-M48"/>
-                            </mask>
-                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
@@ -193,11 +95,78 @@
                         <outlet property="imageView" destination="Fil-4h-b8F" id="Hdd-E7-Q2a"/>
                         <outlet property="shutterButton" destination="r05-4B-iRH" id="YNE-DC-ZHv"/>
                         <outlet property="torchSwitch" destination="Nqu-rX-ycN" id="Nj9-7u-zyQ"/>
+                        <segue destination="0MF-Hl-BNX" kind="show" identifier="CaptureToRefine" id="qln-BQ-WrU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="303" y="365.25"/>
+        </scene>
+        <!--Refine View Controller-->
+        <scene sceneID="3Fp-Vp-wEf">
+            <objects>
+                <viewController id="0MF-Hl-BNX" customClass="RefineViewController" customModule="Sharpener" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cC7-WJ-MEq"/>
+                        <viewControllerLayoutGuide type="bottom" id="UrX-jL-rEf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vXi-qg-mEn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VGd-uL-c4f" customClass="ProcessingNavigationBar" customModule="Sharpener" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="9G1-iZ-eaC"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7QX-Ym-Ixc">
+                                <rect key="frame" x="0.0" y="50" width="600" height="800"/>
+                                <color key="backgroundColor" red="0.92941176470588238" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="7QX-Ym-Ixc" secondAttribute="height" multiplier="3:4" id="oOH-QC-oOE"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Hu-2X-OBn">
+                                <rect key="frame" x="0.0" y="484" width="600" height="116"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="750" constant="116" id="jCZ-lx-1Ma"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dn-z9-jIo">
+                                <rect key="frame" x="0.0" y="50" width="600" height="434"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7QX-Ym-Ixc" firstAttribute="top" secondItem="VGd-uL-c4f" secondAttribute="bottom" id="4im-Ti-32D"/>
+                            <constraint firstItem="7QX-Ym-Ixc" firstAttribute="centerX" secondItem="vXi-qg-mEn" secondAttribute="centerX" id="5jM-RW-u8c"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="centerX" secondItem="vXi-qg-mEn" secondAttribute="centerX" id="6lr-Jz-bEu"/>
+                            <constraint firstItem="2Dn-z9-jIo" firstAttribute="top" secondItem="VGd-uL-c4f" secondAttribute="bottom" id="BFv-Pg-S0s"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="top" secondItem="2Dn-z9-jIo" secondAttribute="bottom" id="DdT-aZ-QKB"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="width" secondItem="vXi-qg-mEn" secondAttribute="width" id="KrT-Hy-Vb7"/>
+                            <constraint firstItem="VGd-uL-c4f" firstAttribute="top" secondItem="cC7-WJ-MEq" secondAttribute="bottom" id="OGE-Jz-Myk"/>
+                            <constraint firstItem="VGd-uL-c4f" firstAttribute="leading" secondItem="vXi-qg-mEn" secondAttribute="leading" id="TMW-pU-q8r"/>
+                            <constraint firstItem="8Hu-2X-OBn" firstAttribute="top" secondItem="7QX-Ym-Ixc" secondAttribute="bottom" priority="250" id="Vpd-75-930"/>
+                            <constraint firstItem="2Dn-z9-jIo" firstAttribute="centerX" secondItem="vXi-qg-mEn" secondAttribute="centerX" id="g7O-nw-PIj"/>
+                            <constraint firstItem="UrX-jL-rEf" firstAttribute="top" secondItem="8Hu-2X-OBn" secondAttribute="bottom" id="gF0-pM-2xh"/>
+                            <constraint firstItem="2Dn-z9-jIo" firstAttribute="width" secondItem="vXi-qg-mEn" secondAttribute="width" id="geP-G0-YwZ"/>
+                            <constraint firstItem="7QX-Ym-Ixc" firstAttribute="width" secondItem="vXi-qg-mEn" secondAttribute="width" id="ham-nj-VT0"/>
+                            <constraint firstAttribute="trailing" secondItem="VGd-uL-c4f" secondAttribute="trailing" id="zXf-zO-Fug"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="controlPanel" destination="8Hu-2X-OBn" id="bU7-NT-o3q"/>
+                        <outlet property="navigationBar" destination="VGd-uL-c4f" id="L1h-PO-Edl"/>
+                        <outlet property="scrollView" destination="2Dn-z9-jIo" id="BLn-dG-IPh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aHX-Ka-vm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1158" y="365.25"/>
         </scene>
     </scenes>
 </document>

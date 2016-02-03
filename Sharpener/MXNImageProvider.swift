@@ -40,8 +40,8 @@ class MXNImageProvider: MXNTextureProvider {
             bitsPerComponent, bytesPerRow,
             colorSpace,
             bitmapInfo.rawValue)
-        CGContextTranslateCTM(bitmapContext, 0, CGFloat(imageHeight))
-        CGContextScaleCTM(bitmapContext, 1, -1)
+        //CGContextTranslateCTM(bitmapContext, 0, CGFloat(imageHeight))
+        //CGContextScaleCTM(bitmapContext, 1, -1)
         
         CGContextDrawImage(bitmapContext, CGRectMake(0, 0, CGFloat(imageWidth), CGFloat(imageHeight)), imageRef)
         
@@ -49,7 +49,6 @@ class MXNImageProvider: MXNTextureProvider {
             width: imageWidth, height: imageHeight,
             mipmapped: true)
         texture = context.device!.newTextureWithDescriptor(textureDescriptor)
-        
         let region = MTLRegionMake2D(0, 0, imageWidth, imageHeight)
         texture.replaceRegion(region, mipmapLevel: 0, withBytes: &rawData, bytesPerRow: bytesPerRow)
         

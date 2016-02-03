@@ -1,25 +1,15 @@
 //
-//  LineShapeFilteringFilters.swift
+//  LineShapeRefiningFilter.swift
 //  Sharpener
 //
-//  Created by Inti Guo on 12/22/15.
-//  Copyright © 2015 Inti Guo. All rights reserved.
+//  Created by Inti Guo on 1/15/16.
+//  Copyright © 2016 Inti Guo. All rights reserved.
 //
 
 import Foundation
 import MetalKit
 
-struct LineShapeDetectingUniforms {
-    var threshold: Float
-}
-
-class LineShapeFilterFilteringFilter: MXNImageFilter {
-    
-    var threshold: Float {
-        didSet {
-            isDirty = true
-        }
-    }
+class LineShapeRefiningFilter: MXNImageFilter {
     var radius: Int {
         didSet {
             isDirty = true
@@ -28,14 +18,13 @@ class LineShapeFilterFilteringFilter: MXNImageFilter {
     }
     var weightTexture: MTLTexture!
     
-    required init?(functionName: String, context: MXNContext, threshold: Float, radius: Int) {
-        self.threshold = threshold
+    required init?(functionName: String, context: MXNContext, radius: Int) {
         self.radius = radius
         super.init(functionName: functionName, context: context)
     }
     
-    convenience init?(context: MXNContext, threshold: Float, radius: Int) {
-        self.init(functionName: "lineShapeFiltering", context: context, threshold: threshold, radius: radius)
+    convenience init?(context: MXNContext, radius: Int) {
+        self.init(functionName: "lineShapeRefining", context: context, radius: radius)
     }
     
     required init?(functionName: String, context: MXNContext) {
@@ -43,9 +32,6 @@ class LineShapeFilterFilteringFilter: MXNImageFilter {
     }
     
     override func configureArgumentTableWithCommandEncoder(commandEncoder: MTLComputeCommandEncoder) {
-        let uniforms = LineShapeDetectingUniforms(threshold: threshold)
-        putBufferUniforms(uniforms, into: commandEncoder, size: sizeof(LineShapeDetectingUniforms), offset: 0, atIndex: 0)
-        
         if weightTexture == nil {
             generateWeightTexture()
         }

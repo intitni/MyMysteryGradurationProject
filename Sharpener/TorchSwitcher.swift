@@ -83,13 +83,13 @@ class LightningIcon: UIView {
     var lightning: CAShapeLayer! {
         didSet {
             let path = UIBezierPath()
-            path.moveToPoint(CGPoint(x: 10*scaleFactor, y: 15*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 10*scaleFactor, y: 23*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 16*scaleFactor, y: 23*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 10*scaleFactor, y: 35*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 10*scaleFactor, y: 27*scaleFactor))
-            path.addLineToPoint(CGPoint(x: 4*scaleFactor, y: 27*scaleFactor))
-            path.closePath()
+            path ==> CGPoint(x: 10, y: 15).scaled(scaleFactor)
+                 --> CGPoint(x: 10, y: 23).scaled(scaleFactor)
+                 --> CGPoint(x: 16, y: 23).scaled(scaleFactor)
+                 --> CGPoint(x: 10, y: 35).scaled(scaleFactor)
+                 --> CGPoint(x: 10, y: 27).scaled(scaleFactor)
+                 --> CGPoint(x: 4, y: 27).scaled(scaleFactor)
+            path-><-
             lightning.path = path.CGPath
             lightning.lineWidth = 1
             layer.addSublayer(lightning)
