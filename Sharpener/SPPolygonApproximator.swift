@@ -30,8 +30,8 @@ class SPPolygonApproximator {
         
         var stack = Stack(storage: [Int]())
         
-        var endA: Int? = 0
-        var endB: Int? = manipPoints.count - 1
+        var endA: Int? = manipPoints.startIndex
+        var endB: Int? = manipPoints.endIndex - 1
         manipPoints[endA!].isCharacteristicPoint = true
         manipPoints[endB!].isCharacteristicPoint = true
         stack.push(endB!)

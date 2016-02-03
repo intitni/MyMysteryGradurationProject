@@ -49,7 +49,6 @@ class MXNImageProvider: MXNTextureProvider {
             width: imageWidth, height: imageHeight,
             mipmapped: true)
         texture = context.device!.newTextureWithDescriptor(textureDescriptor)
-        print(imageWidth, imageHeight)
         let region = MTLRegionMake2D(0, 0, imageWidth, imageHeight)
         texture.replaceRegion(region, mipmapLevel: 0, withBytes: &rawData, bytesPerRow: bytesPerRow)
         

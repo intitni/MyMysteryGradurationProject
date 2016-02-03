@@ -10,14 +10,14 @@ import Foundation
 import CoreGraphics
 
 extension CGPoint  {
-    var right: CGPoint { return CGPoint(x: self.x + 1, y: self.y) }
-    var left: CGPoint { return CGPoint(x: self.x - 1, y: self.y) }
-    var up: CGPoint { return CGPoint(x: self.x, y: self.y - 1) }
-    var down: CGPoint { return CGPoint(x: self.x, y: self.y + 1) }
+    var right: CGPoint     { return CGPoint(x: self.x + 1, y: self.y) }
+    var left: CGPoint      { return CGPoint(x: self.x - 1, y: self.y) }
+    var up: CGPoint        { return CGPoint(x: self.x, y: self.y - 1) }
+    var down: CGPoint      { return CGPoint(x: self.x, y: self.y + 1) }
     
-    var upleft: CGPoint { return CGPoint(x: self.x - 1, y: self.y - 1) }
-    var downleft: CGPoint { return CGPoint(x: self.x + 1, y: self.y - 1) }
-    var upright: CGPoint { return CGPoint(x: self.x - 1, y: self.y + 1) }
+    var upleft: CGPoint    { return CGPoint(x: self.x - 1, y: self.y - 1) }
+    var downleft: CGPoint  { return CGPoint(x: self.x + 1, y: self.y - 1) }
+    var upright: CGPoint   { return CGPoint(x: self.x - 1, y: self.y + 1) }
     var downright: CGPoint { return CGPoint(x: self.x + 1, y: self.y + 1) }
     
     /// Move this point 1pt away to given Direction2D.
