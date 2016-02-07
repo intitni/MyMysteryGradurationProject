@@ -30,6 +30,15 @@ struct MXNTextureData {
         self.bytesPerPixel = bytesPerPixel
     }
     
+    /// Points in black, background in white
+    init(points: [CGPoint], width: Int, height: Int, bytesPerPixel: Int = 4) {
+        let rawData = [UInt8](count: width*height*4, repeatedValue: 255)
+        self.init(data: rawData, width: width, height: height)
+        for p in points {
+            self[p] = RGBAPixel(r: 0, g: 0, b: 0, a: 255)
+        }
+    }
+    
     subscript(position: (x: Int, y: Int)) -> RGBAPixel? {
         let x = position.x, y = position.y
         guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
@@ -59,6 +68,12 @@ struct MXNTextureData {
         let x = Int(position.x), y = Int(position.y)
         guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
         return x + y * width
+    }
+    
+    func ifPointIsValid(point: CGPoint) -> Bool {
+        let x = point.x, y = point.y
+        if y < height && x < width && x >= 0 && y >= 0 { return true }
+        return false
     }
     
     mutating func eraseAt(x: Int, _ y: Int) {
@@ -129,6 +144,10 @@ struct RGBAPixel {
     var g: UInt8
     var b: UInt8
     var a: UInt8
+    var x: UInt8 { return r }
+    var y: UInt8 { return g }
+    var z: UInt8 { return b }
+    var w: UInt8 { return a }
 }
 
 extension RGBAPixel {

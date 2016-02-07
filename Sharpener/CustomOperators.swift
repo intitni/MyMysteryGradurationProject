@@ -13,3 +13,6 @@ infix operator <-- { associativity right precedence 140 }
 
 /// Copy Operator
 infix operator <=< { associativity right precedence 130 }
+
+/// Inner Production
+infix operator • { associativity right precedence 130 }
