@@ -26,6 +26,8 @@
 		13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */; };
 		13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C971C67355300DFE73C /* GaussianBlurFilter.swift */; };
 		13627C9A1C67357700DFE73C /* DirectionCalculatingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C991C67357700DFE73C /* DirectionCalculatingFilter.swift */; };
+		13627C9C1C6746D300DFE73C /* GaussianBlur.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13627C9B1C6746D300DFE73C /* GaussianBlur.metal */; };
+		13627C9E1C674D3500DFE73C /* DirectionCalculation.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13627C9D1C674D3500DFE73C /* DirectionCalculation.metal */; };
 		13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */; };
 		13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */; };
 		13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF71C2AEC710086CAB3 /* MedianFilter.swift */; };
@@ -91,6 +93,8 @@
 		13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingNavigationBar.swift; sourceTree = "<group>"; };
 		13627C971C67355300DFE73C /* GaussianBlurFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaussianBlurFilter.swift; sourceTree = "<group>"; };
 		13627C991C67357700DFE73C /* DirectionCalculatingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionCalculatingFilter.swift; sourceTree = "<group>"; };
+		13627C9B1C6746D300DFE73C /* GaussianBlur.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = GaussianBlur.metal; sourceTree = "<group>"; };
+		13627C9D1C674D3500DFE73C /* DirectionCalculation.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = DirectionCalculation.metal; sourceTree = "<group>"; };
 		13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalEnums.swift; sourceTree = "<group>"; };
 		13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MedianFilter.metal; sourceTree = "<group>"; };
 		13772AF71C2AEC710086CAB3 /* MedianFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedianFilter.swift; sourceTree = "<group>"; };
@@ -225,6 +229,8 @@
 				13988F041C494CE6000CE61B /* LineShapeRefining.metal */,
 				13416C4F1C296470006CB39A /* Thresholding.metal */,
 				13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */,
+				13627C9B1C6746D300DFE73C /* GaussianBlur.metal */,
+				13627C9D1C674D3500DFE73C /* DirectionCalculation.metal */,
 			);
 			name = "Metal Shaders";
 			sourceTree = "<group>";
@@ -531,10 +537,12 @@
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
 				13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
+				13627C9C1C6746D300DFE73C /* GaussianBlur.metal in Sources */,
 				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
 				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
 				13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */,
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
+				13627C9E1C674D3500DFE73C /* DirectionCalculation.metal in Sources */,
 				13627C9A1C67357700DFE73C /* DirectionCalculatingFilter.swift in Sources */,
 				13918C111C5F408B008DD316 /* SPLineRepresentable.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
