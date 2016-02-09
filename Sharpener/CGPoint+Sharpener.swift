@@ -81,4 +81,47 @@ enum Direction2D {
     
     case Clockwise(degree: Double)
     case CounterClockwise(degree: Double)
+    
+    case Pole(vector: MXNFreeVector, used: Bool)
+}
+
+
+/// A free vector indicating direction and length.
+struct MXNFreeVector {
+    var x: CGFloat
+    var y: CGFloat
+    
+    var absolute: CGFloat {
+        return sqrt(x*x+y*y)
+    }
+    
+    /// Returns a normalized vector of self.
+    var normalized: MXNFreeVector {
+        let proportion = y / x
+        let newX = 1 / (1 + pow(proportion, 2))
+        let newY = newX * proportion
+        return MXNFreeVector(x: newX, y: newY)
+    }
+    
+    /// Getting the Direction2D of it.
+    var direction: Direction2D { return .Pole(vector: self, used: false) }
+}
+
+
+// MARK: - Operators
+
+func *(left: MXNFreeVector, right: CGFloat) -> MXNFreeVector {
+    return MXNFreeVector(x: left.x * right, y: left.y * right)
+}
+
+func +(left: MXNFreeVector, right: MXNFreeVector) -> MXNFreeVector {
+    return MXNFreeVector(x: left.x + right.x, y: left.y + right.y)
+}
+
+func +(left: CGPoint, right: MXNFreeVector) -> CGPoint {
+    return CGPoint(x: left.x + right.x, y: left.y + right.y)
+}
+
+func •(left: MXNFreeVector, right: MXNFreeVector) -> CGFloat {
+    return left.x * right.x + left.y * right.y
 }

@@ -72,7 +72,7 @@ struct MXNTextureData {
     
     func ifPointIsValid(point: CGPoint) -> Bool {
         let x = point.x, y = point.y
-        if y < height && x < width && x >= 0 && y >= 0 { return true }
+        if y < CGFloat(height) && x < CGFloat(width) && x >= 0 && y >= 0 { return true }
         return false
     }
     
@@ -139,6 +139,87 @@ struct MXNTextureData {
     }
 }
 
+struct MXNTextureDataFloat {
+    
+    var data: [Float]
+    let width: Int
+    let height: Int
+    let bytesPerPixel: Int
+    
+    init(texture: MTLTexture) {
+        var rawData = [Float](count: texture.width*texture.height*4, repeatedValue: 0)
+        texture.getBytes(&rawData, bytesPerRow: texture.width * 16, fromRegion: MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: texture.width, height: texture.height, depth: 1)), mipmapLevel: 0)
+        self.init(data: rawData, width: texture.width, height: texture.height)
+    }
+    
+    init(data: [Float], width: Int, height: Int, bytesPerPixel: Int = 4) {
+        self.width = width
+        self.height = height
+        self.data = data
+        self.bytesPerPixel = bytesPerPixel
+    }
+    
+    /// Points in black, background in white
+    init(points: [CGPoint], width: Int, height: Int, bytesPerPixel: Int = 4) {
+        let rawData = [Float](count: width*height*4, repeatedValue: 255)
+        self.init(data: rawData, width: width, height: height)
+        for p in points {
+            self[p] = XYZWPixel(r: 0, g: 0, b: 0, a: 255)
+        }
+    }
+    
+    subscript(position: (x: Int, y: Int)) -> XYZWPixel? {
+        let x = position.x, y = position.y
+        guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
+        let pos = (x + y * width) * bytesPerPixel
+        return XYZWPixel(r:data[pos], g:data[pos+1], b:data[pos+2], a:data[pos+3])
+    }
+    
+    subscript(position: CGPoint) -> XYZWPixel? {
+        get {
+            let x = Int(position.x), y = Int(position.y)
+            guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
+            let pos = (x + y * width) * bytesPerPixel
+            return XYZWPixel(r:data[pos], g:data[pos+1], b:data[pos+2], a:data[pos+3])
+        }
+        set {
+            let x = Int(position.x), y = Int(position.y)
+            guard y < height && x < width && x >= 0 && y >= 0 && newValue != nil else { return }
+            let pos = (x + y * width) * bytesPerPixel
+            data[pos] = newValue!.r
+            data[pos+1] = newValue!.g
+            data[pos+2] = newValue!.b
+            data[pos+3] = newValue!.a
+        }
+    }
+    
+    func indexOfPoint(position: CGPoint) -> Int? {
+        let x = Int(position.x), y = Int(position.y)
+        guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
+        return x + y * width
+    }
+    
+    func ifPointIsValid(point: CGPoint) -> Bool {
+        let x = point.x, y = point.y
+        if y < CGFloat(height) && x < CGFloat(width) && x >= 0 && y >= 0 { return true }
+        return false
+    }
+    
+}
+
+
+struct XYZWPixel {
+    var r: Float
+    var g: Float
+    var b: Float
+    var a: Float
+    var x: Float { return r }
+    var y: Float { return g }
+    var z: Float { return b }
+    var w: Float { return a }
+}
+
+
 struct RGBAPixel {
     var r: UInt8
     var g: UInt8
@@ -150,6 +231,7 @@ struct RGBAPixel {
     var w: UInt8 { return a }
 }
 
+
 extension RGBAPixel {
     var isNotWhiteAndBlack: Bool { return self.r != 255 && self.r != 0 }
     var isInShape: Bool { return self.r == 107 }
@@ -158,9 +240,11 @@ extension RGBAPixel {
     var isTransparent: Bool { return self.a == 0 }
     
     /* 
-            66, 133, 214 0.25 b
-            209, 117, 120 0.82 r
-            107, 181, 161 0.42 g
-        */
+        66, 133, 214 0.25 b
+        209, 117, 120 0.82 r
+        107, 181, 161 0.42 g
+    */
 }
+
+
 

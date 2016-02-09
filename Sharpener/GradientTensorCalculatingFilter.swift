@@ -1,5 +1,5 @@
 //
-//  DirectionCalculatingFilter.swift
+//  GradientTensorCalculatingFilter.swift
 //  Sharpener
 //
 //  Created by Inti Guo on 2/7/16.
@@ -10,17 +10,18 @@ import Foundation
 import MetalKit
 
 
-class DirectionCalculatingFilter: MXNImageFilter {
+class GradientTensorCalculatingFilter: MXNImageFilter {
     
     var xOperator: MTLTexture!
     var yOperator: MTLTexture!
     
     required init?(functionName: String, context: MXNContext) {
         super.init(functionName: functionName, context: context)
+        internalTextureFormat = MTLPixelFormat.RGBA32Float
     }
     
     convenience init?(context: MXNContext) {
-        self.init(functionName: "gaussianBlur", context: context)
+        self.init(functionName: "gradientTensorCalculating", context: context)
     }
     
     override func configureArgumentTableWithCommandEncoder(commandEncoder: MTLComputeCommandEncoder) {

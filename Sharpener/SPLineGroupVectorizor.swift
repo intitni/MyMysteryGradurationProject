@@ -13,10 +13,12 @@ import Foundation
 class SPLineGroupVectorizor {
     
     // MARK: Properties
+    private let context: MXNContext = MXNContext()
+    
     var width: Int
     var height: Int
     
-    var directionData: MXNTextureData!
+    var directionData: MXNTextureDataFloat!
     var rawData: MXNTextureData!
     var rawGeometric: SPRawGeometric!
     var magnetPoints = [CGPoint]()
@@ -28,9 +30,11 @@ class SPLineGroupVectorizor {
         
         rawGeometric = raw
         rawData = fetchRawDataFromRawLineGroup(rawGeometric)
-        directionData = fetchDirectionData()
-        trackLineGroup()
-        seperateLineGroup()
+        
+        // FIXME: this will not fetch direction data, it only fetches gradient tensor, we need to calculate evalue and evector from it.
+        fetchDirectionData()
+        //trackLineGroup()
+        //seperateLineGroup()
         
         return lineGroup
     }
@@ -55,10 +59,32 @@ class SPLineGroupVectorizor {
     /// It applys gradientFieldDetectingFilter on raw and returns a direction data containg 2 vectors representing tengential direction and gradient direction.
     ///
     /// - Returns: A direction data containg 2 vectors representing tengential direction and gradient direction
-    private func fetchDirectionData() -> MXNTextureData {
+    private func fetchDirectionData() {
+        let filter = LineTrackingFilter(context: context)
+        filter.provider = MXNImageProvider(image: UIImage(textureData: rawData), context: context)
         
+        filter.applyFilter()
+        directionData = MXNTextureDataFloat(texture: filter.eigenVectors)
         
-        return MXNTextureData(data: [0], width: 0, height: 0)
+        for i in 0..<100 {
+            for j in 0..<100 {
+                let p = CGPoint(x: i, y: j)
+                let t = directionData[p]
+                guard let a = t else { continue }
+                if a.x == 0 { print("•"); continue }
+                switch (a.z, a.w) {
+                case let (x, y) where x != 0 && y/x < 0.5579 && y/x >= -0.5579:
+                    print("⟷"); continue
+                case let (x, y) where x != 0 && y/x >= 0.5579 && y/x < 22.5882:
+                    print("⤢"); continue
+                case let (x, y) where x != 0 && y/x < -0.5579 && y/x >= -22.5882:
+                    print("⤡"); continue
+                default:
+                    print("⇅"); continue
+                }
+            }
+            print("↵")
+        }
     }
     
     private func trackLineGroup() {
@@ -69,13 +95,13 @@ class SPLineGroupVectorizor {
         var stack = Stack(storage: [CGPoint]())
         stack.push(startPoint)
         
-        var last = startPoint
-        var current = startPoint
+        let last = startPoint
+        let current = startPoint
         while !stack.isEmpty {
             let tanCurrent = tangentialDirectionOf(current)
             let tanLast = tangentialDirectionOf(last)
-            let s = !(tanLast • tanCurrent).isSignMinus
-            current += 
+            //let s = !(tanLast • tanCurrent).isSignMinus
+            // current +=
         }
     }
     
@@ -99,9 +125,9 @@ extension SPLineGroupVectorizor {
     }
     
     /// Get the tangential direction of a point when it is not a integer-point using bilinear interpolation.
-    private func tangentialDirectionOf(point: CGPoint) -> MXNVector {
+    private func tangentialDirectionOf(point: CGPoint) -> MXNFreeVector {
         guard !point.isIntegerPoint && directionData.ifPointIsValid(point)
-        else { return directionData[point]?.tangentialDirection ?? MXNVector(x: 0, y: 0)}
+        else { return directionData[point]?.tangentialDirection ?? MXNFreeVector(x: 0, y: 0)}
         
         let xceil = Int(ceil(point.x))
         let xfloor = Int(floor(point.x))
@@ -113,7 +139,7 @@ extension SPLineGroupVectorizor {
             let dDownLeft = directionData[(xfloor, yfloor)]?.tangentialDirection,
             let dUpRight = directionData[(xceil, yceil)]?.tangentialDirection,
             let dDownRight = directionData[(xceil, yfloor)]?.tangentialDirection
-        else { return MXNVector(x: 0, y: 0) } // if any of those is nil, such point should not be valid
+        else { return MXNFreeVector(x: 0, y: 0) } // if any of those is nil, such point should not be valid
         
         return bilinearInterporlation(this: (point.x, point.y),
             bX: CGFloat(xfloor), bY: CGFloat(yfloor), eX: CGFloat(xceil), eY: CGFloat(yceil),
@@ -121,9 +147,9 @@ extension SPLineGroupVectorizor {
     }
     
     /// Get the gradient of a point when it is not a integer-point using bilinear interpolation.
-    private func gradientOf(point: CGPoint) -> MXNVector {
+    private func gradientOf(point: CGPoint) -> MXNFreeVector {
         guard !point.isIntegerPoint && directionData.ifPointIsValid(point)
-            else { return directionData[point]?.tangentialDirection ?? MXNVector(x: 0, y: 0)}
+            else { return directionData[point]?.tangentialDirection ?? MXNFreeVector(x: 0, y: 0)}
         
         let xceil = Int(ceil(point.x))
         let xfloor = Int(floor(point.x))
@@ -134,7 +160,7 @@ extension SPLineGroupVectorizor {
             let dDownLeft = directionData[(xfloor, yfloor)]?.gradient,
             let dUpRight = directionData[(xceil, yceil)]?.gradient,
             let dDownRight = directionData[(xceil, yfloor)]?.gradient
-        else { return MXNVector(x: 0, y: 0) } // if any of those is nil, such point should not be valid
+        else { return MXNFreeVector(x: 0, y: 0) } // if any of those is nil, such point should not be valid
         
         return bilinearInterporlation(this: (point.x, point.y),
             bX: CGFloat(xfloor), bY: CGFloat(yfloor), eX: CGFloat(xceil), eY: CGFloat(yceil),
@@ -142,13 +168,13 @@ extension SPLineGroupVectorizor {
     }
     
     /// Get the gradient direction of a point when it is not a integer-point using bilinear interpolation.
-    private func gradientDirectionOf(point: CGPoint) -> MXNVector {
+    private func gradientDirectionOf(point: CGPoint) -> MXNFreeVector {
         return gradientOf(point).normalized
     }
     
     func bilinearInterporlation(this this: (x: CGFloat, y: CGFloat),
         bX: CGFloat, bY: CGFloat, eX: CGFloat, eY: CGFloat,
-        bXbY: MXNVector, bXeY: MXNVector, eXbY: MXNVector, eXeY:  MXNVector) -> MXNVector {
+        bXbY: MXNFreeVector, bXeY: MXNFreeVector, eXbY: MXNFreeVector, eXeY:  MXNFreeVector) -> MXNFreeVector {
         
         let r11 = bXbY * ((eX - this.x) / (eX - bX))
         let r21 = eXbY * ((this.x - bX) / (eX - bX))
@@ -168,10 +194,10 @@ extension SPLineGroupVectorizor {
 
 // MARK: - Extensions
 
-extension RGBAPixel {
-    var tangentialDirection: MXNVector { return MXNVector(x: CGFloat(x), y: CGFloat(y)).normalized }
-    var gradientDirection: MXNVector { return MXNVector(x: CGFloat(z), y: CGFloat(w)).normalized }
-    var gradient: MXNVector { return MXNVector(x: CGFloat(z), y: CGFloat(w)) }
+extension XYZWPixel {
+    var tangentialDirection: MXNFreeVector { return MXNFreeVector(x: CGFloat(x), y: CGFloat(y)).normalized }
+    var gradientDirection: MXNFreeVector { return MXNFreeVector(x: CGFloat(z), y: CGFloat(w)).normalized }
+    var gradient: MXNFreeVector { return MXNFreeVector(x: CGFloat(z), y: CGFloat(w)) }
 }
 
 extension CGPoint {
@@ -187,53 +213,4 @@ extension CGFloat {
 }
 
 
-// MARK: - Structs
-
-struct MXNVector {
-    var x: CGFloat
-    var y: CGFloat
-    
-    var absolute: CGFloat {
-        return sqrt(x*x+y*y)
-    }
-    
-    var normalized: MXNVector {
-        let proportion = y / x
-        let newX = 1 / (1 + pow(proportion, 2))
-        let newY = newX * proportion
-        return MXNVector(x: newX, y: newY)
-    }
-    
-    var direction: (a: Direction2D, b: Direction2D) {
-        switch (x, y) {
-        case let (x, y) where x != 0 && y/x < 0.5579 && y/x >= -0.5579:
-            return (.Left, .Right)
-        case let (x, y) where x != 0 && y/x >= 0.5579 && y/x < 22.5882:
-            return (.UpRight, .DownLeft)
-        case let (x, y) where x != 0 && y/x < -0.5579 && y/x >= -22.5882:
-            return (.UpLeft, .DownRight)
-        default:
-            return (.Up, .Down)
-        }
-    }
-}
-
-
-// MARK: - Operators
-
-func *(left: MXNVector, right: CGFloat) -> MXNVector {
-    return MXNVector(x: left.x * right, y: left.y * right)
-}
-
-func +(left: MXNVector, right: MXNVector) -> MXNVector {
-    return MXNVector(x: left.x + right.x, y: left.y + right.y)
-}
-
-func +(left: CGPoint, right: MXNVector) -> CGPoint {
-    return CGPoint(x: left.x + right.x, y: left.y + right.y)
-}
-
-func •(left: MXNVector, right: MXNVector) -> CGFloat {
-    return left.x * right.x + left.y * right.y
-}
 

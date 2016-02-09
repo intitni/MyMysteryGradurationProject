@@ -33,7 +33,11 @@ class GaussianBlurFilter: MXNImageFilter {
     
     required init?(functionName: String, context: MXNContext, radius: Int, sigma: Double) {
         self.radius = radius
+        self.sigma = sigma
+        sigmaPow2 = sigma * sigma
+        pre = 1 / (2 * 3.141593 * sigmaPow2)
         super.init(functionName: functionName, context: context)
+        internalTextureFormat = MTLPixelFormat.RGBA32Float
     }
     
     convenience init?(context: MXNContext, radius: Int, sigma: Double = 1.5) {
