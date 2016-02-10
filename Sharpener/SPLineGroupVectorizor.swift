@@ -23,6 +23,9 @@ class SPLineGroupVectorizor {
     var rawGeometric: SPRawGeometric!
     var magnetPoints = [CGPoint]()
     var trackedPoints = [CGPoint]()
+    var harrisValues: MXNTextureDataFloat!
+    
+    var gradientTensorTexture: MTLTexture!
     
     // MARK: Main Process
     func vectorize(raw: SPRawGeometric) -> SPLineGroup {
@@ -33,6 +36,7 @@ class SPLineGroupVectorizor {
         
         // FIXME: this will not fetch direction data, it only fetches gradient tensor, we need to calculate evalue and evector from it.
         fetchDirectionData()
+        findJunctions()
         //trackLineGroup()
         //seperateLineGroup()
         
@@ -57,33 +61,33 @@ class SPLineGroupVectorizor {
     }
     
     /// It applys gradientFieldDetectingFilter on raw and returns a direction data containg 2 vectors representing tengential direction and gradient direction.
-    ///
-    /// - Returns: A direction data containg 2 vectors representing tengential direction and gradient direction
     private func fetchDirectionData() {
         let filter = LineTrackingFilter(context: context)
         filter.provider = MXNImageProvider(image: UIImage(textureData: rawData), context: context)
         
         filter.applyFilter()
         directionData = MXNTextureDataFloat(texture: filter.eigenVectors)
+        gradientTensorTexture = filter.gradientTensor
+    }
+    
+    private func findJunctions() {
+        let gradientTensorProvider = MXNSimpleTextureProvider(texture: gradientTensorTexture)
+        let harrisFilter = AnglePointDetectingFilter(context: context)
+        harrisFilter.provider = gradientTensorProvider
+        harrisFilter.applyFilter()
+        harrisValues = MXNTextureDataFloat(texture: harrisFilter.harrisValues)
+        
+        let max = harrisValues.data.reduce(0) { max, elem in
+            return elem > max ? elem : max
+        }
         
         for i in 0..<100 {
             for j in 0..<100 {
-                let p = CGPoint(x: i, y: j)
-                let t = directionData[p]
-                guard let a = t else { continue }
-                if a.x == 0 { print("•"); continue }
-                switch (a.z, a.w) {
-                case let (x, y) where x != 0 && y/x < 0.5579 && y/x >= -0.5579:
-                    print("⟷"); continue
-                case let (x, y) where x != 0 && y/x >= 0.5579 && y/x < 22.5882:
-                    print("⤢"); continue
-                case let (x, y) where x != 0 && y/x < -0.5579 && y/x >= -22.5882:
-                    print("⤡"); continue
-                default:
-                    print("⇅"); continue
+                guard let r = harrisValues[CGPoint(x: i, y: j)]?.x else { continue }
+                if r > 0.02 {
+                    print("(\(i/2), \(j/2)): \(r)")
                 }
             }
-            print("↵")
         }
     }
     
@@ -195,9 +199,9 @@ extension SPLineGroupVectorizor {
 // MARK: - Extensions
 
 extension XYZWPixel {
-    var tangentialDirection: MXNFreeVector { return MXNFreeVector(x: CGFloat(x), y: CGFloat(y)).normalized }
-    var gradientDirection: MXNFreeVector { return MXNFreeVector(x: CGFloat(z), y: CGFloat(w)).normalized }
-    var gradient: MXNFreeVector { return MXNFreeVector(x: CGFloat(z), y: CGFloat(w)) }
+    var tangentialDirection: MXNFreeVector { return MXNFreeVector(x: CGFloat(z), y: CGFloat(w)).normalized }
+    var gradientDirection: MXNFreeVector { return MXNFreeVector(x: CGFloat(x), y: CGFloat(y)).normalized }
+    var gradient: MXNFreeVector { return MXNFreeVector(x: CGFloat(x), y: CGFloat(y)) }
 }
 
 extension CGPoint {

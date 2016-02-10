@@ -148,10 +148,10 @@ struct MXNTextureDataFloat {
     let height: Int
     let bytesPerPixel: Int
     
-    init(texture: MTLTexture) {
+    init(texture: MTLTexture, bytesPerPixel: Int = 16) {
         var rawData = [Float](count: texture.width*texture.height*4, repeatedValue: 0)
         texture.getBytes(&rawData, bytesPerRow: texture.width * 16, fromRegion: MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: texture.width, height: texture.height, depth: 1)), mipmapLevel: 0)
-        self.init(data: rawData, width: texture.width, height: texture.height)
+        self.init(data: rawData, width: texture.width, height: texture.height, bytesPerPixel: bytesPerPixel)
     }
     
     init(data: [Float], width: Int, height: Int, bytesPerPixel: Int = 4) {
@@ -173,7 +173,7 @@ struct MXNTextureDataFloat {
     subscript(position: (x: Int, y: Int)) -> XYZWPixel? {
         let x = position.x, y = position.y
         guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
-        let pos = (x + y * width) * bytesPerPixel
+        let pos = (x + y * width) * bytesPerPixel / 4
         return XYZWPixel(r:data[pos], g:data[pos+1], b:data[pos+2], a:data[pos+3])
     }
     
@@ -181,13 +181,13 @@ struct MXNTextureDataFloat {
         get {
             let x = Int(position.x), y = Int(position.y)
             guard y < height && x < width && x >= 0 && y >= 0 else { return nil }
-            let pos = (x + y * width) * bytesPerPixel
+            let pos = (x + y * width) * bytesPerPixel / 4
             return XYZWPixel(r:data[pos], g:data[pos+1], b:data[pos+2], a:data[pos+3])
         }
         set {
             let x = Int(position.x), y = Int(position.y)
             guard y < height && x < width && x >= 0 && y >= 0 && newValue != nil else { return }
-            let pos = (x + y * width) * bytesPerPixel
+            let pos = (x + y * width) * bytesPerPixel / 4
             data[pos] = newValue!.r
             data[pos+1] = newValue!.g
             data[pos+2] = newValue!.b

@@ -18,13 +18,14 @@ class HarrisFilter: MXNImageFilter {
     var uniforms: HarrisFilterUniforms
     
     required init?(functionName: String, context: MXNContext, alpha: Float) {
-        uniforms = HarrisFilterUniforms(alpha: alpha)
+        let newAlpha = max(0.04, min(0.06, alpha))
+        uniforms = HarrisFilterUniforms(alpha: newAlpha)
         super.init(functionName: functionName, context: context)
-        internalTextureFormat = MTLPixelFormat.R32Float
+        internalTextureFormat = MTLPixelFormat.RGBA32Float
     }
     
-    convenience init?(context: MXNContext, alpha: Float = 0.06) {
-        self.init(functionName: "eigenCalculating", context: context, alpha: alpha)
+    convenience init(context: MXNContext, alpha: Float = 0.06) {
+        self.init(functionName: "harris", context: context, alpha: alpha)!
     }
 
     required init?(functionName: String, context: MXNContext) {

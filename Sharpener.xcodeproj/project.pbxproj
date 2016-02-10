@@ -73,6 +73,9 @@
 		13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */; };
 		13DDCE001C4CE66700072492 /* XNStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFF1C4CE66700072492 /* XNStack.swift */; };
 		13E7D8331C6B435E0036601E /* HarrisFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8321C6B435E0036601E /* HarrisFilter.swift */; };
+		13E7D8351C6B7F8D0036601E /* AnglePointDetectingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */; };
+		13E7D8371C6B7FDF0036601E /* DirectionTensorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */; };
+		13E7D8391C6B83660036601E /* invertFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8381C6B83660036601E /* invertFilter.swift */; };
 		8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB5EA983D3116ADF305711E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -148,6 +151,9 @@
 		13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureData.swift; sourceTree = "<group>"; };
 		13DDCDFF1C4CE66700072492 /* XNStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNStack.swift; sourceTree = "<group>"; };
 		13E7D8321C6B435E0036601E /* HarrisFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarrisFilter.swift; sourceTree = "<group>"; };
+		13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnglePointDetectingFilter.swift; sourceTree = "<group>"; };
+		13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionTensorFilter.swift; sourceTree = "<group>"; };
+		13E7D8381C6B83660036601E /* invertFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = invertFilter.swift; sourceTree = "<group>"; };
 		2AB5EA983D3116ADF305711E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -321,6 +327,7 @@
 			children = (
 				13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */,
 				13988EFD1C492613000CE61B /* GeometricsFilteringFilter.swift */,
+				13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */,
 				13627CA31C6A1ACF00DFE73C /* LineTrackingFilter.swift */,
 			);
 			name = "Composition Filters";
@@ -332,10 +339,12 @@
 				133E0A531C26D50D0058B103 /* MXNImageFilter.swift */,
 				13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */,
 				13416C4D1C296450006CB39A /* ThresholdingFilter.swift */,
+				13E7D8381C6B83660036601E /* invertFilter.swift */,
 				13772AF71C2AEC710086CAB3 /* MedianFilter.swift */,
 				13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */,
 				13627C971C67355300DFE73C /* GaussianBlurFilter.swift */,
 				13627C991C67357700DFE73C /* GradientTensorCalculatingFilter.swift */,
+				13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */,
 				13627C9F1C68930800DFE73C /* EigenValueCalculatingFilter.swift */,
 				13E7D8321C6B435E0036601E /* HarrisFilter.swift */,
 			);
@@ -513,6 +522,7 @@
 				13988EF71C47A1D6000CE61B /* SPRawGeometric.swift in Sources */,
 				139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */,
 				13988EEF1C478788000CE61B /* SPShape.swift in Sources */,
+				13E7D8391C6B83660036601E /* invertFilter.swift in Sources */,
 				13988EF11C478951000CE61B /* SPLine.swift in Sources */,
 				131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */,
 				13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */,
@@ -544,6 +554,7 @@
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
 				13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */,
 				13BCAC8F1C5922090029DD9F /* SPSVGGenerator.swift in Sources */,
+				13E7D8351C6B7F8D0036601E /* AnglePointDetectingFilter.swift in Sources */,
 				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
@@ -556,6 +567,7 @@
 				13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */,
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				13627C9A1C67357700DFE73C /* GradientTensorCalculatingFilter.swift in Sources */,
+				13E7D8371C6B7FDF0036601E /* DirectionTensorFilter.swift in Sources */,
 				13918C111C5F408B008DD316 /* SPLineRepresentable.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
 				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
