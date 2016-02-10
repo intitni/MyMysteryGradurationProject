@@ -85,3 +85,20 @@ kernel void eigenCalculating(texture2d<float, access::read> gradientTensor [[tex
     
     eigenVectors.write(float4(g, t), gid);
 }
+
+struct HarrisFilterUniforms {
+    float alpha; // between 0.04 ~ 0.06
+};
+
+kernel void harris(texture2d<float, access::read> gradientTensor [[texture(0)]],
+                   texture2d<float, access::write> respondValues [[texture(1)]], // R32Float
+                   constant MedianFilterUniforms &uniforms [[buffer(0)]],
+                   uint2 gid [[thread_position_in_grid]]) {
+    float alpha = uniforms.alpha;
+    float4 tensor = gradientTensor.read(gid).xyzw;
+    float dm = tensor.x * tensor.w - pow(tensor.y, 2);
+    float tm = tensor.x + tensor.w;
+    float r = dm - alpha * pow(tm, 2);
+    
+    respondValues.write(r, gid);
+}

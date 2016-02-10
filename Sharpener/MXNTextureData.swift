@@ -139,6 +139,8 @@ struct MXNTextureData {
     }
 }
 
+// TODO: Make things generic
+
 struct MXNTextureDataFloat {
     
     var data: [Float]
