@@ -82,7 +82,15 @@ enum Direction2D {
     case Clockwise(degree: Double)
     case CounterClockwise(degree: Double)
     
-    case Pole(vector: MXNFreeVector, used: Bool)
+    case Pole(vector: MXNFreeVector)
+    
+    /// Returns the stored value of .Pole, 0 Vector if it's not .Pole.
+    var poleValue: MXNFreeVector {
+        if case .Pole(let x) = self {
+            return x
+        }
+        return MXNFreeVector(x: 0, y: 0)
+    }
 }
 
 
@@ -97,14 +105,31 @@ struct MXNFreeVector {
     
     /// Returns a normalized vector of self.
     var normalized: MXNFreeVector {
-        let proportion = y / x
-        let newX = 1 / (1 + pow(proportion, 2))
-        let newY = newX * proportion
+        let newX = x / absolute
+        let newY = y / absolute
         return MXNFreeVector(x: newX, y: newY)
     }
     
     /// Getting the Direction2D of it.
-    var direction: Direction2D { return .Pole(vector: self, used: false) }
+    var direction: Direction2D { return .Pole(vector: self) }
+    
+    /// Calculate the angle between self and another free vector.
+    /// - Returns: Angle in degree.
+    func angleWith(another: MXNFreeVector) -> CGFloat {
+        return MXNFreeVector.angleBetween(self, vectorB: another)
+    }
+    
+    static func angleBetween(vectorA: MXNFreeVector, vectorB: MXNFreeVector) -> CGFloat {
+        let cosValue = (vectorA • vectorB) / (vectorA.absolute * vectorB.absolute)
+        return acos(cosValue) * 180 / CGFloat(M_PI)
+    }
+    
+    var isZeroVector: Bool {
+        if x == 0 && y == 0 {
+            return true
+        }
+        return false
+    }
 }
 
 
@@ -122,6 +147,11 @@ func +(left: CGPoint, right: MXNFreeVector) -> CGPoint {
     return CGPoint(x: left.x + right.x, y: left.y + right.y)
 }
 
+/// Inner production of two MXNFreeVectors
 func •(left: MXNFreeVector, right: MXNFreeVector) -> CGFloat {
     return left.x * right.x + left.y * right.y
+}
+
+prefix func -(right: MXNFreeVector) -> MXNFreeVector {
+    return MXNFreeVector(x: -right.x, y: -right.y)
 }
