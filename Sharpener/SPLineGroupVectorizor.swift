@@ -98,10 +98,20 @@ class SPLineGroupVectorizor {
             
             currentLine<--current
             
-            // TODO: first time closed path
-            
             var meetsEndPoint = false
-            if checkIfMeetsJunction(current) {
+            if trackedLines.count == 0 {
+                if startMagnetPoint.shouldAttract(current,
+                    withTengentialDirection: MXNFreeVector(x: startMagnetPoint.point.x-current.x, y:startMagnetPoint.point.y-current.y)) {
+                        // go towards start point
+                        let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
+                        currentLine.raw.appendContentsOf(straight)
+                        meetsEndPoint = true
+                        startMagnetPoint.directions.removeAll()
+                }
+            }
+            
+            
+            if checkIfMeetsJunction(current) && !meetsEndPoint {
                 let result = findJunctionPointStartFrom(current, last: last)
                 
                 if let p = result.point {
@@ -118,10 +128,10 @@ class SPLineGroupVectorizor {
                     if straight.count > 1 { last = straight[straight.endIndex-2] }
                     currentLine.raw.appendContentsOf(straight)
                 
-                    if let smoothDirectionIndex = smoothDirectionIndexFor(inDirection, of: p) {
+                    if let outDirectionIndex = smoothDirectionIndexFor(inDirection, of: p) {
                         // shoot!
-                        let thisDirection = startMagnetPoint.directions[smoothDirectionIndex].poleValue
-                        let free = freelyTrackToDirectionFrom(current, to: thisDirection, steps: 3)
+                        let outDirection = startMagnetPoint.directions[outDirectionIndex].poleValue
+                        let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 4)
                         if !free.isEmpty { current = free.last! }
                         if free.count > 1 { last = free[free.endIndex-2] }
                         currentLine.raw.appendContentsOf(free)
@@ -136,7 +146,7 @@ class SPLineGroupVectorizor {
             if meetsEndPoint {
                 var needNewStartPoint = true
                 if shouldTrackInvertly {
-                    // Should track from current start point, but invertly
+                    // should track from current start point, but invertly.
                     if let directionIndex = invertDirectionIndexFor(startDirection, of: startMagnetPoint) {
                         // found invert direction of start point.
                         needNewStartPoint = false
@@ -150,25 +160,23 @@ class SPLineGroupVectorizor {
                         currentLine.raw.appendContentsOf(free)
                         shouldTrackInvertly = false
                         needNewStartPoint = false
+                        currentLine.raw = currentLine.raw.reverse()
                     } else {
                         shouldTrackInvertly = true
                     }
                 } else {
-                    // Did track invertly, and need to append new line into the old one
-                    let newRaw: [CGPoint] = currentLine.raw.reverse()
-                    let oldRaw: [CGPoint] = trackedLines[trackedLines.endIndex-1].raw
-                    newRaw.appendContentsOf(oldRaw)
-                    trackedLines.removeLast()
-                    trackedLines.append(newRaw)
+                    // did track invertly, should turn shouldTrackInvertly back on.
                     shouldTrackInvertly = true
                 }
+                
                 guard needNewStartPoint else { continue }
                 
                 if let next = nextStartPoint() {
+                    // need to find a new start point from magnetPoints, and append currentLine to trackedLines.
                     current = next.point
-                    let thisDirection: MXNFreeVector
+                    let outDirection: MXNFreeVector
                     if case .Pole(let x) = next.directions[0] {
-                        thisDirection = x
+                        outDirection = x
                         next.directions.removeFirst()
                     }
                     trackedLines.append(currentLine)
@@ -177,11 +185,12 @@ class SPLineGroupVectorizor {
                     
                     startMagnetPoint = next
                 	    
-                    let free = freelyTrackToDirectionFrom(current, to: thisDirection, steps: 3)
+                    let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 4)
                     if !free.isEmpty { current = free.last! }
                     if free.count > 1 { last = free[free.endIndex-2] }
                     currentLine.raw.appendContentsOf(free)
                 } else {
+                    // when start points are exausted.
                     break
                 }
             }
@@ -265,6 +274,7 @@ extension SPLineGroupVectorizor {
         
         if candidates.isEmpty { return (nil, false, 0) }
         
+        // find if such MagnetPoint is already found
         for c in candidates {
             for p in magnetPoints {
                 if c.point.distanceTo(p.point) <= 5 {
@@ -273,6 +283,7 @@ extension SPLineGroupVectorizor {
             }
         }
         
+        // Calculate luminance of candidates
         for c in candidates {
             var lumi = [CGFloat]()
             for i in 0..<circCount {
@@ -289,12 +300,15 @@ extension SPLineGroupVectorizor {
                 sum /= CGFloat(distance)
                 lumi.append(sum)
             }
-            c.luminance = lumi
+            c.luminance = lumi // directions will be calculated
         }
         
+        // filter the ones that have fewer directions than the others
+        // also, select the one with lowest luminance value from previous result
         candidates.sortInPlace { $0.directions.count > $1.directions.count }
         let directionCount = candidates.first?.directions.count
         
+        // a junction point neeed more than 2 directions
         if directionCount <= 2 { return (nil, false, 0) }
         
         candidates = candidates.filter { $0.directions.count < directionCount }
@@ -527,7 +541,7 @@ extension SPLineGroupVectorizor {
         private func isOfTheSameDirection(point: CGPoint,
             withTengentialDirection tan: MXNFreeVector) -> (yes: Bool, directionIndex: Int) {
                 for (n, d) in directions.enumerate() {
-                    if case .Pole(let v) = d where v.angleWith(tan) < 10 {
+                    if case .Pole(let v) = d where v.angleWith(tan) > 160 {
                         return (true, n)
                     }
                 }
@@ -664,7 +678,7 @@ extension CGPoint {
     
     func interpolateSemiTowards(direction: MXNFreeVector, forward: Bool) -> CGPoint {
         let newDirection = MXNFreeVector(x: direction.x/2, y: direction.y/2)
-        return interpolateSemiTowards(newDirection, forward: forward)
+        return interpolateTowards(newDirection, forward: forward)
     }
 }
 
