@@ -14,6 +14,8 @@ protocol MXNCompositionFilters: MXNTextureConsumer, MXNTextureProvider {
     var tailFilter: MXNImageFilter { get }
     /// Should be the first filter in chain
     var headFilter: MXNImageFilter { get }
+    var texture: MTLTexture! { get }
+    var provider: MXNTextureProvider? { get set }
 }
 
 extension MXNCompositionFilters {

@@ -24,6 +24,12 @@ class MXNImageFilter: MXNTextureProvider, MXNTextureConsumer, MXNDrawablePresent
             return internalTexture
         }
     }
+    var internalTextureFormat: MTLPixelFormat! {
+        didSet {
+            isDirty = true
+            internalTexture = nil
+        }
+    }
     var internalTexture: MTLTexture?
     var shouldWaitUntilCompleted: Bool = true
     
@@ -46,7 +52,10 @@ class MXNImageFilter: MXNTextureProvider, MXNTextureConsumer, MXNDrawablePresent
     func applyFilter() {
         guard let inputTexture = self.provider?.texture else { return } // one should always have provider
         if internalTexture == nil || internalTexture?.width != inputTexture.width || internalTexture?.height != inputTexture.height {
-            let textureDescriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(inputTexture.pixelFormat,
+            if internalTextureFormat == nil {
+                internalTextureFormat = inputTexture.pixelFormat
+            }
+            let textureDescriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(internalTextureFormat,
                 width: inputTexture.width, height: inputTexture.height, mipmapped: false)
             internalTexture = context.device?.newTextureWithDescriptor(textureDescriptor)
         }
