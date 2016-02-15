@@ -139,6 +139,9 @@ struct MXNTextureData {
     }
     
     func isBackgroudAtPoint(point: CGPoint) -> Bool {
+        let dx = point.x, dy = point.y
+        guard dy < CGFloat(height) && dx < CGFloat(width) && dx >= 0 && dy >= 0 else { return true }
+
         if point.isIntegerPoint {
             return self[point]?.isBackgroundWhite ?? true
         }
@@ -156,7 +159,7 @@ struct MXNTextureData {
         if self[CGPoint(x:x+1, y:y+1)]?.isBackgroundWhite ?? true {
             weight += 1
         }
-        return weight >= 3 ? true : false
+        return weight > 3 ? true : false
     }
 }
 
@@ -261,7 +264,7 @@ extension RGBAPixel {
     var isInShapeBorder: Bool { return self.r == 66 }
     var isInLine: Bool { return self.r == 209 }
     var isTransparent: Bool { return self.a == 0 }
-    var isBackgroundWhite: Bool { return self.r == 255 }
+    var isBackgroundWhite: Bool { return self.r >= 240 }
     
     /* 
         66, 133, 214 0.25 b

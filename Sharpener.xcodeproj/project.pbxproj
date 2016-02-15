@@ -30,6 +30,7 @@
 		13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C9F1C68930800DFE73C /* EigenValueCalculatingFilter.swift */; };
 		13627CA21C69C51D00DFE73C /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627CA11C69C51D00DFE73C /* TestViewController.swift */; };
 		13627CA41C6A1ACF00DFE73C /* LineTrackingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627CA31C6A1ACF00DFE73C /* LineTrackingFilter.swift */; };
+		1374CE391C704D3A003E9D88 /* Array+Smoothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */; };
 		13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */; };
 		13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */; };
 		13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF71C2AEC710086CAB3 /* MedianFilter.swift */; };
@@ -103,6 +104,7 @@
 		13627C9F1C68930800DFE73C /* EigenValueCalculatingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EigenValueCalculatingFilter.swift; sourceTree = "<group>"; };
 		13627CA11C69C51D00DFE73C /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		13627CA31C6A1ACF00DFE73C /* LineTrackingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineTrackingFilter.swift; sourceTree = "<group>"; };
+		1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Smoothing.swift"; sourceTree = "<group>"; };
 		13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalEnums.swift; sourceTree = "<group>"; };
 		13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MedianFilter.metal; sourceTree = "<group>"; };
 		13772AF71C2AEC710086CAB3 /* MedianFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedianFilter.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				13416C541C297981006CB39A /* UIColor+Custom.swift */,
+				1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */,
 				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
 				13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */,
 			);
@@ -524,6 +527,7 @@
 				13988EEF1C478788000CE61B /* SPShape.swift in Sources */,
 				13E7D8391C6B83660036601E /* invertFilter.swift in Sources */,
 				13988EF11C478951000CE61B /* SPLine.swift in Sources */,
+				1374CE391C704D3A003E9D88 /* Array+Smoothing.swift in Sources */,
 				131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */,
 				13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */,
 				13988EF31C479A66000CE61B /* SPLineGroup.swift in Sources */,

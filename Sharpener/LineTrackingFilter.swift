@@ -31,7 +31,7 @@ class LineTrackingFilter: MXNCompositionFilters {
         t = ThresholdingFilter(context: context, thresholdingFactor: 0.5)
         
         gradientTensorCalculatingFilter = GradientTensorCalculatingFilter(context: context)
-        gaussianBlurFilter = GaussianBlurFilter(context: context, radius: 4)
+        gaussianBlurFilter = GaussianBlurFilter(context: context, radius: 6, sigma: 1.5)
         eigenValueVectorCalculatingFilter = EigenValueVectorCalculatingFilter(context: context)
         
         gradientTensorCalculatingFilter.provider = t

@@ -92,20 +92,19 @@ kernel void eigenCalculating(texture2d<float, access::read> gradientTensor [[tex
     float c = gradientTensor.read(gid).z;
     float d = gradientTensor.read(gid).w;
     float s = pow(a+d, 2) - 4 * (a*d - b*c);
-    float maxv = a + d + sqrt(s);
-    float minv = a + d - sqrt(s);
+    float maxv = (a + d + sqrt(s))/2;
+    float minv = (a + d - sqrt(s))/2;
     
     eigenValues.write(float4(minv, maxv, float2(0)), gid);
     
     // gradient
-    float up = a - maxv + b;
-    float down = c - maxv + d;
+    float up = b;
+    float down = maxv - a;
     
     float2 g = float2(up, down);
     
     // tangential
-    up = a - minv + b;
-    down = c - minv + d;
+    down = minv - a;
     
     float2 t = float2(up, down);
     

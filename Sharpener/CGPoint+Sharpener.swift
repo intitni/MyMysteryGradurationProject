@@ -105,6 +105,7 @@ struct MXNFreeVector {
     
     /// Returns a normalized vector of self.
     var normalized: MXNFreeVector {
+        if absolute == 0 { return MXNFreeVector(x: 0, y: 0) }
         let newX = x / absolute
         let newY = y / absolute
         return MXNFreeVector(x: newX, y: newY)
@@ -112,6 +113,16 @@ struct MXNFreeVector {
     
     /// Getting the Direction2D of it.
     var direction: Direction2D { return .Pole(vector: self) }
+    
+    init(x: CGFloat, y: CGFloat) {
+        self.x = x
+        self.y = y
+    }
+    
+    init(start: CGPoint, end: CGPoint) {
+        x = end.x - start.x
+        y = end.y - start.y
+    }
     
     /// Calculate the angle between self and another free vector.
     /// - Returns: Angle in degree.
