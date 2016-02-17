@@ -11,8 +11,13 @@ import UIKit
 struct SPLine {
     var raw = [CGPoint]()
     var guesses = [SPGuess]()
-    var applied: SPGuess?
+    var applied: SPGuess? = nil
     var vectorized = [SPAnchorPoint]()
+    
+    init(raw: [CGPoint] = []) {
+        self.raw = raw
+    }
+    
     mutating func appendVectorized(point: SPAnchorPoint) { vectorized.append(point) }
     mutating func appendRaw(point: CGPoint) { raw.append(point) }
 }

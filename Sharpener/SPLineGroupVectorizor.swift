@@ -668,6 +668,7 @@ extension SPLineGroupVectorizor {
                 calculateDirection()
             }
         }
+        // TODO: use luminance deviation to average, on maximun directions, not minimum.
         var leastLuminance: CGFloat = 0
         var directions = [Direction2D]()
         

@@ -14,14 +14,18 @@ class SPGuess {
         case Straight(start: CGPoint, end: CGPoint)
         // case PartialStraight(straightLines: [(startIndex: Int, endIndex: Int)])
         case Circle(center: CGPoint, radius: CGFloat)
-        case Rectangle(a: CGPoint, b: CGPoint, c: CGPoint, d: CGPoint)
-        case Closed(closePoint: CGPoint)
-        case RoundedRect(a: CGPoint, b: CGPoint, c: CGPoint, d: CGPoint, radius: CGFloat)
+        case Rectangle(center: CGPoint, height: CGFloat, width: CGFloat, rotation: CGFloat, radius: CGFloat)
+        case Closed(closeStartIndex: Int, closeEndIndex: Int)
+        case RoundedRect(center: CGPoint, height: CGFloat, width: CGFloat, rotation: CGFloat, radius: CGFloat)
         case Polygon(points: [CGPoint])
         // case Symmetric(top: CGPoint, bottom: CGPoint)
     }
     
     var guessType: GuessType?
+    
+    init(guessType: GuessType) {
+        self.guessType = guessType
+    }
     
     var bezierPath: UIBezierPath {
         let path = UIBezierPath()

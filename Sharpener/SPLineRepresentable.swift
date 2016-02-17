@@ -39,3 +39,34 @@ extension SPLineRepresentable {
     }
 }
 
+protocol SPCurveRepresentable {
+    var representingLines: [SPCurve] { get }
+    var bezierPath: UIBezierPath { get }
+    var shapeLayer: CAShapeLayer { get }
+    var fillColor: UIColor { get }
+}
+
+extension SPCurveRepresentable {
+    /// UIBezierPath made up of SPLines.
+    var bezierPath: UIBezierPath {
+        let path = UIBezierPath()
+        representingLines.forEach { border in
+            path.appendPath(border.bezierPath)
+        }
+        
+        return path
+    }
+    
+    /// CAShapeLayer made up of bezierPath.
+    var shapeLayer: CAShapeLayer {
+        let layer = CAShapeLayer()
+        
+        layer.path = bezierPath.CGPath
+        layer.fillRule = kCAFillRuleEvenOdd
+        layer.fillColor = fillColor.CGColor
+        layer.backgroundColor = UIColor.blackColor().CGColor
+        
+        return layer
+    }
+}
+

@@ -11,8 +11,12 @@ import Foundation
 class SPCurve {
     var raw: [CGPoint]
     var guesses = [SPGuess]()
-    var applied: SPGuess? = nil
+    var applied: SPGuess?
     var vectorized = [SPAnchorPoint]()
+    
+    var smoothness: CGFloat = 0.36
+    var farthestDistance: CGFloat?
+    
     func appendRaw(point: CGPoint) { raw.append(point) }
     
     func appendVectorized(point: SPAnchorPoint) {

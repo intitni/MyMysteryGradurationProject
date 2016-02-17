@@ -17,7 +17,7 @@ enum SPGeometricType {
 // MARK: - SPGeometrics
 protocol SPGeometrics {
     var type: SPGeometricType { get }
-    var lines: [SPLine] { get set }
+    var lines: [SPCurve] { get set }
 }
 
 // MARK: - For All SPGeometrics
@@ -26,8 +26,8 @@ extension SPGeometrics {
 }
 
 // MARK: - Where SPLineRepresentable
-extension SPGeometrics where Self: SPLineRepresentable {
-    var representingLines: [SPLine] { return lines }
+extension SPGeometrics where Self: SPCurveRepresentable {
+    var representingLines: [SPCurve] { return lines }
     var fillColor: UIColor {
         switch type {
         case .Shape:
@@ -38,7 +38,7 @@ extension SPGeometrics where Self: SPLineRepresentable {
     }
 }
 
-func <--(inout left: SPGeometrics, right: SPLine) {
+func <--(inout left: SPGeometrics, right: SPCurve) {
     left.lines.append(right)
 }
 

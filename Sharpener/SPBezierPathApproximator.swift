@@ -13,31 +13,64 @@ class SPBezierPathApproximator {
     /// Deviation to endurance.
     var threshold: CGFloat = 10
     
-    /// Apply BezierPath approximation on given `SPLine`, returning a `SPCurve` with vectorized results stored in `SPCurve.vectorized`.
+    /// Smoothness of approximation, 0 to 1.
+    var smoothness: CGFloat = 0.36
+    
+    init(threshold: CGFloat, smoothness: CGFloat = 0) {
+        self.threshold = threshold
+        self.smoothness = smoothness
+    }
+    
+    /// Apply BezierPath approximation on given `SPCurve`,  and store vectorized results in `SPCurve.vectorized`.
     ///
     /// Process:
-    /// 1. Using Polygon approximation to find feature points in the line, then split the line into seperate lines.
-    /// 2. Apply BezierPath approximation on each.
-    /// 3. If Deviation is smaller than threshold, we embrace the result. Or, we will find the point leading in deviation, and split the line according to it.
-    /// 4. After fetching a new `SPCurve`, we append it to the old long one, and do a little bit angle correction to connect point to make it smooth.
+    /// 1. Smooth the line by Polygon approximation.
+    /// 2. Using Polygon approximation to find feature points in the line, then split the line into seperate lines.
+    /// 3. Apply BezierPath approximation on each.
+    /// 4. If Deviation is smaller than threshold, we embrace the result. Or, we will find the point leading in deviation, and split the line according to it.
+    /// 5. After fetching a new `SPCurve`, we append it to the old long one, and do a little bit angle correction to connect point to make it smooth.
     /// 
-    /// - Parameter line: The `SPLine` that needs to be approximated.
-    /// - Returns: A approximated result in `SPCurve`
-    func approximate(line: SPLine) -> SPCurve {
+    /// - Parameter line: The `SPCurve` that needs to be approximated.`
+    func approximate(line: SPCurve) {
         let curve = SPCurve(raw: line.raw)
+        var raw = line.raw
         
-        // 1. polygon approximation and split!
-        let polyApprox = SPPolygonApproximator(threshold: 5)
-        let splitors = polyApprox.polygonApproximate(line.raw)
-        let splitedLines = splitSPLine(line, accordingTo: splitors)
+        // 1. smooth raw
+        if line.farthestDistance == nil {
+            line.farthestDistance = fetchFarthestDistanceFrom(line.raw)
+        }
+        if let fd = line.farthestDistance {
+            let smoother = SPPolygonApproximator(threshold: fd * smoothness)
+            raw = smoother.polygonApproximate(line.raw)
+            line.smoothness = smoothness
+        }
         
-        // 2. approximate every line
+        // 2. polygon approximation and split!
+        let polyApprox = SPPolygonApproximator(threshold: (line.farthestDistance ?? CGFloat(raw.count)) * 0.3 )
+        let splitors = polyApprox.polygonApproximate(raw)
+        
+        let splitedLines = splitSPLine(SPLine(raw: raw), accordingTo: splitors)
+        
+        // 3. approximate every line
         for line in splitedLines {
             let c = approximateSplittedLine(line)
             curve.appendCurve(c)
         }
         
-        return curve
+        line.vectorized = curve.vectorized
+    }
+    
+    private func fetchFarthestDistanceFrom(points: [CGPoint]) -> CGFloat {
+        guard points.count >= 3 else { return 0 }
+        let closed = points.last == points.first
+        var manipPoints = closed ? points.dropLast(1) : points.dropLast(0)
+        let line = SPPolygonApproximator.Line(endA: manipPoints.first!, endB: manipPoints.last!)
+        var max: CGFloat = 0
+        for i in 1..<manipPoints.endIndex-1 {
+            let distance = line.distanceToPoint(manipPoints[i])
+            if distance > max { max = distance }
+        }
+        return max
     }
     
     /// Used to split SPLine base on an array of points.
@@ -72,15 +105,15 @@ class SPBezierPathApproximator {
     /// - Returns: A approximated result in `SPCurve`
     private func approximateSplittedLine(line: SPLine) -> SPCurve {
         guard line.raw.count >= 2 else {
-            let s = SPCurve(raw: [])
+            let s = SPCurve()
             s.vectorized = [SPAnchorPoint(point: line.raw.first!), SPAnchorPoint(point: line.raw.last!)]
             return s
         }
         guard line.raw.count >= 1 else {
-            return SPCurve(raw: [])
+            return SPCurve()
         }
         
-        var curve = SPCurve(raw: [])
+        var curve = SPCurve()
         var splittedLines = [line]
         var manipIndex = 0
         

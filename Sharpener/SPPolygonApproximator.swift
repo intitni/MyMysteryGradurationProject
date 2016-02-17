@@ -123,7 +123,7 @@ class SPPolygonApproximator {
         }
         
         /// For distance between point(x,y) and line((a,b)->(c,d)) should be <br> **|(d-b)x + (a-c)y + cb - ad| / √((d-b)^2 + (a-c)^2)**.
-        mutating func distanceToPoint(point: CGPoint) -> CGFloat {
+        func distanceToPoint(point: CGPoint) -> CGFloat {
             let numerator = (endB.y - endA.y) * point.x + (endA.x - endB.x) * point.y
                           + endB.x * endA.y - endA.x * endB.y
             return abs(numerator) / eruclideanDistance
