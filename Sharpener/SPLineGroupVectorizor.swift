@@ -95,6 +95,7 @@ class SPLineGroupVectorizor {
             let tanCurrent = tangentialDirectionOf(current)
             let tanLast = MXNFreeVector(start: last, end: current)
             let innerProduct = tanLast • tanCurrent
+            // FIXME: avoid affects from mid point correction
             var s = !(innerProduct).isSignMinus
             if innerProduct == 0 { s = true }
             last = current
@@ -160,7 +161,7 @@ class SPLineGroupVectorizor {
                     } else {
                         meetsEndPoint = true
                     }
-                    
+                    // FIXME: consider junction count 2 is a junction point, but fewer free track step
                 } else {
                     if result.junctionCount < 2 {
                         print("### meets end point")
@@ -472,6 +473,7 @@ extension SPLineGroupVectorizor {
     }
     
     private func freelyTrackToDirectionFrom(current: CGPoint, to direction: MXNFreeVector, steps: Int) -> [CGPoint] {
+        // FIXME: free track auto ends when tan is no longer messy
         print("=== free tracking")
         var line = [CGPoint]()
         var point = current

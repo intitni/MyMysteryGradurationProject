@@ -9,20 +9,9 @@
 import UIKit
 
 struct SPLine {
-    enum Guess {
-        case Straight(start: CGPoint, end: CGPoint)
-        case PartialStraight(straightLines: [(startIndex: Int, endIndex: Int)])
-        case Circle(center: CGPoint, radius: CGFloat)
-        case Triangle(a: CGPoint, b: CGPoint, c: CGPoint)
-        case Rectangle(a: CGPoint, b: CGPoint, c: CGPoint, d: CGPoint)
-        case Closed(on: CGPoint)
-        case RoundedRect(a: CGPoint, b: CGPoint, c: CGPoint, d: CGPoint, radius: CGFloat)
-        case Symmetric(top: CGPoint, bottom: CGPoint)
-    }
-    
     var raw = [CGPoint]()
-    var guesses = [Guess]()
-    var applied = [Guess]()
+    var guesses = [SPGuess]()
+    var applied: SPGuess?
     var vectorized = [SPAnchorPoint]()
     mutating func appendVectorized(point: SPAnchorPoint) { vectorized.append(point) }
     mutating func appendRaw(point: CGPoint) { raw.append(point) }
@@ -41,12 +30,14 @@ struct SPAnchorPoint: CustomStringConvertible {
     var controlPointA: CGPoint?
     var controlPointB: CGPoint?
     
-    init(point: CGPoint) {
+    init(point: CGPoint, controlPointA: CGPoint? = nil, controlPointB: CGPoint? = nil) {
         self.anchorPoint = point
+        self.controlPointA = controlPointA
+        self.controlPointB = controlPointB
     }
     
     var description: String {
-        return "\(anchorPoint)"
+        return "\(controlPointA) o- \(anchorPoint) -o \(controlPointB)"
     }
 }
 
