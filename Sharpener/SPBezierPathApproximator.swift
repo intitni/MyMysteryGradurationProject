@@ -11,12 +11,12 @@ import Foundation
 class SPBezierPathApproximator {
     
     /// Deviation to endurance.
-    var threshold: CGFloat = 10
+    var threshold: CGFloat = 5
     
     /// Smoothness of approximation, 0 to 1.
     var smoothness: CGFloat = 0.36
     
-    init(threshold: CGFloat, smoothness: CGFloat = 0) {
+    init(threshold: CGFloat = 10, smoothness: CGFloat = 0) {
         self.threshold = threshold
         self.smoothness = smoothness
     }
@@ -85,9 +85,11 @@ class SPBezierPathApproximator {
         for p in line.raw {
             currentLine <-- p
             if p == points[currentSplitterIndex] {
-                splittedLines.append(currentLine)
-                currentLine = SPLine()
-                currentLine <-- p
+                if currentLine.raw.count >= 5 {
+                    splittedLines.append(currentLine)
+                    currentLine = SPLine()
+                    currentLine <-- p
+                }
                 currentSplitterIndex += 1
             }
         }
@@ -124,7 +126,7 @@ class SPBezierPathApproximator {
             let (v1, v2) = vsForPoints(raw)
             let (deviation, splitterIndex) = deviationSumForPoints(raw, v0: v0, v1: v1, v2: v2, v3: v3)
             
-            if deviation < threshold || checkIfSplitterIndex(splitterIndex, isValidWhenLengthIs: raw.endIndex) {
+            if deviation < threshold || !checkIfSplitterIndex(splitterIndex, isValidWhenLengthIs: raw.endIndex) {
                 // Accept!
                 let anchorPoint1 = SPAnchorPoint(point: v0)
                 let anchorPoint2 = SPAnchorPoint(point: v3, controlPointA: v1, controlPointB: v2)
@@ -148,7 +150,7 @@ class SPBezierPathApproximator {
     ///
     ///To calculate v1 and v2, we need  **at least 2 points (excluding start and end)** in a `SPLine`.
     private func checkIfSplitterIndex(splitterIndex: Int, isValidWhenLengthIs length: Int) -> Bool {
-        return splitterIndex <= 2 || splitterIndex > length-4
+        return splitterIndex > 3 && splitterIndex <= length-5
     }
     
     /// Used to split SPLine base on an index of point.
@@ -181,6 +183,7 @@ class SPBezierPathApproximator {
             var sum: CGFloat = 0
             var farthestIndex = 0
             var max: CGFloat = 0
+            var realMax: CGFloat = 0
             let count = points.count
             for i in 1..<count-2 {
                 let position = CGFloat(i) / CGFloat(count-1)
@@ -189,12 +192,14 @@ class SPBezierPathApproximator {
                 sum += d
                 
                 if d > max {
-                    farthestIndex = i
-                    max = d
+                    realMax = d
+                    if checkIfSplitterIndex(i, isValidWhenLengthIs: points.count) {
+                        farthestIndex = i
+                        max = d
+                    }
                 }
             }
-            
-            return (sum, farthestIndex)
+            return (realMax, farthestIndex)
     }
     
     /// Calculate the Average deviation for a point.
@@ -221,6 +226,8 @@ class SPBezierPathApproximator {
         let c2 = argumentC(k: 2, forPoints: points)
         let a1a2 = a1*a2
         let powa12 = pow(a12, 2)
+        
+        assert(a1a2 - powa12 != 0, "0")
         
         let v1 = (a2*c1 - a12*c2) / (a1a2 - powa12)
         let v2 = (a1*c2 - a12*c1) / (a1a2 - powa12)
