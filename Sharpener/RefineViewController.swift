@@ -10,6 +10,8 @@ import UIKit
 
 class RefineViewController: UIViewController {
     
+    enum Mode { case Catch, Erase }
+    
     // MARK: UI Elements
     
     @IBOutlet weak var scrollView: UIScrollView! {
@@ -21,8 +23,18 @@ class RefineViewController: UIViewController {
             scrollView.maximumZoomScale = 2
         }
     }
-    @IBOutlet weak var navigationBar: ProcessingNavigationBar!
-    @IBOutlet weak var controlPanel: UIView!
+    @IBOutlet weak var navigationBar: ProcessingNavigationBar! {
+        didSet {
+            navigationBar.buttonDelegate = self
+        }
+    }
+    @IBOutlet weak var controlPanel: UIView! {
+        didSet {
+            controlPanel.backgroundColor = UIColor.whiteColor()
+        }
+    }
+    
+    @IBOutlet weak var segmentedControl: SPTwoWaySegmentedControl!
     
     var refineView: SPRefineView! {
         didSet {
@@ -30,6 +42,7 @@ class RefineViewController: UIViewController {
             refineView.delegate = self
         }
     }
+    var mode: Mode = .Erase
     
     // MARK: Constants
     
@@ -79,6 +92,7 @@ class RefineViewController: UIViewController {
 extension RefineViewController {
     private func prepareViews() {
         refineView = SPRefineView(frame: CGRectZero)
+        segmentedControl.buttonDelegate = self
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -107,6 +121,42 @@ extension RefineViewController: SPRawGeometricsFinderDelegate {
 // MARK: - SPRefineViewDelegate
 extension RefineViewController: SPRefineViewDelegate {
     func didTouchShapeAtIndex(index: Int) {
-        SPGeometricsStore.universalStore.rawStore[index].isHidden.turn()
+        let shape = SPGeometricsStore.universalStore.rawStore[index]
+        shape.isHidden = mode == .Catch ? false : true
+        refineView.updateShapeLayerAtIndex(index, to: shape.shapeLayer)
+    }
+}
+
+extension RefineViewController: ProcessingNavigationBarDelegate {
+    func didTapOnNavigationBarButton(index: Int) {
+        switch index {
+        case 0:
+            SPGeometricsStore.universalStore.removeAll()
+            dismissViewControllerAnimated(true, completion: nil)
+        case 1:
+            performSegueWithIdentifier("RefineToVectorize", sender: self)
+        default: break
+        }
+    }
+    
+    var processingNavigationBarRightButtonText: String { return "Vectorize" }
+}
+
+extension RefineViewController: SPTwoWaySegmentedControlDelegate {
+    func twoWaySegmentedControlDidTapOnButtonWithIndex(index: Int) {
+        switch index {
+        case 0:
+            mode = .Erase
+        default:
+            mode = .Catch
+        }
+    }
+    
+    func performDragOutActionForButtonWithIndex(index: Int) {
+        
+    }
+    
+    var twoWaySegmentedControlButtonNames: (String, String) {
+        return ("Erase", "Catch")
     }
 }

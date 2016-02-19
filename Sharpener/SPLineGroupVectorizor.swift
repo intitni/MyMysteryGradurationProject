@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SPLineGroupVectorizorDelegate {
+protocol SPLineGroupVectorizorVisualTestDelegate {
     func trackingToPoint(point: CGPoint)
 }
 
@@ -32,7 +32,8 @@ class SPLineGroupVectorizor {
     
     var gradientTensorTexture: MTLTexture!
     
-    var delegate: SPLineGroupVectorizorDelegate?
+    var testDelegate: SPLineGroupVectorizorVisualTestDelegate? = nil
+    var visualTesting: Bool { return testDelegate == nil ? false : true }
     
     // MARK: Main Process
     func vectorize(raw: SPRawGeometric) -> SPLineGroup {
@@ -42,6 +43,21 @@ class SPLineGroupVectorizor {
         rawData = fetchRawDataFromRawLineGroup(rawGeometric)
         fetchDirectionData()
         trackLineGroup()
+        
+        let curves = trackedLines.map { line -> SPCurve in
+            let curve = SPCurve(raw: line.raw)
+            return curve
+        }
+        
+        curves.forEach { c in
+            let shapeDetector = SPShapeDetector()
+            let guesses = shapeDetector.detect(c, inShape: false)
+            c.guesses = guesses
+            let approx = SPBezierPathApproximator()
+            approx.approximate(c)
+        }
+        
+        lineGroup.lines = curves
         
         return lineGroup
     }
@@ -110,10 +126,14 @@ class SPLineGroupVectorizor {
             (current, currentLeft, currentRight) = correctedPositionMidPointFor(current)
             currentLine<--current
 
-            dispatch_async(GCD.mainQueue) {
-                self.delegate?.trackingToPoint(current)
+            /////////////////////////////////////////////
+            if visualTesting {
+                dispatch_async(GCD.mainQueue) {
+                    self.testDelegate?.trackingToPoint(current)
+                }
+                NSThread.sleepForTimeInterval(0.1)
             }
-            NSThread.sleepForTimeInterval(0.1)
+            /////////////////////////////////////////////
             
             var meetsEndPoint = false
             if rawData.isBackgroudAtPoint(current) && rawData.isBackgroudAtPoint(last) {
@@ -122,7 +142,7 @@ class SPLineGroupVectorizor {
             if trackedLines.count == 0 {
                 if startMagnetPoint.shouldAttract(current,
                     withTengentialDirection: MXNFreeVector(start: current, end: startMagnetPoint.point)) {
-                        print("### attracted by start point")
+                        if testDelegate != nil { print("### attracted by start point") }
                         // go towards start point
                         let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
                         currentLine.raw.appendContentsOf(straight)
@@ -132,11 +152,13 @@ class SPLineGroupVectorizor {
             }
             
             if checkIfMeetsJunction((currentLeft,currentRight), lastEdge: (lastLeft, lastRight)) && !meetsEndPoint {
-                print("### meets protential junction point")
+                if visualTesting { print("### meets protential junction point") }
+                
                 let result = findJunctionPointStartFrom(current, last: last)
                 
                 if let p = result.point, let dIndex = result.directionIndex {
-                    print("### found junction point, \(result.exist ? "exist" : "new")")
+                    if visualTesting { print("### found junction point, \(result.exist ? "exist" : "new")") }
+                    
                     if !result.exist {
                         magnetPoints.append(p)
                     }
@@ -164,7 +186,7 @@ class SPLineGroupVectorizor {
                     // FIXME: consider junction count 2 is a junction point, but fewer free track step
                 } else {
                     if result.junctionCount < 2 {
-                        print("### meets end point")
+                        if visualTesting { print("### meets end point") }
                         meetsEndPoint = true
                     }
                 }
@@ -175,7 +197,7 @@ class SPLineGroupVectorizor {
                 if shouldTrackInvertly {
                     // should track from current start point, but invertly.
                     if let directionIndex = invertDirectionIndexFor(startDirection, of: startMagnetPoint) {
-                        print("### track invertly")
+                        if visualTesting { print("### track invertly") }
                         // found invert direction of start point.
                         needNewStartPoint = false
                         shouldTrackInvertly = false
@@ -201,7 +223,7 @@ class SPLineGroupVectorizor {
                 guard needNewStartPoint else { continue }
                 
                 if let next = nextStartPoint() {
-                    print("### new start point: \(next.point)")
+                    if visualTesting { print("### new start point: \(next.point)") }
                     // need to find a new start point from magnetPoints, and append currentLine to trackedLines.
                     current = next.point
                     let outDirection: MXNFreeVector = next.directions.removeFirst().poleValue
@@ -217,7 +239,7 @@ class SPLineGroupVectorizor {
                     currentLine.raw.appendContentsOf(free)
                 } else {
                     // when start points are exausted.
-                    print("!!! end")
+                    if visualTesting { print("!!! end") }
                     break
                 }
             }
@@ -343,7 +365,7 @@ extension SPLineGroupVectorizor {
                     if (MXNFreeVector(start: lastPoint, end: point) • MXNFreeVector(start: point, end: p.point)).isSignMinus {
                         return (nil, false, 0, 2)
                     }
-                    print("### Magnet Point already exists: \(p.point)")
+                    if visualTesting { print("### Magnet Point already exists: \(p.point)") }
                     return (p, true, inDirectionIndexFor(MXNFreeVector(x:p.point.x-point.x,y:p.point.y-point.y), of: p), 0)
                 }
             }
@@ -387,7 +409,7 @@ extension SPLineGroupVectorizor {
         
         // a junction point neeed more than 2 directions
         if directionCount <= 2 {
-            print("### not a valid Junction Point: \(directionCount)")
+            if visualTesting { print("### not a valid Junction Point: \(directionCount)") }
             return (nil, false, 0, directionCount!)
         }
         
@@ -401,7 +423,7 @@ extension SPLineGroupVectorizor {
             MXNFreeVector(x:junctionPoint.point.x-point.x,y:junctionPoint.point.y-point.y),
             of: junctionPoint.magnetPoint
         )
-        print("### Junction Point: \(junctionPoint.magnetPoint.point))")
+        if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point))") }
         return (junctionPoint.magnetPoint, false, inDirectionIndex, 0)
     }
     
@@ -452,7 +474,7 @@ extension SPLineGroupVectorizor {
     }
     
     private func straightlyTrackToPointFrom(current: CGPoint, to target: CGPoint) -> [CGPoint] {
-        print("=== straight tracking")
+        if visualTesting { print("=== straight tracking") }
         var line = [CGPoint]()
         var point = current
         let direction = MXNFreeVector(x: target.x-current.x, y: target.y-current.y).normalized
@@ -461,31 +483,40 @@ extension SPLineGroupVectorizor {
             for _ in 1...distance {
                 point = point + direction
                 line.append(point)
-                dispatch_async(GCD.mainQueue) {
-                    self.delegate?.trackingToPoint(current)
+                /////////////////////////////////////////////
+                if visualTesting {
+                    dispatch_async(GCD.mainQueue) {
+                        self.testDelegate?.trackingToPoint(current)
+                    }
+                    NSThread.sleepForTimeInterval(0.1)
                 }
-                NSThread.sleepForTimeInterval(0.1)
+                /////////////////////////////////////////////
             }
+                
         }
         line.append(target)
-        print("~~~ straight tracking end")
+        if visualTesting { print("~~~ straight tracking end") }
         return line
     }
     
     private func freelyTrackToDirectionFrom(current: CGPoint, to direction: MXNFreeVector, steps: Int) -> [CGPoint] {
         // FIXME: free track auto ends when tan is no longer messy
-        print("=== free tracking")
+        if visualTesting { print("=== free tracking") }
         var line = [CGPoint]()
         var point = current
         for _ in 1...steps {
             point = point + direction
             line.append(point)
-            dispatch_async(GCD.mainQueue) {
-                self.delegate?.trackingToPoint(current)
+            /////////////////////////////////////////////
+            if visualTesting {
+                dispatch_async(GCD.mainQueue) {
+                    self.testDelegate?.trackingToPoint(current)
+                }
+                NSThread.sleepForTimeInterval(0.1)
             }
-            NSThread.sleepForTimeInterval(0.1)
+            /////////////////////////////////////////////
         }
-        print("~~~ free tracking end")
+        if visualTesting { print("~~~ free tracking end") }
         return line
     }
     
@@ -711,7 +742,6 @@ extension SPLineGroupVectorizor {
                     i += count
                 }
             }
-            print("      ### angle count: \(angleIndexes)")
             
             // fetch minimum luminace value
             leastLuminance = angleIndexes.reduce(0) { sum, this in

@@ -11,4 +11,16 @@ import Foundation
 class SPShape: SPGeometrics, SPCurveRepresentable {
     var type: SPGeometricType { return .Shape }
     var lines = [SPCurve]()
+    
+    /// CAShapeLayer made up of bezierPath.
+    var shapeLayer: CAShapeLayer {
+        let layer = CAShapeLayer()
+        
+        layer.path = bezierPath.CGPath
+        layer.fillRule = kCAFillRuleEvenOdd
+        layer.fillColor = fillColor.CGColor
+        layer.backgroundColor = UIColor.clearColor().CGColor
+        
+        return layer
+    }
 }

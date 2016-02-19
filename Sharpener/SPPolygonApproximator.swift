@@ -76,7 +76,7 @@ class SPPolygonApproximator {
     /// Find the farthest point in manipPoints to given line, returning the index of it.
     /// - parameter line: The line to calculate
     /// - returns: The index of the point in manipPoints. If no point sits between, returns nil.
-    func farthestPointForLine(var line: Line, indexA: Int, indexB: Int, inout manipPoints: [CharacteristicPoint] ) -> Int? {
+    func farthestPointForLine(line: Line, indexA: Int, indexB: Int, inout manipPoints: [CharacteristicPoint] ) -> Int? {
         guard abs(indexA - indexB) > 1 else { return nil }
         var index = 0
         var max: CGFloat = 0

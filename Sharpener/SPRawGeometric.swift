@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SPRawGeometric {
+class SPRawGeometric {
     var type: SPGeometricType = .Shape
     var isHidden: Bool = false
     var raw = [CGPoint]()
@@ -64,8 +64,10 @@ extension SPRawGeometric: SPLineRepresentable {
     var fillColor: UIColor {
         switch type {
         case .Shape:
+            if isHidden { return UIColor.spShapeColor().colorWithAlphaComponent(0.5) }
             return UIColor.spShapeColor()
         case .Line:
+            if isHidden { return UIColor.spLineColor().colorWithAlphaComponent(0.5) }
             return UIColor.spLineColor()
         }
     }

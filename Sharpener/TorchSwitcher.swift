@@ -89,7 +89,7 @@ class LightningIcon: UIView {
                  --> CGPoint(x: 10, y: 35).scaled(scaleFactor)
                  --> CGPoint(x: 10, y: 27).scaled(scaleFactor)
                  --> CGPoint(x: 4, y: 27).scaled(scaleFactor)
-            path-><-
+            path-->|
             lightning.path = path.CGPath
             lightning.lineWidth = 1
             layer.addSublayer(lightning)

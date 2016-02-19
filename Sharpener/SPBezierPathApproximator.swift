@@ -11,13 +11,12 @@ import Foundation
 class SPBezierPathApproximator {
     
     /// Deviation to endurance.
-    var threshold: CGFloat = 5
+    var threshold: CGFloat { return 50 * smoothness + 1 }
     
     /// Smoothness of approximation, 0 to 1.
-    var smoothness: CGFloat = 0.36
+    var smoothness: CGFloat
     
-    init(threshold: CGFloat = 10, smoothness: CGFloat = 0) {
-        self.threshold = threshold
+    init(smoothness: CGFloat = 0.10) {
         self.smoothness = smoothness
     }
     
@@ -33,23 +32,21 @@ class SPBezierPathApproximator {
     /// - Parameter line: The `SPCurve` that needs to be approximated.`
     func approximate(line: SPCurve) {
         let curve = SPCurve(raw: line.raw)
-        var raw = line.raw
+        let raw = line.raw
         
         // 1. smooth raw
         if line.farthestDistance == nil {
             line.farthestDistance = fetchFarthestDistanceFrom(line.raw)
         }
-        if let fd = line.farthestDistance {
-            let smoother = SPPolygonApproximator(threshold: fd * smoothness)
-            raw = smoother.polygonApproximate(line.raw)
-            line.smoothness = smoothness
-        }
+        line.smoothness = smoothness
         
         // 2. polygon approximation and split!
-        let polyApprox = SPPolygonApproximator(threshold: (line.farthestDistance ?? CGFloat(raw.count)) * 0.3 )
-        let splitors = polyApprox.polygonApproximate(raw)
+        // let polyApprox = SPPolygonApproximator(threshold: (line.farthestDistance ?? CGFloat(raw.count)) * 0.3 )
+        // let splitors = polyApprox.polygonApproximate(raw)
         
-        let splitedLines = splitSPLine(SPLine(raw: raw), accordingTo: splitors)
+        // let splitedLines = splitSPLine(SPLine(raw: raw), accordingTo: splitors)
+        
+        let splitedLines = [SPLine(raw: raw)]
         
         // 3. approximate every line
         for line in splitedLines {
@@ -129,7 +126,17 @@ class SPBezierPathApproximator {
             if deviation < threshold || !checkIfSplitterIndex(splitterIndex, isValidWhenLengthIs: raw.endIndex) {
                 // Accept!
                 let anchorPoint1 = SPAnchorPoint(point: v0)
-                let anchorPoint2 = SPAnchorPoint(point: v3, controlPointA: v1, controlPointB: v2)
+                var anchorPoint2 = SPAnchorPoint(point: v3, controlPointA: v1, controlPointB: v2)
+                
+                if manipIndex > 0 {
+                    // smooth the connection, and re-approximate the previous part of curve
+                    if let last = curve.vectorized.last {
+                        let (newLast, newNext) = newAnchorPointsForLast(last, andNext: anchorPoint2)
+                        anchorPoint2 = newNext
+                        curve.vectorized.removeLast()
+                        curve <-- newLast
+                    }
+                }
                 
                 curve <-- anchorPoint1
                 curve <-- anchorPoint2
@@ -144,6 +151,37 @@ class SPBezierPathApproximator {
         }
         
         return curve
+    }
+
+    
+    private func newAnchorPointsForLast(point: SPAnchorPoint, andNext next: SPAnchorPoint) -> (last: SPAnchorPoint, next: SPAnchorPoint) {
+        guard let controlPointA = point.controlPointB, let controlPointB = next.controlPointA else {
+            return (point, next)
+        }
+        guard controlPointA != point.anchorPoint || controlPointB != point.anchorPoint else {
+            return (point, next)
+        }
+        let vA = MXNFreeVector(start: point.anchorPoint, end: controlPointA)
+        let vB = MXNFreeVector(start: point.anchorPoint, end: controlPointB)
+        
+        guard vA.angleWith(vB) > 140 else { return (point, next) }
+        guard vA.absolute > point.anchorPoint.distanceTo(next.anchorPoint) || vB.absolute > point.anchorPoint.distanceTo(next.anchorPoint) else { return (point, next) }
+        
+        let xplus = MXNFreeVector(start: CGPointZero, end: CGPoint(x: 1, y: 0))
+        var alpha = vA.angleWith(xplus)
+        alpha = alpha > 90 ? 180 - alpha : alpha
+        var beta = vB.angleWith(xplus)
+        beta = beta > 90 ? 180 - beta : beta
+        
+        let theta = 180 - vA.angleWith(vB)
+        let thetaB = theta * vA.absolute / (vA.absolute + vB.absolute)
+        let thetaA = theta - thetaB
+        
+        let newControlPointA = controlPointA.rotateAround(point.anchorPoint, forDegree: thetaA, clockWise: alpha >= beta)
+        let newControlPointB = controlPointB.rotateAround(point.anchorPoint, forDegree: thetaB, clockWise: beta > alpha)
+        
+        return (SPAnchorPoint(point: point.anchorPoint, controlPointA: point.controlPointA, controlPointB: newControlPointA),
+            SPAnchorPoint(point: next.anchorPoint, controlPointA: newControlPointB, controlPointB: next.controlPointB))
     }
     
     /// Check if `splitterIndex` is valid. 
@@ -185,6 +223,7 @@ class SPBezierPathApproximator {
             var max: CGFloat = 0
             var realMax: CGFloat = 0
             let count = points.count
+            
             for i in 1..<count-2 {
                 let position = CGFloat(i) / CGFloat(count-1)
                 let d = deviationForPoint(points[i], at: position,
@@ -193,7 +232,7 @@ class SPBezierPathApproximator {
                 
                 if d > max {
                     realMax = d
-                    if checkIfSplitterIndex(i, isValidWhenLengthIs: points.count) {
+                    if checkIfSplitterIndex(i, isValidWhenLengthIs: count) {
                         farthestIndex = i
                         max = d
                     }

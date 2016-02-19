@@ -8,18 +8,17 @@
 
 import UIKit
 
-protocol SPRefineViewDelegate {
+protocol SPRefineViewDelegate: class {
     func didTouchShapeAtIndex(index: Int)
 }
 
 class SPRefineView: UIView {
 
-    var delegate: SPRefineViewDelegate?
+    weak var delegate: SPRefineViewDelegate?
     var shapes = [CAShapeLayer]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        prepareGestures()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,18 +31,22 @@ class SPRefineView: UIView {
         }
     }
     
-    func prepareGestures() {
-        let tap = UITapGestureRecognizer(target: self, action: "tap:")
-        addGestureRecognizer(tap)
+    func updateShapeLayerAtIndex(index: Int, to layer: CAShapeLayer) {
+        let oldLayer = shapes[index]
+        oldLayer.path = layer.path
+        oldLayer.opacity = layer.opacity
+        oldLayer.fillColor = layer.fillColor
+        oldLayer.strokeColor = layer.strokeColor
     }
     
-    func tap(recognizer: UITapGestureRecognizer) {
-        let location = recognizer.locationInView(self)
-        for (i, _) in shapes.enumerate() {
-            if SPGeometricsStore.universalStore.rawStore[i].raw.contains(CGPoint(x: Int(location.x), y: Int(location.y))) {
-                delegate?.didTouchShapeAtIndex(i)
-                shapes[i].opacity = shapes[i].opacity == 0.5 ? 1 : 0.5
-                return
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let touch = touches.first where touches.count == 1 {
+            let location = touch.locationInView(self)
+            for (i, shape) in shapes.enumerate() {
+                if CGPathContainsPoint(shape.path, nil, location, true) {
+                    delegate?.didTouchShapeAtIndex(i)
+                    break
+                }
             }
         }
     }

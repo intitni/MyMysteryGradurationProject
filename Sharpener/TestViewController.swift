@@ -27,12 +27,12 @@ class TestViewController: UIViewController {
     
 }
 
-extension TestViewController: SPRawGeometricsFinderDelegate, SPLineGroupVectorizorDelegate {
+extension TestViewController: SPRawGeometricsFinderDelegate, SPLineGroupVectorizorVisualTestDelegate {
     func succefullyFoundRawGeometrics() {
         // put results on screen.
         
         let v = SPLineGroupVectorizor(width: 300, height: 400)
-        v.delegate = self
+        v.testDelegate = self
         print(SPGeometricsStore.universalStore.rawStore.count)
         let layer = SPGeometricsStore.universalStore.rawStore[0].shapeLayer
         view.layer.addSublayer(layer)

@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol SPGeometricsVectorizorDelegate: class {
+    func finishVectorizing(store: SPGeometricsStore)
+}
+
 /// SPGeometricsVectorizor is used to generate vectorized SPGeometrics from SPRawGeometrics storing in universalGeometricsStore.
 ///
 /// It's devided into two parts:
@@ -18,20 +22,27 @@ import Foundation
 ///
 /// Shape detection will be applied too.
 class SPGeometricsVectorizor {
+    
+    weak var delegate: SPGeometricsVectorizorDelegate?
+    
     func vectorize(store: SPGeometricsStore) {
-        let shapes = [SPShape]()
-        let linegroups = [SPLineGroup]()
+        let store = SPGeometricsStore.universalStore
         
-        for raw in store.rawStore {
+        for raw in SPGeometricsStore.universalStore.rawStore {
             switch raw.type {
             case .Shape:
-                break
+                let v = SPShapeVectorizor()
+                let s = v.vectorize(raw)
+                store.shapeStore.append(s)
             case .Line:
-                break
+                let v = SPLineGroupVectorizor(width: 600, height: 800)
+                let l = v.vectorize(raw)
+                store.lineStore.append(l)
             }
         }
         
-        SPGeometricsStore.universalStore.shapeStore = shapes
-        SPGeometricsStore.universalStore.lineStore = linegroups
+        dispatch_async(GCD.mainQueue) {
+            self.delegate?.finishVectorizing(store)
+        }
     }
 }

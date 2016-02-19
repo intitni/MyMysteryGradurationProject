@@ -31,8 +31,8 @@ func ~~>(path: UIBezierPath, point: SPAnchorPoint) -> UIBezierPath {
 }
 
 /// Close path
-postfix operator -><- {}
-postfix func -><-(path: UIBezierPath) {
+postfix operator -->| {}
+postfix func -->|(path: UIBezierPath) {
     path.closePath()
 }
 

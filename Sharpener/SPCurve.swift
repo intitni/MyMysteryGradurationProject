@@ -27,38 +27,10 @@ class SPCurve {
     func appendCurve(curve: SPCurve) {
         if let last = vectorized.last, let first = curve.vectorized.first
             where last.anchorPoint == first.anchorPoint {
-                vectorized.appendContentsOf(curve.vectorized.dropFirst())
+                vectorized.appendContentsOf(curve.vectorized.dropFirst(1))
         } else {
             vectorized.appendContentsOf(curve.vectorized)
         }
-    }
-    
-    private func newAnchorPointFor(point: SPAnchorPoint) -> SPAnchorPoint {
-        guard let controlPointA = point.controlPointA, let controlPointB = point.controlPointB else {
-            return point
-        }
-        guard point.controlPointA == point.anchorPoint || point.controlPointB == point.anchorPoint else {
-            return point
-        }
-        let vA = MXNFreeVector(start: point.anchorPoint, end: controlPointA)
-        let vB = MXNFreeVector(start: point.anchorPoint, end: controlPointB)
-        
-        guard vA.angleWith(vB) > 90 else { return point }
-        
-        let xplus = MXNFreeVector(start: CGPointZero, end: CGPoint(x: 1, y: 0))
-        var alpha = vA.angleWith(xplus)
-        alpha = alpha > 180 ? alpha - 180 : alpha
-        var beta = vB.angleWith(xplus)
-        beta = beta > 180 ? beta - 180 : beta
-        
-        let theta = 180 - vA.angleWith(vB)
-        let thetaA = theta * vA.absolute / (vA.absolute + vB.absolute)
-        let thetaB = theta - thetaA
-        
-        let newControlPointA = controlPointA.rotateAround(point.anchorPoint, forDegree: thetaA, clockWise: thetaA >= thetaB)
-        let newControlPointB = controlPointB.rotateAround(point.anchorPoint, forDegree: thetaB, clockWise: thetaB > thetaA)
-        
-        return SPAnchorPoint(point: point.anchorPoint, controlPointA: newControlPointA, controlPointB: newControlPointB)
     }
     
     init(raw: [CGPoint] = []) {
@@ -75,9 +47,8 @@ class SPCurve {
             switch i {
             case 0:
                 path==>p
-                path~~>p
             case vectorized.endIndex where p.anchorPoint == vectorized.first?.anchorPoint:
-                path-><-
+                path-->|
             default:
                 path~~>p
             }
@@ -98,7 +69,7 @@ extension CGPoint {
     func rotateAround(ref: CGPoint, forDegree degree: CGFloat, clockWise: Bool = true) -> CGPoint {
         let rad = CGFloat(M_PI) / 180 * ( clockWise ? 360-degree : degree )
         let newX = (x-ref.x) * cos(rad) - (y-ref.y) * sin(rad) + ref.x
-        let newY = (x-ref.x) * sin(rad) - (y-ref.y) * cos(rad) + ref.y
+        let newY = (x-ref.x) * sin(rad) + (y-ref.y) * cos(rad) + ref.y
         return CGPoint(x: newX, y: newY)
     }
 }

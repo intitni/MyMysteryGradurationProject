@@ -61,7 +61,7 @@ public class SPRawGeometricsFinder {
             self.findContoursOfEachAndPerformSimpleVectorization()
             
             dispatch_async(GCD.mainQueue) {
-                SPGeometricsStore.universalStore.rawStore = self.rawGeometrics
+                SPGeometricsStore.universalStore.rawStore.appendContentsOf(self.rawGeometrics)
                 self.delegate?.succefullyFoundRawGeometrics()
             }
         }
@@ -92,7 +92,7 @@ public class SPRawGeometricsFinder {
         var newGeometrics = [SPRawGeometric]()
         defer { textureData = tempTextureData; rawGeometrics = newGeometrics }
         
-        for var raw in rawGeometrics {
+        for raw in rawGeometrics {
             
             // calculate size
             for point in raw.raw {

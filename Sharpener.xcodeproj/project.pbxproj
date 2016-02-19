@@ -40,6 +40,9 @@
 		13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D6D1C2013850047F0C0 /* Main.storyboard */; };
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
+		138C42E31C75FBBE00224670 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E21C75FBBE00224670 /* Preference.swift */; };
+		138C42E81C76065C00224670 /* VectorizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E71C76065C00224670 /* VectorizeViewController.swift */; };
+		138C42EA1C7754C400224670 /* SPTwoWaySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */; };
 		13918C111C5F408B008DD316 /* SPLineRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13918C101C5F408B008DD316 /* SPLineRepresentable.swift */; };
 		13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EE91C478538000CE61B /* SPGeometricsStore.swift */; };
 		13988EED1C478694000CE61B /* SPGeometrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EEC1C478694000CE61B /* SPGeometrics.swift */; };
@@ -118,6 +121,9 @@
 		13835D701C2013850047F0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13835D731C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		138C42E21C75FBBE00224670 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
+		138C42E71C76065C00224670 /* VectorizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorizeViewController.swift; sourceTree = "<group>"; };
+		138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPTwoWaySegmentedControl.swift; sourceTree = "<group>"; };
 		13918C101C5F408B008DD316 /* SPLineRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineRepresentable.swift; sourceTree = "<group>"; };
 		13988EE91C478538000CE61B /* SPGeometricsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsStore.swift; sourceTree = "<group>"; };
 		13988EEC1C478694000CE61B /* SPGeometrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometrics.swift; sourceTree = "<group>"; };
@@ -214,6 +220,7 @@
 				139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */,
 				139EE2101C2FDDA600E3464F /* SPStepSlider.swift */,
 				139EE2121C2FDE3C00E3464F /* SPSlider.swift */,
+				138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */,
 				13416C591C29A401006CB39A /* TorchSwitcher.swift */,
 				13416C511C297803006CB39A /* ShutterButton.swift */,
 			);
@@ -234,6 +241,7 @@
 		13481C9B1C3173FE00EE9525 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				138C42E71C76065C00224670 /* VectorizeViewController.swift */,
 				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
 				13627CA11C69C51D00DFE73C /* TestViewController.swift */,
 				13481C9C1C324F0700EE9525 /* RefineViewController.swift */,
@@ -292,6 +300,7 @@
 				139D561F1C5210DE006106D4 /* XNUsefuls.swift */,
 				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
 				13988EF41C479B06000CE61B /* CustomOperators.swift */,
+				138C42E21C75FBBE00224670 /* Preference.swift */,
 				133E0A5B1C26EFB50058B103 /* Supporting Files */,
 			);
 			path = Sharpener;
@@ -302,11 +311,11 @@
 			children = (
 				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
 				13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */,
-				13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */,
 				13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */,
 				131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */,
 				131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */,
 				131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */,
+				13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */,
 				13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */,
 				13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */,
 				13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift */,
@@ -522,9 +531,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				138C42E31C75FBBE00224670 /* Preference.swift in Sources */,
 				1374CE3B1C72F445003E9D88 /* SPCurve.swift in Sources */,
 				13627CA21C69C51D00DFE73C /* TestViewController.swift in Sources */,
 				133E0A501C269D350058B103 /* MXNContext.swift in Sources */,
+				138C42E81C76065C00224670 /* VectorizeViewController.swift in Sources */,
 				13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */,
 				13E7D8331C6B435E0036601E /* HarrisFilter.swift in Sources */,
 				133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */,
@@ -547,6 +558,7 @@
 				13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */,
 				13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */,
 				131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */,
+				138C42EA1C7754C400224670 /* SPTwoWaySegmentedControl.swift in Sources */,
 				13DDCE001C4CE66700072492 /* XNStack.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
 				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,

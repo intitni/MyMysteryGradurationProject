@@ -54,7 +54,7 @@ extension SPLine {
             case 0:
                 path==>p
             case vectorized.endIndex where p.anchorPoint == vectorized.first?.anchorPoint:
-                path-><-
+                path-->|
             default:
                 path~~>p
             }

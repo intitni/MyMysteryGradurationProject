@@ -16,7 +16,11 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     // MARK: UI
     @IBOutlet weak var ToolBar: UIView!
     @IBOutlet weak var imageView: CaptureImageView!
-    @IBOutlet weak var controlPanel: UIView!
+    @IBOutlet weak var controlPanel: UIView! {
+        didSet {
+            controlPanel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+        }
+    }
     @IBOutlet weak var shutterButton: ShutterButton!
     @IBOutlet weak var torchSwitch: TorchSwitcher!
     var metalView: MetalVideoView! {
@@ -62,6 +66,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         }
     }
     
+    var previewLayer: AVCaptureVideoPreviewLayer!
+    
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -75,8 +81,20 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         UIApplication.sharedApplication().idleTimerDisabled = false
         metalView.shouldDraw = false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.sharedApplication().idleTimerDisabled = true
+        metalView.shouldDraw = true
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        captureSession.startRunning()
+        previewLayer.connection.enabled = true
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -167,7 +185,9 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             let imageDataJpeg = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
             self.stillImage = UIImage(data: imageDataJpeg)
         }
-        self.captureSession.stopRunning()
+        
+        previewLayer.connection.enabled = false
+        captureSession.stopRunning()
         performSegueWithIdentifier("CaptureToRefine", sender: self)
     }
     
@@ -227,7 +247,7 @@ extension CaptureViewController {
             return
         }
         
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         view.layer.addSublayer(previewLayer)
         videoOutput.alwaysDiscardsLateVideoFrames = true
         videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey : NSNumber(unsignedInt: kCVPixelFormatType_32BGRA)]

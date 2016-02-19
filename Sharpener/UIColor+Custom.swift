@@ -33,5 +33,9 @@ extension UIColor {
     class func spShapeColor() -> UIColor {
         return UIColor(red:107/255, green:181/255, blue:161/255, alpha:1)
     }
+    
+    class func spRedColor() -> UIColor {
+        return UIColor(red:244/255, green:194/255, blue:183/255, alpha:1)
+    }
 }
 
