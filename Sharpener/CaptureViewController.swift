@@ -84,17 +84,19 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         super.viewWillDisappear(animated)
         UIApplication.sharedApplication().idleTimerDisabled = false
         metalView.shouldDraw = false
+        previewLayer.connection.enabled = false
+        captureSession.stopRunning()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().idleTimerDisabled = true
-        metalView.shouldDraw = true
     }
     
     override func viewDidAppear(animated: Bool) {
         captureSession.startRunning()
         previewLayer.connection.enabled = true
+        metalView.shouldDraw = true
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -186,8 +188,6 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             self.stillImage = UIImage(data: imageDataJpeg)
         }
         
-        previewLayer.connection.enabled = false
-        captureSession.stopRunning()
         performSegueWithIdentifier("CaptureToRefine", sender: self)
     }
     

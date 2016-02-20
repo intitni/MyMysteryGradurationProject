@@ -27,6 +27,7 @@ extension SPGeometricsStore {
     func removeAll() {
         shapeStore.removeAll()
         lineStore.removeAll()
+        rawStore.removeAll()
     }
     
     func append(shape: SPShape) {
