@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SPRefineViewDelegate: class {
-    func didTouchShapeAtIndex(index: Int)
+    func didTouchShape(shape: CAShapeLayer)
 }
 
 class SPRefineView: UIView {
@@ -25,26 +25,40 @@ class SPRefineView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func drawLayers() {
-        shapes.forEach { s in
-            layer.addSublayer(s)
+    func appendShapeLayerForGeometric(geometric: SPGeometrics) {
+        if let s = geometric as? SPShape {
+            let l = s.shapeLayer
+            shapes.append(l)
+            l.setValue(s, forKey: "geometric")
+            layer.addSublayer(l)
+        } else if let s = geometric as? SPLineGroup {
+            let l = s.shapeLayer
+            shapes.append(l)
+            l.setValue(s, forKey: "geometric")
+            layer.addSublayer(l)
         }
     }
     
-    func updateShapeLayerAtIndex(index: Int, to layer: CAShapeLayer) {
-        let oldLayer = shapes[index]
-        oldLayer.path = layer.path
-        oldLayer.opacity = layer.opacity
-        oldLayer.fillColor = layer.fillColor
-        oldLayer.strokeColor = layer.strokeColor
+    func appendShapeLayerForRawGeometric(raw: SPRawGeometric) {
+        let l = raw.shapeLayer
+        shapes.append(l)
+        l.setValue(raw, forKey: "rawGeometric")
+        layer.addSublayer(l)
+    }
+    
+    func updateShapeLayer(shapLayer: CAShapeLayer, to layer: CAShapeLayer) {
+        shapLayer.path = layer.path
+        shapLayer.opacity = layer.opacity
+        shapLayer.fillColor = layer.fillColor
+        shapLayer.strokeColor = layer.strokeColor
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first where touches.count == 1 {
             let location = touch.locationInView(self)
-            for (i, shape) in shapes.enumerate() {
+            for shape in shapes {
                 if CGPathContainsPoint(shape.path, nil, location, true) {
-                    delegate?.didTouchShapeAtIndex(i)
+                    delegate?.didTouchShape(shape)
                     break
                 }
             }

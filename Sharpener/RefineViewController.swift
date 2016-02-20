@@ -28,7 +28,7 @@ class RefineViewController: UIViewController {
             navigationBar.buttonDelegate = self
         }
     }
-    @IBOutlet weak var controlPanel: UIView! {
+    @IBOutlet weak var controlPanel: SPControlPanel! {
         didSet {
             controlPanel.backgroundColor = UIColor.whiteColor()
         }
@@ -61,6 +61,7 @@ class RefineViewController: UIViewController {
             refineView.frame.size = imageSize
         }
     }
+    var geometricsFindingOperation: NSBlockOperation!
     
     // MARK: Life Cycle
     
@@ -76,9 +77,17 @@ class RefineViewController: UIViewController {
         imageSize = newImage.size.scaled(newImage.scale)
 
         // FIXME: calculated attributes for filter
+        
         finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: processSize)
         finder.delegate = self
-        finder.process(newImage)
+        
+        geometricsFindingOperation = NSBlockOperation { [unowned self] in
+            self.finder.process(newImage)
+        }
+        
+        let queue = NSOperationQueue()
+        queue.qualityOfService = .Utility
+        queue.addOperation(geometricsFindingOperation)
     }
     
 
@@ -110,20 +119,21 @@ extension RefineViewController: UIScrollViewDelegate {
 // MARK: - SPRawGeometricsFinderDelegate
 extension RefineViewController: SPRawGeometricsFinderDelegate {
     func succefullyFoundRawGeometrics() {
-        // put results on screen.
-        for raw in SPGeometricsStore.universalStore.rawStore {
-            refineView.shapes.append(raw.shapeLayer)
+        NSOperationQueue.mainQueue().addOperationWithBlock { [unowned self] in
+            for raw in SPGeometricsStore.universalStore.rawStore {
+                self.refineView.appendShapeLayerForRawGeometric(raw)
+            }
+            self.navigationBar.actionButtonEnabled = true
         }
-        refineView.drawLayers()
     }
 }
 
 // MARK: - SPRefineViewDelegate
 extension RefineViewController: SPRefineViewDelegate {
-    func didTouchShapeAtIndex(index: Int) {
-        let shape = SPGeometricsStore.universalStore.rawStore[index]
-        shape.isHidden = mode == .Catch ? false : true
-        refineView.updateShapeLayerAtIndex(index, to: shape.shapeLayer)
+    func didTouchShape(shape: CAShapeLayer) {
+        guard let raw = shape.valueForKey("rawGeometric") as? SPRawGeometric else { return }
+        raw.isHidden = mode == .Catch ? false : true
+        refineView.updateShapeLayer(shape, to: raw.shapeLayer)
     }
 }
 
@@ -131,6 +141,9 @@ extension RefineViewController: ProcessingNavigationBarDelegate {
     func didTapOnNavigationBarButton(index: Int) {
         switch index {
         case 0:
+            if geometricsFindingOperation != nil && geometricsFindingOperation.executing {
+                geometricsFindingOperation.cancel()
+            }
             SPGeometricsStore.universalStore.removeAll()
             dismissViewControllerAnimated(true, completion: nil)
         case 1:

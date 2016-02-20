@@ -8,8 +8,10 @@
 
 import UIKit
 
-class VectorizeViewController: UIViewController, SPGeometricsVectorizorDelegate {
+class VectorizeViewController: UIViewController {
 
+    // MARK: UI Elements
+    
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
@@ -25,11 +27,14 @@ class VectorizeViewController: UIViewController, SPGeometricsVectorizorDelegate 
         }
     }
     
-    @IBOutlet weak var controlPanel: UIView! {
+    @IBOutlet weak var controlPanel: SPControlPanel! {
         didSet {
             controlPanel.backgroundColor = UIColor.whiteColor()
         }
     }
+    @IBOutlet weak var progressBar: SPBigProgressBar!
+    
+    var vectorizingOperation: NSBlockOperation!
     
     var refineView: SPRefineView! {
         didSet {
@@ -39,16 +44,28 @@ class VectorizeViewController: UIViewController, SPGeometricsVectorizorDelegate 
         }
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        progressBar.labelText = "Vectorizing"
         let raws = SPGeometricsStore.universalStore
         let vectorizer = SPGeometricsVectorizor()
         vectorizer.delegate = self
         refineView = SPRefineView(frame: CGRectZero)
-        dispatch_async(GCD.utilityQueue) {
+        
+        vectorizingOperation = NSBlockOperation {
             vectorizer.vectorize(raws)
         }
+        
+        let queue = NSOperationQueue()
+        queue.qualityOfService = .Utility
+        queue.addOperation(vectorizingOperation)
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,20 +73,23 @@ class VectorizeViewController: UIViewController, SPGeometricsVectorizorDelegate 
         // Dispose of any resources that can be recreated.
     }
     
-    func finishVectorizing(store: SPGeometricsStore) {
-        let s = store
-        for v in s.lineStore {
-            let shape = v.shapeLayer
-            refineView.shapes.append(shape)
+}
+
+extension VectorizeViewController: SPGeometricsVectorizorDelegate {
+    func didFinishVectorizing(store: SPGeometricsStore) {
+        NSOperationQueue.mainQueue().addOperationWithBlock { [unowned self] in
+            self.progressBar.labelText = "Done"
+            self.navigationBar.actionButtonEnabled = true
+            // Hide progressBar and show countings
         }
-        for v in s.shapeStore {
-            refineView.shapes.append(v.shapeLayer)
-        }
-        refineView.drawLayers()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
+    func didFinishAnIndividualVectorizingFor(geometric: SPGeometrics, withIndex index: Int, countOfTotal count: Int) {
+        NSOperationQueue.mainQueue().addOperationWithBlock { [unowned self] in
+            let progress = CGFloat(index + 1) / CGFloat(count)
+            self.progressBar.currentProgress = progress
+            self.refineView.appendShapeLayerForGeometric(geometric)
+        }
     }
 }
 
@@ -82,8 +102,9 @@ extension VectorizeViewController: UIScrollViewDelegate {
 
 // MARK: - SPRefineViewDelegate
 extension VectorizeViewController: SPRefineViewDelegate {
-    func didTouchShapeAtIndex(index: Int) {
-        
+    func didTouchShape(shape: CAShapeLayer) {
+        // Show edit view
+        guard let geometric = shape.valueForKey("geometric") as? SPGeometrics else { return }
     }
 }
 
@@ -92,6 +113,11 @@ extension VectorizeViewController: ProcessingNavigationBarDelegate {
     func didTapOnNavigationBarButton(index: Int) {
         switch index {
         case 0:
+            if vectorizingOperation != nil && vectorizingOperation.executing {
+                vectorizingOperation.cancel()
+            }
+            SPGeometricsStore.universalStore.shapeStore.removeAll()
+            SPGeometricsStore.universalStore.shapeStore.removeAll()
             dismissViewControllerAnimated(true, completion: nil)
         case 1:
             break

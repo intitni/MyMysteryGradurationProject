@@ -108,7 +108,7 @@ extension SPTwoWaySegmentedControl {
                 label.text = "NOT SET"
                 label.textColor = UIColor.spOutlineColor()
                 label.textAlignment = .Center
-                label.font = UIFont.systemFontOfSize(17)
+                label.font = UIFont.systemFontOfSize(14)
             }
         }
         
@@ -184,7 +184,7 @@ extension SPTwoWaySegmentedControl {
                 label.text = "NOT SET"
                 label.textColor = UIColor.spOutlineColor()
                 label.textAlignment = .Center
-                label.font = UIFont.systemFontOfSize(17)
+                label.font = UIFont.systemFontOfSize(14)
             }
         }
         

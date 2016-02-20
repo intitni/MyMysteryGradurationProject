@@ -9,7 +9,8 @@
 import Foundation
 
 protocol SPGeometricsVectorizorDelegate: class {
-    func finishVectorizing(store: SPGeometricsStore)
+    func didFinishVectorizing(store: SPGeometricsStore)
+    func didFinishAnIndividualVectorizingFor(geometric: SPGeometrics, withIndex index: Int, countOfTotal count: Int)
 }
 
 /// SPGeometricsVectorizor is used to generate vectorized SPGeometrics from SPRawGeometrics storing in universalGeometricsStore.
@@ -28,21 +29,21 @@ class SPGeometricsVectorizor {
     func vectorize(store: SPGeometricsStore) {
         let store = SPGeometricsStore.universalStore
         
-        for raw in SPGeometricsStore.universalStore.rawStore {
+        for (i, raw) in store.rawStore.enumerate() where !raw.isHidden {
             switch raw.type {
             case .Shape:
                 let v = SPShapeVectorizor()
                 let s = v.vectorize(raw)
                 store.shapeStore.append(s)
+                self.delegate?.didFinishAnIndividualVectorizingFor(s, withIndex: i, countOfTotal: store.rawStore.count)
             case .Line:
                 let v = SPLineGroupVectorizor(width: 600, height: 800)
                 let l = v.vectorize(raw)
                 store.lineStore.append(l)
+                self.delegate?.didFinishAnIndividualVectorizingFor(l, withIndex: i, countOfTotal: store.rawStore.count)
             }
         }
         
-        dispatch_async(GCD.mainQueue) {
-            self.delegate?.finishVectorizing(store)
-        }
+        self.delegate?.didFinishVectorizing(store)
     }
 }

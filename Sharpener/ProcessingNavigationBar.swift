@@ -14,6 +14,21 @@ protocol ProcessingNavigationBarDelegate: class {
 }
 
 class ProcessingNavigationBar: UINavigationBar {
+    
+    var lowerBorder = UIView() {
+        didSet {
+            addSubview(lowerBorder)
+            lowerBorder.translatesAutoresizingMaskIntoConstraints = false
+            lowerBorder.snp_makeConstraints { make in
+                make.bottom.equalTo(self)
+                make.centerX.equalTo(self)
+                make.width.equalTo(self)
+                make.height.equalTo(1)
+            }
+            lowerBorder.backgroundColor = UIColor.spLightBorderColor()
+        }
+    }
+    
     var backButton: SPBackButton! {
         didSet {
             let tap = UITapGestureRecognizer(target: self, action: "tappedOnBackButton")
@@ -30,6 +45,8 @@ class ProcessingNavigationBar: UINavigationBar {
     }
     var actionButton: UIButton! {
         didSet {
+            actionButton.enabled = false
+            
             let tap = UITapGestureRecognizer(target: self, action: "tappedOnActionButton")
             actionButton.addGestureRecognizer(tap)
             
@@ -48,6 +65,11 @@ class ProcessingNavigationBar: UINavigationBar {
             self.actionButton.setTitle(buttonDelegate?.processingNavigationBarRightButtonText,
                               forState: UIControlState.Normal)
         }
+    }
+    
+    var actionButtonEnabled: Bool {
+        get { return actionButton.enabled }
+        set { actionButton.enabled = newValue }
     }
 
     override init(frame: CGRect) {

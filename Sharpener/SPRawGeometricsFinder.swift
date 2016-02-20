@@ -52,19 +52,14 @@ public class SPRawGeometricsFinder {
     /// Process and given UIImage, when done, it will tell its delegate, and store everything in universalStore.
     public func process(image: UIImage) {
         geometricsFilteringFilter.provider = MXNImageProvider(image: image, context: context)
-        // TODO: Use NSOperation to make it cancelable.
-        dispatch_async(GCD.newSerialQueue("rawgeometrics_finding")) {
-            
-            self.extractTexture()
-            self.extractSeperatedTexture()
-            self.extractRawGeometrics()
-            self.findContoursOfEachAndPerformSimpleVectorization()
-            
-            dispatch_async(GCD.mainQueue) {
-                SPGeometricsStore.universalStore.rawStore.appendContentsOf(self.rawGeometrics)
-                self.delegate?.succefullyFoundRawGeometrics()
-            }
-        }
+
+        self.extractTexture()
+        self.extractSeperatedTexture()
+        self.extractRawGeometrics()
+        self.findContoursOfEachAndPerformSimpleVectorization()
+    
+        SPGeometricsStore.universalStore.rawStore.appendContentsOf(self.rawGeometrics)
+        self.delegate?.succefullyFoundRawGeometrics()
     }
     
     /// Used to extract texture from UIImage.
