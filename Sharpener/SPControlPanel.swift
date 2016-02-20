@@ -14,7 +14,7 @@ class SPControlPanel: UIView {
             addSubview(upperBorder)
             upperBorder.translatesAutoresizingMaskIntoConstraints = false
             upperBorder.snp_makeConstraints { make in
-                make.top.equalTo(self)
+                make.top.equalTo(self).offset(1)
                 make.centerX.equalTo(self)
                 make.width.equalTo(self)
                 make.height.equalTo(1)

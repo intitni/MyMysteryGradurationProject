@@ -15,8 +15,8 @@ class VectorizeViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            scrollView.contentSize = CGSize(width: 300, height: 400)
-            scrollView.zoomScale = 1.0
+            scrollView.contentSize = Preference.vectorizeSize
+            scrollView.zoomScale = 0.8
             scrollView.minimumZoomScale = 0.8
             scrollView.maximumZoomScale = 2
         }
@@ -41,6 +41,7 @@ class VectorizeViewController: UIViewController {
             refineView.backgroundColor = UIColor.whiteColor()
             scrollView.addSubview(refineView)
             refineView.delegate = self
+            refineView.frame.size = Preference.vectorizeSize
         }
     }
     
@@ -52,12 +53,14 @@ class VectorizeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         progressBar.labelText = "Vectorizing"
+        refineView = SPRefineView(frame: CGRectZero)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         let raws = SPGeometricsStore.universalStore
         let vectorizer = SPGeometricsVectorizor()
         vectorizer.delegate = self
-        refineView = SPRefineView(frame: CGRectZero)
         
         vectorizingOperation = NSBlockOperation {
             vectorizer.vectorize(raws)

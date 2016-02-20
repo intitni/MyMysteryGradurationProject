@@ -17,8 +17,8 @@ class RefineViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            scrollView.contentSize = processSize
-            scrollView.zoomScale = 1.0
+            scrollView.contentSize = Preference.vectorizeSize
+            scrollView.zoomScale = 0.8
             scrollView.minimumZoomScale = 0.8
             scrollView.maximumZoomScale = 2
         }
@@ -40,14 +40,13 @@ class RefineViewController: UIViewController {
         didSet {
             scrollView.addSubview(refineView)
             refineView.delegate = self
+            refineView.frame.size = Preference.vectorizeSize
         }
     }
     var mode: Mode = .Erase
     
     // MARK: Constants
     
-    /// Actually 600 * 800 in @2x devices. Maybe 900 * 1200 in @3x devices.
-    let processSize = CGSize(width: 300, height: 400)
     let shouldUseTestImage = true
 
     // MARK: Properties
@@ -55,12 +54,7 @@ class RefineViewController: UIViewController {
     var incomeImage: UIImage!
     var finder: SPRawGeometricsFinder!
     var shapes = [CAShapeLayer]()
-    var imageSize = CGSizeZero {
-        didSet {
-            scrollView.contentSize = imageSize
-            refineView.frame.size = imageSize
-        }
-    }
+
     var geometricsFindingOperation: NSBlockOperation!
     
     // MARK: Life Cycle
@@ -73,12 +67,11 @@ class RefineViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if shouldUseTestImage { incomeImage = UIImage(named: "TestImage") }
         
-        let newImage = incomeImage.resizedImageToSize(processSize)
-        imageSize = newImage.size.scaled(newImage.scale)
+        let newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
 
         // FIXME: calculated attributes for filter
         
-        finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: processSize)
+        finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: Preference.vectorizeSize)
         finder.delegate = self
         
         geometricsFindingOperation = NSBlockOperation { [unowned self] in

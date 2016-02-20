@@ -63,9 +63,13 @@ class SPLineGroupVectorizor {
     }
     
     // MARK: Initializing
-    init(width: Int, height: Int) {
+    required init(width: Int, height: Int) {
         self.width = width
         self.height = height
+    }
+    
+    convenience init(size: CGSize) {
+        self.init(width: Int(size.width), height: Int(size.height))
     }
     
     // MARK: Sub Processes

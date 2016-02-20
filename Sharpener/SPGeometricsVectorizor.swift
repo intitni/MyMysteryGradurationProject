@@ -29,7 +29,7 @@ class SPGeometricsVectorizor {
     func vectorize(store: SPGeometricsStore) {
         let store = SPGeometricsStore.universalStore
         
-        for (i, raw) in store.rawStore.enumerate() where !raw.isHidden {
+        for (i, raw) in store.rawStore.filter({!$0.isHidden}).enumerate() {
             switch raw.type {
             case .Shape:
                 let v = SPShapeVectorizor()
@@ -37,7 +37,7 @@ class SPGeometricsVectorizor {
                 store.shapeStore.append(s)
                 self.delegate?.didFinishAnIndividualVectorizingFor(s, withIndex: i, countOfTotal: store.rawStore.count)
             case .Line:
-                let v = SPLineGroupVectorizor(width: 600, height: 800)
+                let v = SPLineGroupVectorizor(size: Preference.vectorizeSize)
                 let l = v.vectorize(raw)
                 store.lineStore.append(l)
                 self.delegate?.didFinishAnIndividualVectorizingFor(l, withIndex: i, countOfTotal: store.rawStore.count)

@@ -14,7 +14,7 @@ class GeometricsFilteringFilter: MXNCompositionFilters, MXNDrawablePresentable {
     var thresholdingFilter: ThresholdingFilter!
     var medianFilter: MedianFilter!
     var lineShapeFilteringFilter: LineShapeFilterFilteringFilter!
-    //var lineShapeRefiningFilter: LineShapeRefiningFilter!
+    var lineShapeRefiningFilter: LineShapeRefiningFilter!
     
     var tailFilter: MXNImageFilter { return lineShapeFilteringFilter }
     var headFilter: MXNImageFilter { return thresholdingFilter }
@@ -35,11 +35,11 @@ class GeometricsFilteringFilter: MXNCompositionFilters, MXNDrawablePresentable {
         lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context,
             threshold: lineShapeFilteringFilterAttributes.threshold,
             radius: lineShapeFilteringFilterAttributes.radius)
-        //lineShapeRefiningFilter = LineShapeRefiningFilter(context: context, radius: lineShapeFilteringFilterAttributes.radius + 1)
+        lineShapeRefiningFilter = LineShapeRefiningFilter(context: context, radius: lineShapeFilteringFilterAttributes.radius + 1)
         
         lineShapeFilteringFilter.provider = medianFilter
         medianFilter.provider = thresholdingFilter
-        //lineShapeRefiningFilter.provider = lineShapeFilteringFilter
+        lineShapeRefiningFilter.provider = lineShapeFilteringFilter
     }
 
 }
