@@ -11,13 +11,14 @@ import UIKit
 class RefineViewController: UIViewController {
     
     enum Mode { case Catch, Erase }
+    var finished: Bool = false
     
     // MARK: UI Elements
     
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            scrollView.contentSize = Preference.vectorizeSize
+            scrollView.contentSize = CGSize(width: Preference.vectorizeSize.height, height: Preference.vectorizeSize.height)
             scrollView.zoomScale = 0.8
             scrollView.minimumZoomScale = 0.8
             scrollView.maximumZoomScale = 2
@@ -67,10 +68,13 @@ class RefineViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if shouldUseTestImage { incomeImage = UIImage(named: "TestImage") }
         
-        let newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
-
         // FIXME: calculated attributes for filter
+        if !finished { performGeometricsFinding() }
         
+    }
+    
+    private func performGeometricsFinding() {
+        let newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
         finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: Preference.vectorizeSize)
         finder.delegate = self
         
@@ -88,6 +92,8 @@ class RefineViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func unwindToRefine(sender: UIStoryboardSegue) {}
 }
 
 // MARK: - UI
@@ -117,6 +123,8 @@ extension RefineViewController: SPRawGeometricsFinderDelegate {
                 self.refineView.appendShapeLayerForRawGeometric(raw)
             }
             self.navigationBar.actionButtonEnabled = true
+            self.finished = true
+            self.refineView.enabled = true
         }
     }
 }
@@ -137,6 +145,7 @@ extension RefineViewController: ProcessingNavigationBarDelegate {
             if geometricsFindingOperation != nil && geometricsFindingOperation.executing {
                 geometricsFindingOperation.cancel()
             }
+            finder.isCanceled = true
             SPGeometricsStore.universalStore.removeAll()
             dismissViewControllerAnimated(true, completion: nil)
         case 1:

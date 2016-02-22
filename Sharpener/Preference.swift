@@ -10,4 +10,8 @@ import Foundation
 
 class Preference {
     static var vectorizeSize = CGSize(width: 600, height: 800)
+    
+    class func versionString() -> String? {
+        return NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String
+    }
 }

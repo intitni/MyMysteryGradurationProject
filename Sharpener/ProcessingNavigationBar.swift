@@ -58,6 +58,7 @@ class ProcessingNavigationBar: UINavigationBar {
             }
             
             actionButton.setTitleColor(UIColor.spOutlineColor(), forState: .Normal)
+            actionButton.setTitleColor(UIColor.spOutlineColor().colorWithAlphaComponent(0.5), forState: .Disabled)
         }
     }
     weak var buttonDelegate: ProcessingNavigationBarDelegate? {

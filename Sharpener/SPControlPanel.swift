@@ -9,12 +9,12 @@
 import Foundation
 
 class SPControlPanel: UIView {
-    var upperBorder = UIView() {
+    var upperBorder: UIView! {
         didSet {
             addSubview(upperBorder)
             upperBorder.translatesAutoresizingMaskIntoConstraints = false
             upperBorder.snp_makeConstraints { make in
-                make.top.equalTo(self).offset(1)
+                make.top.equalTo(self)
                 make.centerX.equalTo(self)
                 make.width.equalTo(self)
                 make.height.equalTo(1)
@@ -23,4 +23,17 @@ class SPControlPanel: UIView {
         }
     }
 
+    init() {
+        super.init(frame: CGRectZero)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        upperBorder = UIView()
+    }
 }

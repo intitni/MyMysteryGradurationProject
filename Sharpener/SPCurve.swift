@@ -12,6 +12,7 @@ class SPCurve {
     var raw: [CGPoint]
     var guesses = [SPGuess]()
     var applied: SPGuess?
+    var preview: SPGuess?
     var vectorized = [SPAnchorPoint]()
     
     var smoothness: CGFloat = 0.36
@@ -47,13 +48,56 @@ class SPCurve {
             switch i {
             case 0:
                 path==>p
-            case vectorized.endIndex where p.anchorPoint == vectorized.first?.anchorPoint:
+            case vectorized.endIndex-1 where p.anchorPoint == vectorized.first?.anchorPoint:
                 path-->|
             default:
                 path~~>p
             }
         }
         return path
+    }
+    
+    var previewBezierPath: UIBezierPath {
+        if preview != nil {
+            return preview!.bezierPath
+        }
+        
+        let path = UIBezierPath()
+        for (i, p) in vectorized.enumerate() {
+            switch i {
+            case 0:
+                path==>p
+            case vectorized.endIndex-1 where p.anchorPoint == vectorized.first?.anchorPoint:
+                path-->|
+            default:
+                path~~>p
+            }
+        }
+        return path
+    }
+    
+    var shapeLayer: CAShapeLayer {
+        let layer = CAShapeLayer()
+        let path = bezierPath.CGPath
+        layer.path = path
+        layer.strokeColor = UIColor.spShapeColor().CGColor
+        layer.lineWidth = 4
+        layer.lineCap = kCALineCapRound
+        layer.fillColor = UIColor.clearColor().CGColor
+        
+        return layer
+    }
+    
+    var previewShapeLayer: CAShapeLayer {
+        let layer = CAShapeLayer()
+        let path = previewBezierPath.CGPath
+        layer.path = path
+        layer.strokeColor = UIColor.spShapeColor().CGColor
+        layer.lineWidth = 4
+        layer.lineCap = kCALineCapRound
+        layer.fillColor = UIColor.clearColor().CGColor
+        
+        return layer
     }
 }
 

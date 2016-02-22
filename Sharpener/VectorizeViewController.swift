@@ -12,12 +12,14 @@ class VectorizeViewController: UIViewController {
 
     // MARK: UI Elements
     
+    var done: Bool = false
+    
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
             scrollView.contentSize = Preference.vectorizeSize
-            scrollView.zoomScale = 0.8
-            scrollView.minimumZoomScale = 0.8
+            scrollView.zoomScale = 0.6
+            scrollView.minimumZoomScale = 0.6
             scrollView.maximumZoomScale = 2
         }
     }
@@ -33,6 +35,18 @@ class VectorizeViewController: UIViewController {
         }
     }
     @IBOutlet weak var progressBar: SPBigProgressBar!
+    var countingView: SPGeometricCountingView! {
+        didSet {
+            countingView.alpha = 0
+            countingView.backgroundColor = UIColor.clearColor()
+            controlPanel.addSubview(countingView)
+            countingView.snp_makeConstraints { make in
+                make.edges.equalTo(self.controlPanel)
+            }
+        }
+    }
+    
+    var vectorizer: SPGeometricsVectorizor!
     
     var vectorizingOperation: NSBlockOperation!
     
@@ -45,6 +59,8 @@ class VectorizeViewController: UIViewController {
         }
     }
     
+    var editingGeometric: SPGeometrics?
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -55,25 +71,40 @@ class VectorizeViewController: UIViewController {
         super.viewDidLoad()
         progressBar.labelText = "Vectorizing"
         refineView = SPRefineView(frame: CGRectZero)
+        countingView = SPGeometricCountingView()
     }
     
     override func viewDidAppear(animated: Bool) {
+        if !done { performVectorizing() }
+    }
+    
+    private func performVectorizing() {
         let raws = SPGeometricsStore.universalStore
-        let vectorizer = SPGeometricsVectorizor()
+        vectorizer = SPGeometricsVectorizor()
         vectorizer.delegate = self
         
         vectorizingOperation = NSBlockOperation {
-            vectorizer.vectorize(raws)
+            self.vectorizer.vectorize(raws)
         }
         
         let queue = NSOperationQueue()
         queue.qualityOfService = .Utility
         queue.addOperation(vectorizingOperation)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let identifier = segue.identifier else { return }
+        switch identifier {
+        case "VectorizeToEdit":
+            guard let toVC = segue.destinationViewController as? SingleGeometricEditViewController else { break }
+            toVC.geometric = editingGeometric
+        default: break
+        }
+    }
+    
+    @IBAction func unwindFromEdit(sender: UIStoryboardSegue) {
+        guard editingGeometric != nil else { return }
+        refineView.updateShapeLayerFor(editingGeometric!)
     }
     
 }
@@ -83,7 +114,15 @@ extension VectorizeViewController: SPGeometricsVectorizorDelegate {
         NSOperationQueue.mainQueue().addOperationWithBlock { [unowned self] in
             self.progressBar.labelText = "Done"
             self.navigationBar.actionButtonEnabled = true
+            self.done = true
             // Hide progressBar and show countings
+            self.countingView.shapeCount = SPGeometricsStore.universalStore.shapeCount
+            self.countingView.lineGroupCount = SPGeometricsStore.universalStore.lineCount
+            UIView.animateWithDuration(0.1, delay: 0.2, options: .CurveLinear, animations: {
+                self.progressBar.alpha = 0
+                self.countingView.alpha = 1
+            }, completion: nil)
+            self.refineView.enabled = true
         }
     }
     
@@ -108,6 +147,8 @@ extension VectorizeViewController: SPRefineViewDelegate {
     func didTouchShape(shape: CAShapeLayer) {
         // Show edit view
         guard let geometric = shape.valueForKey("geometric") as? SPGeometrics else { return }
+        editingGeometric = geometric
+        performSegueWithIdentifier("VectorizeToEdit", sender: self)
     }
 }
 
@@ -119,11 +160,18 @@ extension VectorizeViewController: ProcessingNavigationBarDelegate {
             if vectorizingOperation != nil && vectorizingOperation.executing {
                 vectorizingOperation.cancel()
             }
+            vectorizer.isCanceled = true
             SPGeometricsStore.universalStore.shapeStore.removeAll()
-            SPGeometricsStore.universalStore.shapeStore.removeAll()
+            SPGeometricsStore.universalStore.lineStore.removeAll()
             dismissViewControllerAnimated(true, completion: nil)
         case 1:
-            break
+            // here we save the file
+            let fileHandler = SPSharpenerFileHandler()
+            fileHandler.saveGeometricStore(SPGeometricsStore.universalStore) { succeed in
+                self.performSegueWithIdentifier("NewFileCreated", sender: self)
+                SPGeometricsStore.universalStore.removeAll()
+            }
+            
         default: break
         }
     }

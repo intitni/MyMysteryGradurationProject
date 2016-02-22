@@ -24,4 +24,28 @@ class SPLineGroup: SPGeometrics, SPCurveRepresentable {
         
         return layer
     }
+    
+    var shapeLayerPure: CAShapeLayer {
+        let layer = CAShapeLayer()
+        layer.path = bezierPath.CGPath
+        layer.strokeColor = UIColor.spOutlineColor().CGColor
+        layer.fillColor = UIColor.clearColor().CGColor
+        layer.lineWidth = 4
+        layer.lineCap = kCALineCapRound
+        layer.backgroundColor = UIColor.clearColor().CGColor
+        
+        return layer
+    }
+    
+    var previewShapeLayer: CAShapeLayer {
+        let layer = CAShapeLayer()
+        layer.path = previewBezierPath.CGPath
+        layer.strokeColor = UIColor.spOutlineColor().CGColor
+        layer.fillColor = UIColor.clearColor().CGColor
+        layer.lineWidth = 4
+        layer.lineCap = kCALineCapRound
+        layer.backgroundColor = UIColor.clearColor().CGColor
+        
+        return layer
+    }
 }

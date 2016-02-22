@@ -15,7 +15,7 @@ enum SPGeometricType {
 }
 
 // MARK: - SPGeometrics
-protocol SPGeometrics {
+protocol SPGeometrics: class {
     var type: SPGeometricType { get }
     var lines: [SPCurve] { get set }
 }

@@ -14,6 +14,8 @@ protocol SPRefineViewDelegate: class {
 
 class SPRefineView: UIView {
 
+    var enabled: Bool = false
+    
     weak var delegate: SPRefineViewDelegate?
     var shapes = [CAShapeLayer]()
     
@@ -53,7 +55,20 @@ class SPRefineView: UIView {
         shapLayer.strokeColor = layer.strokeColor
     }
     
+    func updateShapeLayerFor(geometric: SPGeometrics) {
+        for s in shapes {
+            if let g = s.valueForKey("geometric") where g === geometric {
+                if let m = g as? SPShape {
+                    updateShapeLayer(s, to: m.shapeLayer)
+                } else if let m = g as? SPLineGroup {
+                    updateShapeLayer(s, to: m.shapeLayer)
+                }
+            }
+        }
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard enabled else { return }
         if let touch = touches.first where touches.count == 1 {
             let location = touch.locationInView(self)
             for shape in shapes {
