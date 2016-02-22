@@ -57,5 +57,23 @@ extension SPCurveRepresentable {
         return path
     }
     
+    var previewBezierPath: UIBezierPath {
+        let path = UIBezierPath()
+        representingLines.forEach { border in
+            path.appendPath(border.previewBezierPath)
+        }
+        
+        return path
+    }
+    
+    func bezierPathWithoutCurve(curve: SPCurve) -> UIBezierPath {
+        let path = UIBezierPath()
+        representingLines.filter{$0 !== curve}.forEach { border in
+            path.appendPath(border.bezierPath)
+        }
+        
+        return path
+    }
+    
 }
 

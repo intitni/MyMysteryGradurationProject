@@ -11,6 +11,10 @@
 		131337FC1C5FBA640086C96C /* SPBezierPathApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */; };
 		131337FE1C5FBA720086C96C /* SPStraightLineApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */; };
 		131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */; };
+		131C846D1C79A0790041C06F /* GuessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C846C1C79A0790041C06F /* GuessTableViewCell.swift */; };
+		131C846F1C79E2930041C06F /* SPDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C846E1C79E2930041C06F /* SPDisplayView.swift */; };
+		13204A731C7B67D000544C5B /* FilePreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13204A721C7B67D000544C5B /* FilePreviewCollectionViewCell.swift */; };
+		13204A751C7B680000544C5B /* FilePreviewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13204A741C7B680000544C5B /* FilePreviewCollectionViewController.swift */; };
 		1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */; };
 		133E0A501C269D350058B103 /* MXNContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A4F1C269D350058B103 /* MXNContext.swift */; };
 		133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A531C26D50D0058B103 /* MXNImageFilter.swift */; };
@@ -40,6 +44,12 @@
 		13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D6D1C2013850047F0C0 /* Main.storyboard */; };
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
+		138A7BB61C78497C00D5C96D /* SPVectorIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BB51C78497C00D5C96D /* SPVectorIcons.swift */; };
+		138A7BB81C784ADA00D5C96D /* SPControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BB71C784ADA00D5C96D /* SPControlPanel.swift */; };
+		138A7BBA1C784FD900D5C96D /* SPBigProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BB91C784FD900D5C96D /* SPBigProgressBar.swift */; };
+		138A7BBC1C78C56F00D5C96D /* SingleGeometricEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BBB1C78C56F00D5C96D /* SingleGeometricEditViewController.swift */; };
+		138A7BBE1C78CC6700D5C96D /* GuessesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BBD1C78CC6700D5C96D /* GuessesTableViewController.swift */; };
+		138A7BC01C79921700D5C96D /* SPSmoothControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BBF1C79921700D5C96D /* SPSmoothControl.swift */; };
 		138C42E31C75FBBE00224670 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E21C75FBBE00224670 /* Preference.swift */; };
 		138C42E81C76065C00224670 /* VectorizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E71C76065C00224670 /* VectorizeViewController.swift */; };
 		138C42EA1C7754C400224670 /* SPTwoWaySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */; };
@@ -73,6 +83,11 @@
 		13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */; };
 		13BCAC8D1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift */; };
 		13BCAC8F1C5922090029DD9F /* SPSVGGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8E1C5922090029DD9F /* SPSVGGenerator.swift */; };
+		13D826E61C7A3FAB00D183A9 /* SPNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */; };
+		13D826E81C7A3FF400D183A9 /* SPNewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826E71C7A3FF400D183A9 /* SPNewButton.swift */; };
+		13D826EA1C7A41D700D183A9 /* FilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826E91C7A41D700D183A9 /* FilesViewController.swift */; };
+		13D826EC1C7A464E00D183A9 /* SPGeometricCountingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */; };
+		13D826EE1C7B3EB300D183A9 /* SPSharpenerDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */; };
 		13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */; };
 		13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */; };
 		13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFB1C4BCB9800072492 /* Async.swift */; };
@@ -90,6 +105,10 @@
 		131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBezierPathApproximator.swift; sourceTree = "<group>"; };
 		131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStraightLineApproximator.swift; sourceTree = "<group>"; };
 		131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeDetector.swift; sourceTree = "<group>"; };
+		131C846C1C79A0790041C06F /* GuessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessTableViewCell.swift; sourceTree = "<group>"; };
+		131C846E1C79E2930041C06F /* SPDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDisplayView.swift; sourceTree = "<group>"; };
+		13204A721C7B67D000544C5B /* FilePreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		13204A741C7B680000544C5B /* FilePreviewCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewCollectionViewController.swift; sourceTree = "<group>"; };
 		1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Sharpener.swift"; sourceTree = "<group>"; };
 		133E0A4F1C269D350058B103 /* MXNContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNContext.swift; sourceTree = "<group>"; };
 		133E0A531C26D50D0058B103 /* MXNImageFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNImageFilter.swift; sourceTree = "<group>"; };
@@ -121,6 +140,12 @@
 		13835D701C2013850047F0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13835D731C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		138A7BB51C78497C00D5C96D /* SPVectorIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPVectorIcons.swift; sourceTree = "<group>"; };
+		138A7BB71C784ADA00D5C96D /* SPControlPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPControlPanel.swift; sourceTree = "<group>"; };
+		138A7BB91C784FD900D5C96D /* SPBigProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBigProgressBar.swift; sourceTree = "<group>"; };
+		138A7BBB1C78C56F00D5C96D /* SingleGeometricEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleGeometricEditViewController.swift; sourceTree = "<group>"; };
+		138A7BBD1C78CC6700D5C96D /* GuessesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessesTableViewController.swift; sourceTree = "<group>"; };
+		138A7BBF1C79921700D5C96D /* SPSmoothControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSmoothControl.swift; sourceTree = "<group>"; };
 		138C42E21C75FBBE00224670 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		138C42E71C76065C00224670 /* VectorizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorizeViewController.swift; sourceTree = "<group>"; };
 		138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPTwoWaySegmentedControl.swift; sourceTree = "<group>"; };
@@ -157,6 +182,11 @@
 		13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroupVectorizor.swift; sourceTree = "<group>"; };
 		13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerFileGenerator.swift; sourceTree = "<group>"; };
 		13BCAC8E1C5922090029DD9F /* SPSVGGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSVGGenerator.swift; sourceTree = "<group>"; };
+		13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNavigationBar.swift; sourceTree = "<group>"; };
+		13D826E71C7A3FF400D183A9 /* SPNewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNewButton.swift; sourceTree = "<group>"; };
+		13D826E91C7A41D700D183A9 /* FilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesViewController.swift; sourceTree = "<group>"; };
+		13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricCountingView.swift; sourceTree = "<group>"; };
+		13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerDocument.swift; sourceTree = "<group>"; };
 		13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsVectorizor.swift; sourceTree = "<group>"; };
 		13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Sharpener.swift"; sourceTree = "<group>"; };
 		13DDCDFB1C4BCB9800072492 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
@@ -216,6 +246,8 @@
 		13416C531C297810006CB39A /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				138A7BBF1C79921700D5C96D /* SPSmoothControl.swift */,
+				138A7BB71C784ADA00D5C96D /* SPControlPanel.swift */,
 				13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */,
 				139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */,
 				139EE2101C2FDDA600E3464F /* SPStepSlider.swift */,
@@ -223,6 +255,8 @@
 				138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */,
 				13416C591C29A401006CB39A /* TorchSwitcher.swift */,
 				13416C511C297803006CB39A /* ShutterButton.swift */,
+				13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */,
+				13D826E71C7A3FF400D183A9 /* SPNewButton.swift */,
 			);
 			name = Widgets;
 			sourceTree = "<group>";
@@ -231,9 +265,15 @@
 			isa = PBXGroup;
 			children = (
 				13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */,
+				131C846C1C79A0790041C06F /* GuessTableViewCell.swift */,
 				139EE20C1C2FC6B500E3464F /* FilterControlView.swift */,
+				131C846E1C79E2930041C06F /* SPDisplayView.swift */,
 				131337F91C5F99DF0086C96C /* SPRefineView.swift */,
 				13416C561C299C6A006CB39A /* CaptureImageView.swift */,
+				138A7BB51C78497C00D5C96D /* SPVectorIcons.swift */,
+				138A7BB91C784FD900D5C96D /* SPBigProgressBar.swift */,
+				13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */,
+				13204A721C7B67D000544C5B /* FilePreviewCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -243,8 +283,12 @@
 			children = (
 				138C42E71C76065C00224670 /* VectorizeViewController.swift */,
 				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
-				13627CA11C69C51D00DFE73C /* TestViewController.swift */,
 				13481C9C1C324F0700EE9525 /* RefineViewController.swift */,
+				138A7BBB1C78C56F00D5C96D /* SingleGeometricEditViewController.swift */,
+				138A7BBD1C78CC6700D5C96D /* GuessesTableViewController.swift */,
+				13D826E91C7A41D700D183A9 /* FilesViewController.swift */,
+				13204A741C7B680000544C5B /* FilePreviewCollectionViewController.swift */,
+				13627CA11C69C51D00DFE73C /* TestViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -309,7 +353,6 @@
 		13988EE41C463418000CE61B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
 				13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */,
 				13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */,
 				131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */,
@@ -331,10 +374,12 @@
 				13988EF01C478951000CE61B /* SPLine.swift */,
 				1374CE3C1C72F474003E9D88 /* SPGuess.swift */,
 				1374CE3A1C72F445003E9D88 /* SPCurve.swift */,
+				13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */,
 				13988EF61C47A1D6000CE61B /* SPRawGeometric.swift */,
 				13988EEC1C478694000CE61B /* SPGeometrics.swift */,
 				13988EEE1C478788000CE61B /* SPShape.swift */,
 				13988EF21C479A66000CE61B /* SPLineGroup.swift */,
+				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -532,17 +577,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				138C42E31C75FBBE00224670 /* Preference.swift in Sources */,
+				138A7BBE1C78CC6700D5C96D /* GuessesTableViewController.swift in Sources */,
 				1374CE3B1C72F445003E9D88 /* SPCurve.swift in Sources */,
 				13627CA21C69C51D00DFE73C /* TestViewController.swift in Sources */,
 				133E0A501C269D350058B103 /* MXNContext.swift in Sources */,
 				138C42E81C76065C00224670 /* VectorizeViewController.swift in Sources */,
 				13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */,
 				13E7D8331C6B435E0036601E /* HarrisFilter.swift in Sources */,
+				138A7BB81C784ADA00D5C96D /* SPControlPanel.swift in Sources */,
 				133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */,
 				13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */,
 				13988EF71C47A1D6000CE61B /* SPRawGeometric.swift in Sources */,
+				13204A751C7B680000544C5B /* FilePreviewCollectionViewController.swift in Sources */,
 				139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */,
 				13988EEF1C478788000CE61B /* SPShape.swift in Sources */,
+				138A7BB61C78497C00D5C96D /* SPVectorIcons.swift in Sources */,
+				13D826E81C7A3FF400D183A9 /* SPNewButton.swift in Sources */,
 				13E7D8391C6B83660036601E /* invertFilter.swift in Sources */,
 				13988EF11C478951000CE61B /* SPLine.swift in Sources */,
 				1374CE391C704D3A003E9D88 /* Array+Smoothing.swift in Sources */,
@@ -555,6 +605,8 @@
 				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
 				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */,
 				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
+				13D826EE1C7B3EB300D183A9 /* SPSharpenerDocument.swift in Sources */,
+				138A7BBA1C784FD900D5C96D /* SPBigProgressBar.swift in Sources */,
 				13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */,
 				13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */,
 				131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */,
@@ -566,22 +618,28 @@
 				13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */,
 				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
 				13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */,
+				13204A731C7B67D000544C5B /* FilePreviewCollectionViewCell.swift in Sources */,
 				13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */,
 				131337FE1C5FBA720086C96C /* SPStraightLineApproximator.swift in Sources */,
+				138A7BBC1C78C56F00D5C96D /* SingleGeometricEditViewController.swift in Sources */,
 				13627CA41C6A1ACF00DFE73C /* LineTrackingFilter.swift in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
+				13D826EA1C7A41D700D183A9 /* FilesViewController.swift in Sources */,
 				13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */,
 				139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */,
 				139D56481C579BF7006106D4 /* SPCVLine.m in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
 				13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */,
+				13D826EC1C7A464E00D183A9 /* SPGeometricCountingView.swift in Sources */,
 				13BCAC8F1C5922090029DD9F /* SPSVGGenerator.swift in Sources */,
 				13E7D8351C6B7F8D0036601E /* AnglePointDetectingFilter.swift in Sources */,
 				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
 				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
 				13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */,
+				138A7BC01C79921700D5C96D /* SPSmoothControl.swift in Sources */,
+				131C846D1C79A0790041C06F /* GuessTableViewCell.swift in Sources */,
 				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
 				13627C9C1C6746D300DFE73C /* LineTrackingFilters.metal in Sources */,
 				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
@@ -590,12 +648,14 @@
 				13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */,
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				13627C9A1C67357700DFE73C /* GradientTensorCalculatingFilter.swift in Sources */,
+				131C846F1C79E2930041C06F /* SPDisplayView.swift in Sources */,
 				13E7D8371C6B7FDF0036601E /* DirectionTensorFilter.swift in Sources */,
 				13918C111C5F408B008DD316 /* SPLineRepresentable.swift in Sources */,
 				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
 				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
 				1374CE3D1C72F474003E9D88 /* SPGuess.swift in Sources */,
 				131337FC1C5FBA640086C96C /* SPBezierPathApproximator.swift in Sources */,
+				13D826E61C7A3FAB00D183A9 /* SPNavigationBar.swift in Sources */,
 				13988EFB1C47F802000CE61B /* SPRawGeometricsFinder.swift in Sources */,
 				13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */,
 				139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */,

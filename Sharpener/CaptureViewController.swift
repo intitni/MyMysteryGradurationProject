@@ -99,6 +99,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         metalView.shouldDraw = true
     }
     
+    @IBAction func unwindToCapture(sender: UIStoryboardSegue) {}
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }

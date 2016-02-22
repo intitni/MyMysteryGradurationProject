@@ -103,12 +103,12 @@ extension SPTwoWaySegmentedControl {
             didSet {
                 addSubview(label)
                 label.snp_makeConstraints { make in
-                    make.center.equalTo(self)
+                    make.center.equalTo(self).offset(UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0))
                 }
                 label.text = "NOT SET"
                 label.textColor = UIColor.spOutlineColor()
                 label.textAlignment = .Center
-                label.font = UIFont.systemFontOfSize(17)
+                label.font = UIFont.systemFontOfSize(14)
             }
         }
         
@@ -179,12 +179,12 @@ extension SPTwoWaySegmentedControl {
             didSet {
                 addSubview(label)
                 label.snp_makeConstraints { make in
-                    make.center.equalTo(self)
+                    make.center.equalTo(self).offset(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5))
                 }
                 label.text = "NOT SET"
                 label.textColor = UIColor.spOutlineColor()
                 label.textAlignment = .Center
-                label.font = UIFont.systemFontOfSize(17)
+                label.font = UIFont.systemFontOfSize(14)
             }
         }
         

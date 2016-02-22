@@ -9,14 +9,14 @@
 import Foundation
 import MetalKit
 
-/// Composition Filter ← (ImageProvider)? > ThresholdingFilter > MedianFilter > LineShapeFilteringFilter > LineShapeRefiningFilter
+/// Composition Filter ← (ImageProvider)? > ThresholdingFilter > MedianFilter > LineShapeFilteringFilter >? LineShapeRefiningFilter
 class GeometricsFilteringFilter: MXNCompositionFilters, MXNDrawablePresentable {
     var thresholdingFilter: ThresholdingFilter!
     var medianFilter: MedianFilter!
     var lineShapeFilteringFilter: LineShapeFilterFilteringFilter!
     var lineShapeRefiningFilter: LineShapeRefiningFilter!
     
-    var tailFilter: MXNImageFilter { return lineShapeRefiningFilter }
+    var tailFilter: MXNImageFilter { return lineShapeFilteringFilter }
     var headFilter: MXNImageFilter { return thresholdingFilter }
     var texture: MTLTexture! { return tailFilter.texture }
     var provider: MXNTextureProvider? {

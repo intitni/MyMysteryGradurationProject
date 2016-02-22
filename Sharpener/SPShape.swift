@@ -23,4 +23,28 @@ class SPShape: SPGeometrics, SPCurveRepresentable {
         
         return layer
     }
+    
+    var shapeLayerPure: CAShapeLayer {
+        let layer = CAShapeLayer()
+        
+        let path = bezierPath.CGPath
+        layer.path = path
+        layer.fillRule = kCAFillRuleEvenOdd
+        layer.fillColor = UIColor.spOutlineColor().CGColor
+        layer.backgroundColor = UIColor.clearColor().CGColor
+        
+        return layer
+    }
+    
+    var previewShapeLayer: CAShapeLayer {
+        let layer = CAShapeLayer()
+        
+        let path = previewBezierPath.CGPath
+        layer.path = path
+        layer.fillRule = kCAFillRuleEvenOdd
+        layer.fillColor = UIColor.spOutlineColor().CGColor
+        layer.backgroundColor = UIColor.clearColor().CGColor
+        
+        return layer
+    }
 }

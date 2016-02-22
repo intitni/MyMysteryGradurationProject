@@ -11,14 +11,15 @@ import UIKit
 class RefineViewController: UIViewController {
     
     enum Mode { case Catch, Erase }
+    var finished: Bool = false
     
     // MARK: UI Elements
     
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            scrollView.contentSize = processSize
-            scrollView.zoomScale = 1.0
+            scrollView.contentSize = CGSize(width: Preference.vectorizeSize.height, height: Preference.vectorizeSize.height)
+            scrollView.zoomScale = 0.8
             scrollView.minimumZoomScale = 0.8
             scrollView.maximumZoomScale = 2
         }
@@ -28,7 +29,7 @@ class RefineViewController: UIViewController {
             navigationBar.buttonDelegate = self
         }
     }
-    @IBOutlet weak var controlPanel: UIView! {
+    @IBOutlet weak var controlPanel: SPControlPanel! {
         didSet {
             controlPanel.backgroundColor = UIColor.whiteColor()
         }
@@ -40,14 +41,13 @@ class RefineViewController: UIViewController {
         didSet {
             scrollView.addSubview(refineView)
             refineView.delegate = self
+            refineView.frame.size = Preference.vectorizeSize
         }
     }
     var mode: Mode = .Erase
     
     // MARK: Constants
     
-    /// Actually 600 * 800 in @2x devices. Maybe 900 * 1200 in @3x devices.
-    let processSize = CGSize(width: 300, height: 400)
     let shouldUseTestImage = true
 
     // MARK: Properties
@@ -55,12 +55,8 @@ class RefineViewController: UIViewController {
     var incomeImage: UIImage!
     var finder: SPRawGeometricsFinder!
     var shapes = [CAShapeLayer]()
-    var imageSize = CGSizeZero {
-        didSet {
-            scrollView.contentSize = imageSize
-            refineView.frame.size = imageSize
-        }
-    }
+
+    var geometricsFindingOperation: NSBlockOperation!
     
     // MARK: Life Cycle
     
@@ -72,13 +68,23 @@ class RefineViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if shouldUseTestImage { incomeImage = UIImage(named: "TestImage") }
         
-        let newImage = incomeImage.resizedImageToSize(processSize)
-        imageSize = newImage.size.scaled(newImage.scale)
-
         // FIXME: calculated attributes for filter
-        finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: processSize)
+        if !finished { performGeometricsFinding() }
+        
+    }
+    
+    private func performGeometricsFinding() {
+        let newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
+        finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: Preference.vectorizeSize)
         finder.delegate = self
-        finder.process(newImage)
+        
+        geometricsFindingOperation = NSBlockOperation { [unowned self] in
+            self.finder.process(newImage)
+        }
+        
+        let queue = NSOperationQueue()
+        queue.qualityOfService = .Utility
+        queue.addOperation(geometricsFindingOperation)
     }
     
 
@@ -86,6 +92,8 @@ class RefineViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func unwindToRefine(sender: UIStoryboardSegue) {}
 }
 
 // MARK: - UI
@@ -110,20 +118,23 @@ extension RefineViewController: UIScrollViewDelegate {
 // MARK: - SPRawGeometricsFinderDelegate
 extension RefineViewController: SPRawGeometricsFinderDelegate {
     func succefullyFoundRawGeometrics() {
-        // put results on screen.
-        for raw in SPGeometricsStore.universalStore.rawStore {
-            refineView.shapes.append(raw.shapeLayer)
+        NSOperationQueue.mainQueue().addOperationWithBlock { [unowned self] in
+            for raw in SPGeometricsStore.universalStore.rawStore {
+                self.refineView.appendShapeLayerForRawGeometric(raw)
+            }
+            self.navigationBar.actionButtonEnabled = true
+            self.finished = true
+            self.refineView.enabled = true
         }
-        refineView.drawLayers()
     }
 }
 
 // MARK: - SPRefineViewDelegate
 extension RefineViewController: SPRefineViewDelegate {
-    func didTouchShapeAtIndex(index: Int) {
-        let shape = SPGeometricsStore.universalStore.rawStore[index]
-        shape.isHidden = mode == .Catch ? false : true
-        refineView.updateShapeLayerAtIndex(index, to: shape.shapeLayer)
+    func didTouchShape(shape: CAShapeLayer) {
+        guard let raw = shape.valueForKey("rawGeometric") as? SPRawGeometric else { return }
+        raw.isHidden = mode == .Catch ? false : true
+        refineView.updateShapeLayer(shape, to: raw.shapeLayer)
     }
 }
 
@@ -131,6 +142,10 @@ extension RefineViewController: ProcessingNavigationBarDelegate {
     func didTapOnNavigationBarButton(index: Int) {
         switch index {
         case 0:
+            if geometricsFindingOperation != nil && geometricsFindingOperation.executing {
+                geometricsFindingOperation.cancel()
+            }
+            finder.isCanceled = true
             SPGeometricsStore.universalStore.removeAll()
             dismissViewControllerAnimated(true, completion: nil)
         case 1:

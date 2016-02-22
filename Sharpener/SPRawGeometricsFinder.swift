@@ -18,9 +18,10 @@ public protocol SPRawGeometricsFinderDelegate: class {
 /// SPRawGeometricsFinder is used to descriminate shapes and lines from given UIImage.
 ///
 /// It will firstly apply abunch of filter to filter out shape and lines, then seperate them into different groups, refine them (extracting lines from shape, ignoring small shapes in lines, etc.), and create a final seperation for texture, so user can choose to hide or show individual shape or line group in Refine View.
-public class SPRawGeometricsFinder {
+public class SPRawGeometricsFinder: NSObject {
     
     // MARK: Properties
+    var isCanceled: Bool = false
     
     private let context: MXNContext = MXNContext()
     private var geometricsFilteringFilter: GeometricsFilteringFilter!
@@ -52,19 +53,23 @@ public class SPRawGeometricsFinder {
     /// Process and given UIImage, when done, it will tell its delegate, and store everything in universalStore.
     public func process(image: UIImage) {
         geometricsFilteringFilter.provider = MXNImageProvider(image: image, context: context)
-        // TODO: Use NSOperation to make it cancelable.
-        dispatch_async(GCD.newSerialQueue("rawgeometrics_finding")) {
-            
-            self.extractTexture()
-            self.extractSeperatedTexture()
-            self.extractRawGeometrics()
-            self.findContoursOfEachAndPerformSimpleVectorization()
-            
-            dispatch_async(GCD.mainQueue) {
-                SPGeometricsStore.universalStore.rawStore.appendContentsOf(self.rawGeometrics)
-                self.delegate?.succefullyFoundRawGeometrics()
-            }
+
+        guard !isCanceled else { return }
+        self.extractTexture()
+        guard !isCanceled else { return }
+        self.extractSeperatedTexture()
+        guard !isCanceled else { return }
+        self.extractRawGeometrics()
+        guard !isCanceled else { return }
+        self.findContoursOfEachAndPerformSimpleVectorization()
+        
+        guard !isCanceled else { return }
+        SPGeometricsStore.universalStore.rawStore.appendContentsOf(self.rawGeometrics)
+        guard !isCanceled else {
+            SPGeometricsStore.universalStore.rawStore.removeAll()
+            return
         }
+        self.delegate?.succefullyFoundRawGeometrics()
     }
     
     /// Used to extract texture from UIImage.
