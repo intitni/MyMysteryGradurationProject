@@ -58,4 +58,11 @@ class FilePreviewCollectionViewCell: UICollectionViewCell {
             }, completion: nil)
         super.touchesEnded(touches, withEvent: event)
     }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        UIView.animateWithDuration(0.1, animations: {
+            self.imageView.transform = CGAffineTransformIdentity
+            }, completion: nil)
+        super.touchesCancelled(touches, withEvent: event)
+    }
 }

@@ -28,7 +28,7 @@ class SPSharpenerFileHandler {
         return localRoot.URLByAppendingPathComponent("\(NSUUID().UUIDString).\(SPSharpenerDocument.fileExtension)")
     }
     
-    func saveGeometricStore(store: SPGeometricsStore, withCompletionHandler complete: (Bool) -> Void) {
+    func saveGeometricStore(store: SPGeometricsStore, withCompletionHandler complete: (SPSharpenerDocumentRef) -> Void) {
         let newURL = newFileURL()
         let snapshotView = UIView(frame: CGRect(origin: CGPointZero, size: Preference.vectorizeSize))
         store.shapeLayers.forEach {
@@ -39,7 +39,9 @@ class SPSharpenerFileHandler {
                 size: CGSize(width: Preference.vectorizeSize.width, height: Preference.vectorizeSize.width))).resizedImageToSize(CGSize(width: 200, height: 200))
         let file = SPSharpenerDocument(store: store, thumbnail: thumbnail, url: newURL)
         file.saveToURL(newURL, forSaveOperation: .ForCreating) { succeed in
-            file.closeWithCompletionHandler(complete)
+            file.closeWithCompletionHandler { finished in
+                complete(SPSharpenerDocumentRef(url: newURL, thumbnail: thumbnail, modifiedDate: nil))
+            }
         }
     }
     

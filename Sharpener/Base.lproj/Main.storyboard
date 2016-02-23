@@ -164,9 +164,19 @@
                                             <constraint firstAttribute="width" constant="70" id="oxj-UU-Me2"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E0W-qw-Ss4" customClass="CancelCaptureButton" customModule="Sharpener" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="32.5" width="50" height="50"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="dDb-FF-MQu"/>
+                                            <constraint firstAttribute="width" constant="50" id="kay-Fw-U8e"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="E0W-qw-Ss4" firstAttribute="leading" secondItem="heb-3K-LbX" secondAttribute="leading" constant="20" id="F6R-At-oL0"/>
+                                    <constraint firstItem="E0W-qw-Ss4" firstAttribute="centerY" secondItem="heb-3K-LbX" secondAttribute="centerY" id="IiB-0s-oaY"/>
                                     <constraint firstItem="r05-4B-iRH" firstAttribute="centerY" secondItem="heb-3K-LbX" secondAttribute="centerY" id="eY0-82-2cR"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="116" id="u4r-2L-gZi"/>
                                     <constraint firstItem="r05-4B-iRH" firstAttribute="centerX" secondItem="heb-3K-LbX" secondAttribute="centerX" id="y5j-iI-tmh"/>
@@ -192,6 +202,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="ToolBar" destination="3ho-Xp-l2h" id="Ozu-OO-2gl"/>
+                        <outlet property="cancelButton" destination="E0W-qw-Ss4" id="e5P-RP-KDp"/>
                         <outlet property="controlPanel" destination="heb-3K-LbX" id="ng2-j9-mR2"/>
                         <outlet property="imageView" destination="Fil-4h-b8F" id="Hdd-E7-Q2a"/>
                         <outlet property="shutterButton" destination="r05-4B-iRH" id="YNE-DC-ZHv"/>
@@ -269,9 +280,11 @@
                         <outlet property="navigationBar" destination="Okd-Fc-Jlt" id="GzG-ge-ZPh"/>
                         <outlet property="scrollView" destination="6r9-8A-3FI" id="1vj-UA-bQU"/>
                         <outlet property="toolBar" destination="S2g-KB-syb" id="uNG-a3-XY9"/>
+                        <segue destination="nCa-dS-Uma" kind="unwind" identifier="UnwindWithFileDeleted" unwindAction="unwindWithFileDeleted:" id="ilr-cy-ANi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ehc-Uk-Xoe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nCa-dS-Uma" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="303" y="377"/>
         </scene>

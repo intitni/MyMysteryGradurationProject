@@ -26,6 +26,9 @@ class FilePreviewCollectionViewController: UICollectionViewController, UICollect
         // Register cell classes
         self.collectionView!.registerClass(FilePreviewCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.backgroundColor = UIColor.spCollectionViewBackgroundColor()
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.bounces = true
+        collectionView?.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 100, right: 0)
         // Do any additional setup after loading the view.
     }
 

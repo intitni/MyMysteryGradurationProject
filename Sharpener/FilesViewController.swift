@@ -58,7 +58,23 @@ class FilesViewController: UIViewController {
     }
     
     @IBAction func unwindToFile(sender: UIStoryboardSegue) {}
-    @IBAction func unwindWithNewFileAdded(sender: UIStoryboardSegue) {}
+    @IBAction func unwindWithNewFileAdded(sender: UIStoryboardSegue) {
+        if let fromVC = sender.sourceViewController as? VectorizeViewController {
+            if let newRef = fromVC.newDocumentRef {
+                collectionViewController?.documentRefs.append(newRef)
+                collectionViewController?.collectionView?.reloadData()
+            }
+        }
+    }
+    @IBAction func unwindWithFileDeleted(sender: UIStoryboardSegue) {
+        if let fromVC = sender.sourceViewController as? DetailViewController {
+            let deletedRef = fromVC.docRef
+            if let index = collectionViewController?.documentRefs.indexOf({ $0.url == deletedRef?.url }) {
+                collectionViewController?.documentRefs.removeAtIndex(index)
+                collectionViewController?.collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)])
+            }
+        }
+    }
 
     func shouldShowCaptureView() {
         performSegueWithIdentifier("FileToCapture", sender: self)

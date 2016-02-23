@@ -14,15 +14,25 @@ import MetalKit
 class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     // MARK: UI
-    @IBOutlet weak var ToolBar: UIView!
+    @IBOutlet weak var ToolBar: UIView! {
+        didSet {
+            ToolBar.backgroundColor = UIColor.spGrayishWhiteColor()
+        }
+    }
     @IBOutlet weak var imageView: CaptureImageView!
     @IBOutlet weak var controlPanel: UIView! {
         didSet {
-            controlPanel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+            controlPanel.backgroundColor = UIColor.spGrayishWhiteColor().colorWithAlphaComponent(0.7)
         }
     }
     @IBOutlet weak var shutterButton: ShutterButton!
     @IBOutlet weak var torchSwitch: TorchSwitcher!
+    @IBOutlet weak var cancelButton: CancelCaptureButton! {
+        didSet {
+            let tap = UITapGestureRecognizer(target: self, action: "cancelCapture")
+            cancelButton.addGestureRecognizer(tap)
+        }
+    }
     var metalView: MetalVideoView! {
         didSet {
             imageView.addSubview(metalView)
@@ -200,6 +210,10 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             destination?.incomeImage = stillImage
         default: break
         }
+    }
+    
+    func cancelCapture() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
 

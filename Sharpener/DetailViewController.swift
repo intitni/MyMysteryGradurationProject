@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
         didSet {
             if document?.dataJson != nil {
                 store = SPGeometricsStore(json: document!.dataJson!)
+                document?.closeWithCompletionHandler(nil)
             }
         }
     }
@@ -38,13 +39,19 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
             scrollView.delegate = self
-            scrollView.contentSize = CGSize(width: Preference.vectorizeSize.height, height: Preference.vectorizeSize.height)
-            scrollView.zoomScale = 0.8
-            scrollView.minimumZoomScale = 0.8
-            scrollView.maximumZoomScale = 2
+            scrollView.contentSize = Preference.vectorizeSize
+            scrollView.maximumZoomScale = 1.2
+            
         }
     }
-    @IBOutlet weak var toolBar: SPDetailToolBar!
+    @IBOutlet weak var toolBar: SPDetailToolBar! {
+        didSet {
+            let tapL = UITapGestureRecognizer(target: self, action: "shouldDeleteDocument")
+            toolBar.deleteButton.addGestureRecognizer(tapL)
+            let tapR = UITapGestureRecognizer(target: self, action: "shouldShareDocument")
+            toolBar.shareButton.addGestureRecognizer(tapR)
+        }
+    }
     var refineView: SPRefineView! {
         didSet {
             scrollView.addSubview(refineView)
@@ -55,6 +62,9 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refineView = SPRefineView()
+        let screenSize = UIScreen.mainScreen().bounds.size
+        scrollView.minimumZoomScale = screenSize.width / Preference.vectorizeSize.width
+        scrollView.zoomScale = screenSize.width / Preference.vectorizeSize.width
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -73,7 +83,25 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func deleteCurrentDocument() {
+        let url = docRef!.url
+        let fileManager = NSFileManager()
+        do {
+            try fileManager.removeItemAtURL(url)
+            performSegueWithIdentifier("UnwindWithFileDeleted", sender: self)
+        } catch {
+            print("unable to remove file")
+        }
+    }
+    
+    func shouldDeleteDocument() {
+        deleteCurrentDocument()
+        
+    }
+    func shouldShareDocument() {
+        
+    }
 }
 
 extension DetailViewController: UIScrollViewDelegate {

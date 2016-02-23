@@ -13,6 +13,7 @@ class VectorizeViewController: UIViewController {
     // MARK: UI Elements
     
     var done: Bool = false
+    var newDocumentRef: SPSharpenerDocumentRef?
     
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
@@ -26,12 +27,13 @@ class VectorizeViewController: UIViewController {
     @IBOutlet weak var navigationBar: ProcessingNavigationBar! {
         didSet {
             navigationBar.buttonDelegate = self
+            navigationBar.backgroundColor = UIColor.spGrayishWhiteColor()
         }
     }
     
     @IBOutlet weak var controlPanel: SPControlPanel! {
         didSet {
-            controlPanel.backgroundColor = UIColor.whiteColor()
+            controlPanel.backgroundColor = UIColor.spGrayishWhiteColor()
         }
     }
     @IBOutlet weak var progressBar: SPBigProgressBar!
@@ -72,6 +74,9 @@ class VectorizeViewController: UIViewController {
         progressBar.labelText = "Vectorizing"
         refineView = SPRefineView(frame: CGRectZero)
         countingView = SPGeometricCountingView()
+        let screenSize = UIScreen.mainScreen().bounds.size
+        scrollView.minimumZoomScale = screenSize.width / Preference.vectorizeSize.width
+        scrollView.zoomScale = screenSize.width / Preference.vectorizeSize.width
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -167,7 +172,8 @@ extension VectorizeViewController: ProcessingNavigationBarDelegate {
         case 1:
             // here we save the file
             let fileHandler = SPSharpenerFileHandler()
-            fileHandler.saveGeometricStore(SPGeometricsStore.universalStore) { succeed in
+            fileHandler.saveGeometricStore(SPGeometricsStore.universalStore) { ref in
+                self.newDocumentRef = ref
                 self.performSegueWithIdentifier("NewFileCreated", sender: self)
                 SPGeometricsStore.universalStore.removeAll()
             }

@@ -27,11 +27,12 @@ class RefineViewController: UIViewController {
     @IBOutlet weak var navigationBar: ProcessingNavigationBar! {
         didSet {
             navigationBar.buttonDelegate = self
+            navigationBar.backgroundColor = UIColor.spGrayishWhiteColor()
         }
     }
     @IBOutlet weak var controlPanel: SPControlPanel! {
         didSet {
-            controlPanel.backgroundColor = UIColor.whiteColor()
+            controlPanel.backgroundColor = UIColor.spGrayishWhiteColor()
         }
     }
     
@@ -70,14 +71,16 @@ class RefineViewController: UIViewController {
         
         // FIXME: calculated attributes for filter
         if !finished { performGeometricsFinding() }
-        
+        let screenSize = UIScreen.mainScreen().bounds.size
+        scrollView.minimumZoomScale = screenSize.width / Preference.vectorizeSize.width
+        scrollView.zoomScale = screenSize.width / Preference.vectorizeSize.width
     }
     
     private func performGeometricsFinding() {
         var newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
         newImage = newImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/newImage.scale))
         
-        finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: Preference.vectorizeSize)
+        finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 0 ), extractorSize: Preference.vectorizeSize)
         finder.delegate = self
         
         geometricsFindingOperation = NSBlockOperation { [unowned self] in

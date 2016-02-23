@@ -100,6 +100,7 @@
 		13EF71A21C7C82B800F752B2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A11C7C82B800F752B2 /* DetailViewController.swift */; };
 		13EF71A41C7C85D800F752B2 /* SPDetailToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */; };
 		13EF71A61C7C8A2A00F752B2 /* SPDetailNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */; };
+		13EF71A81C7CB4EC00F752B2 /* CancelCaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A71C7CB4EC00F752B2 /* CancelCaptureButton.swift */; };
 		8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB5EA983D3116ADF305711E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +203,7 @@
 		13EF71A11C7C82B800F752B2 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDetailToolBar.swift; sourceTree = "<group>"; };
 		13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDetailNavigationBar.swift; sourceTree = "<group>"; };
+		13EF71A71C7CB4EC00F752B2 /* CancelCaptureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelCaptureButton.swift; sourceTree = "<group>"; };
 		2AB5EA983D3116ADF305711E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				138A7BB91C784FD900D5C96D /* SPBigProgressBar.swift */,
 				13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */,
 				13204A721C7B67D000544C5B /* FilePreviewCollectionViewCell.swift */,
+				13EF71A71C7CB4EC00F752B2 /* CancelCaptureButton.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
 				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
 				13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */,
+				13EF71A81C7CB4EC00F752B2 /* CancelCaptureButton.swift in Sources */,
 				13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */,
 				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
 				13627C9A1C67357700DFE73C /* GradientTensorCalculatingFilter.swift in Sources */,
