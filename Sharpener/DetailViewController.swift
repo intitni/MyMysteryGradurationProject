@@ -8,6 +8,8 @@
 
 import UIKit
 
+var interactionController: UIDocumentInteractionController?
+
 class DetailViewController: UIViewController {
     
     var docRef: SPSharpenerDocumentRef?
@@ -100,7 +102,13 @@ class DetailViewController: UIViewController {
         
     }
     func shouldShareDocument() {
-        
+        let svgg = SPSVGGenerator()
+        if store != nil {
+            svgg.createSVGFor(store!) { url in
+                interactionController = UIDocumentInteractionController(URL: url)
+                interactionController!.presentOpenInMenuFromRect(self.view.bounds, inView: self.view, animated: true)
+            }
+        }
     }
 }
 

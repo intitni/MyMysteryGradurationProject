@@ -13,6 +13,7 @@ protocol SPSharpenerFileHandlerDelegate: class {
     func newDocumentRefFetched(ref: SPSharpenerDocumentRef)
 }
 
+
 class SPSharpenerFileHandler {
     
     weak var delegate: SPSharpenerFileHandlerDelegate?
@@ -26,6 +27,10 @@ class SPSharpenerFileHandler {
     
     func newFileURL() -> NSURL {
         return localRoot.URLByAppendingPathComponent("\(NSUUID().UUIDString).\(SPSharpenerDocument.fileExtension)")
+    }
+    
+    func newSVGURL() -> NSURL {
+        return localRoot.URLByAppendingPathComponent("share.svg")
     }
     
     func saveGeometricStore(store: SPGeometricsStore, withCompletionHandler complete: (SPSharpenerDocumentRef) -> Void) {
@@ -43,6 +48,30 @@ class SPSharpenerFileHandler {
                 complete(SPSharpenerDocumentRef(url: newURL, thumbnail: thumbnail, modifiedDate: nil))
             }
         }
+    }
+    
+    func saveSVGString(svg: String, withCompletionHandler complete: (NSURL)->()) {
+        let newURL = newSVGURL()
+        let fileManager = NSFileManager()
+     
+        if fileManager.fileExistsAtPath(newURL.path!) {
+            do {
+                try fileManager.removeItemAtURL(newURL)
+                    
+            } catch {
+                print("unable to remove file")
+            }
+        }
+        do {
+            try svg.writeToURL(newURL, atomically: false, encoding: NSUTF8StringEncoding)
+            complete(newURL)
+        } catch {
+            print("failed to write file")
+        }
+    }
+    
+    func deleteFileAtURL(url: NSURL) {
+        
     }
     
     func fetchAllLocalDocumentRef() {

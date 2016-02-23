@@ -10,25 +10,49 @@ import Foundation
 
 class SPSVGGenerator {
     static let header: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<svg width=\"600px\" height=\"800px\" viewBox=\"0 0 600 800\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
-    static let closer: String = "</svg>"
+    static let closer: String = "\n</svg>"
     
     func title(title: String) -> String {
         return "\t<title>\(title)</title>\n"
     }
     
-    func createSVGFor(store: SPGeometricsStore) -> NSURL {
+    func createSVGFor(store: SPGeometricsStore, withCompletionHandler complete: (NSURL)->()) {
         var raw = SPSVGGenerator.header
         raw += title("Sharpener")
         for (i, shape) in store.shapeStore.enumerate() {
-            
-            for curve in shape.lines {
-            
+            var gelem = GroupElement(type: .Shape, id: "Shape-\(i)")
+            var pelem = PathElement(id: "Shape-\(i)-Borders")
+            for (_, curve) in shape.lines.enumerate() {
+                for (k, p) in curve.vectorized.enumerate() {
+                    if k == 0 { pelem.moveToPoint(p.anchorPoint); continue }
+                    pelem.addCurveToPoint(p)
+                }
             }
+            gelem.subelements.append(pelem.string)
+            raw += gelem.string
         }
-        return NSURL()
+        
+        for (i, line) in store.lineStore.enumerate() {
+            var gelem = GroupElement(type: .Line, id: "LineGroup-\(i)")
+            for (j, curve) in line.lines.enumerate() {
+                var pelem = PathElement(id: "Line-\(i)-Curve-\(j)")
+                for (k, p) in curve.vectorized.enumerate() {
+                    if k == 0 { pelem.moveToPoint(p.anchorPoint); continue }
+                    pelem.addCurveToPoint(p)
+                }
+                gelem.subelements.append(pelem.string)
+            }
+            raw += gelem.string
+        }
+        raw += SPSVGGenerator.closer
+        
+        let fileHandler = SPSharpenerFileHandler()
+        fileHandler.saveSVGString(raw) { url in
+            complete(url)
+        }
     }
     
-    struct groupElement {
+    struct GroupElement {
         var id: String
         var fillMode: String = "evenodd"
         var fill: String = "none"
@@ -37,16 +61,17 @@ class SPSVGGenerator {
         var type: SPGeometricType
         var subelements = [String]()
         
-        let head = "<g "
+        let head = "\n<g "
         let tail = "\n</g>"
         
         var string: String {
             var s = head + "id=\"" + id + "\" "
-            if type == .Shape {
-                 s += "stroke=\"none\" stroke-width=\"\(strokeWidth)\" stroke-linecap=\"square\""
+            if type == .Line {
+                 s += "stroke=\"#000000\" stroke-width=\"\(strokeWidth)\" stroke-linecap=\"square\" fill=\"none\""
             } else {
-                s += "stroke=\"none\" fill-rule=\"" + fillMode + "\" fill=\"none\""
+                s += "stroke=\"none\" fill-rule=\"" + fillMode + "\" fill=\"#000000\""
             }
+            s += ">"
             for sub in subelements {
                 s += sub
             }
@@ -66,10 +91,9 @@ class SPSVGGenerator {
         }
     }
     
-    struct pathElement {
+    struct PathElement {
         var d: String
         var id: String
-        var fill: String = "#000000"
         
         let head = "<path "
         let tail = "></path>"
@@ -79,13 +103,13 @@ class SPSVGGenerator {
             d += "M\(point.x),\(point.y) "
         }
         mutating func addCurveToPoint(point: SPAnchorPoint) {
-            guard point.controlPointA != nil && point.controlPointB != nil else {
-                moveToPoint(point.anchorPoint)
+            guard point.controlPointA != nil || point.controlPointB != nil else {
+                addLineToPoint(point.anchorPoint)
                 return
             }
-            let new = "C\(point.anchorPoint.x),\(point.anchorPoint.y) "
-                    + "\(point.controlPointA!.x),\(point.controlPointA!.y) "
+            let new = "C\(point.controlPointA!.x),\(point.controlPointA!.y) "
                     + "\(point.controlPointB!.x),\(point.controlPointB!.y) "
+                    + "\(point.anchorPoint.x),\(point.anchorPoint.y) "
             d += new
         }
         mutating func addLineToPoint(point: CGPoint) {
@@ -93,11 +117,11 @@ class SPSVGGenerator {
         }
         
         var string: String {
-            return head + "d=\"" + d + "\" id=\"" + id + "\" fill=\"" + fill + "\"" + tail
+            return head + "d=\"" + d + "\" id=\"" + id + "\"" + tail
         }
     }
     
-    struct circleElement {
+    struct CircleElement {
         var id: String
         var fill: String = "#000000"
         var cx: CGFloat
@@ -120,7 +144,7 @@ class SPSVGGenerator {
         }
     }
     
-    struct rectElement {
+    struct RectElement {
         var id: String
         var fill: String = "#000000"
         var rect: CGRect
