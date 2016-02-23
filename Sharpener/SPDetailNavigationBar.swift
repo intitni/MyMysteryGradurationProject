@@ -1,21 +1,18 @@
 //
-//  SPNavigationBar.swift
+//  SPDetailNavigationBar.swift
 //  Sharpener
 //
-//  Created by Inti Guo on 2/22/16.
+//  Created by Inti Guo on 2/23/16.
 //  Copyright © 2016 Inti Guo. All rights reserved.
 //
 
 import UIKit
 
-protocol SPNavigationBarDelegate: class {
-    func navigationBarButtonTapped()
-}
+class SPDetailNavigationBar: UIView {
 
-class SPNavigationBar: UIView {
     var title = UILabel() {
         didSet {
-            title.text = "Sharpener"
+            title.text = "Detail"
             title.font = UIFont.systemFontOfSize(17)
             title.textColor = UIColor.spOutlineColor()
             title.textAlignment = .Center
@@ -26,7 +23,7 @@ class SPNavigationBar: UIView {
         }
     }
     
-    var lowerBorder = UIView() {
+    var lowerBorder: UIView! {
         didSet {
             addSubview(lowerBorder)
             lowerBorder.translatesAutoresizingMaskIntoConstraints = false
@@ -40,30 +37,23 @@ class SPNavigationBar: UIView {
         }
     }
     
-    var actionButton: UIButton! {
+    var backButton: SPBackButton! {
         didSet {
-            actionButton.enabled = false
+            let tap = UITapGestureRecognizer(target: self, action: "tappedOnBackButton")
+            backButton.addGestureRecognizer(tap)
             
-            let tap = UITapGestureRecognizer(target: self, action: "tappedOnActionButton")
-            actionButton.addGestureRecognizer(tap)
-            
-            addSubview(actionButton)
-            actionButton.translatesAutoresizingMaskIntoConstraints = false
-            actionButton.snp_makeConstraints { make in
-                make.right.equalTo(-12)
+            addSubview(backButton)
+            backButton.translatesAutoresizingMaskIntoConstraints = false
+            backButton.snp_makeConstraints { make in
+                make.left.equalTo(12)
                 make.centerY.equalTo(self).offset(UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0))
+                make.size.equalTo(backButton.defaultSize)
             }
-            
-            actionButton.setTitleColor(UIColor.spOutlineColor(), forState: .Normal)
-            actionButton.setTitleColor(UIColor.spOutlineColor().colorWithAlphaComponent(0.5), forState: .Disabled)
         }
     }
+    
     weak var buttonDelegate: SPNavigationBarDelegate?
     
-    var actionButtonEnabled: Bool {
-        get { return actionButton.enabled }
-        set { actionButton.enabled = newValue }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,12 +69,10 @@ class SPNavigationBar: UIView {
         lowerBorder = UIView()
         title = UILabel()
         backgroundColor = UIColor.spGrayishWhiteColor()
-        actionButton = UIButton(frame: CGRectZero)
+        backButton = SPBackButton(frame: CGRectZero)
     }
-
     
-    func tappedOnActionButton() {
+    func tappedOnBackButton() {
         buttonDelegate?.navigationBarButtonTapped()
     }
-
 }

@@ -55,4 +55,31 @@ class ShutterButton: UIControl {
         outline = CAShapeLayer()
         innerPart = CAShapeLayer()
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // shrink button a little bit while holding
+        UIView.animateWithDuration(0.02, animations: {
+            self.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        })
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        UIView.animateWithDuration(0.1, animations: {
+            self.transform = CGAffineTransformIdentity
+            }, completion: { finished in
+                
+        })
+        super.touchesEnded(touches, withEvent: event)
+    }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        UIView.animateWithDuration(0.1, animations: {
+            self.transform = CGAffineTransformIdentity
+            }, completion: { finished in
+                
+        })
+        super.touchesCancelled(touches, withEvent: event)
+    }
+
 }

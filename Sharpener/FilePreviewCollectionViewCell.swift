@@ -12,6 +12,7 @@ class FilePreviewCollectionViewCell: UICollectionViewCell {
     
     var imageView: UIImageView! {
         didSet {
+            backgroundColor = UIColor.whiteColor()
             addSubview(imageView)
             imageView.snp_makeConstraints { make in
                 make.edges.equalTo(self)
@@ -40,6 +41,7 @@ class FilePreviewCollectionViewCell: UICollectionViewCell {
     }
     
     private func setup() {
+        backgroundColor = UIColor.spCollectionViewBackgroundColor()
         imageView = UIImageView()
     }
     

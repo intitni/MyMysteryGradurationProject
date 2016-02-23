@@ -11,7 +11,7 @@ import UIKit
 private let reuseIdentifier = "FilePreviewCell"
 
 protocol FilePreviewCollectionViewControllerDelegate: class {
-    func selectedCell(cell: UICollectionViewCell)
+    func selectedRef(ref: SPSharpenerDocumentRef)
 }
 
 class FilePreviewCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -25,7 +25,7 @@ class FilePreviewCollectionViewController: UICollectionViewController, UICollect
 
         // Register cell classes
         self.collectionView!.registerClass(FilePreviewCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
+        collectionView?.backgroundColor = UIColor.spCollectionViewBackgroundColor()
         // Do any additional setup after loading the view.
     }
 
@@ -52,7 +52,7 @@ class FilePreviewCollectionViewController: UICollectionViewController, UICollect
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: view.bounds.width/2 , height: view.bounds.width/2)
+        return CGSize(width: view.bounds.width/2-1, height: view.bounds.width/2-1)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -60,11 +60,15 @@ class FilePreviewCollectionViewController: UICollectionViewController, UICollect
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
+        return 2
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 0
+        return 2
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        containerViewController?.selectedRef(documentRefs[indexPath.row])
     }
 
     // MARK: UICollectionViewDelegate

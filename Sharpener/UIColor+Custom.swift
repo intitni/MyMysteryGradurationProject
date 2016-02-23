@@ -41,5 +41,9 @@ extension UIColor {
     class func spGrayishWhiteColor() -> UIColor {
         return UIColor(red:251/255, green:251/255, blue:251/255, alpha:1)
     }
+    
+    class func spCollectionViewBackgroundColor() -> UIColor {
+        return UIColor(red:237/255, green:237/255, blue:237/255, alpha:1)
+    }
 }
 

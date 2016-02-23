@@ -188,9 +188,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             
             let imageDataJpeg = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
             self.stillImage = UIImage(data: imageDataJpeg)
+            self.performSegueWithIdentifier("CaptureToRefine", sender: self)
         }
-        
-        performSegueWithIdentifier("CaptureToRefine", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -24,10 +24,19 @@ extension NSDate {
 class SPSharpenerDocumentRef {
     var url: NSURL
     var thumbnail: UIImage
+    var modifiedDate: NSDate?
     
-    init(url: NSURL, thumbnail: UIImage) {
+    init(url: NSURL, thumbnail: UIImage, modifiedDate: NSDate?) {
         self.url = url
         self.thumbnail = thumbnail
+        self.modifiedDate = modifiedDate
+    }
+}
+
+class SPSharpenerDocumentData {
+    var dataJSON: JSON
+    init(json: JSON) {
+        self.dataJSON = json
     }
 }
 

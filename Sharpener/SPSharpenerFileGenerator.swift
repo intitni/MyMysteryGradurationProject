@@ -65,19 +65,27 @@ class SPSharpenerFileHandler {
         document.openWithCompletionHandler { success in
             guard success else { return }
             let thumbnail = document.thumbnail
-            let metaData = document.metaDataJson
+            let modifiedDate = document.fileModificationDate
             
             document.closeWithCompletionHandler { success in
                 guard success && thumbnail != nil else { return }
                 dispatch_async(GCD.mainQueue) {
-                    self.appendDocumentRefWithURL(url, thumbnail: thumbnail!)
+                    self.appendDocumentRefWithURL(url, thumbnail: thumbnail!, modifiedDate: modifiedDate)
                 }
             }
         }
     }
     
-    func appendDocumentRefWithURL(url: NSURL, thumbnail: UIImage) {
-        let ref = SPSharpenerDocumentRef(url: url, thumbnail: thumbnail)
+    func fetchDocumentForRef(ref: SPSharpenerDocumentRef, withCompletionHandler complete: (SPSharpenerDocument)->Void) {
+        let document = SPSharpenerDocument(fileURL: ref.url)
+        document.openWithCompletionHandler { success in
+            guard success else { return }
+            complete(document)
+        }
+    }
+    
+    func appendDocumentRefWithURL(url: NSURL, thumbnail: UIImage, modifiedDate: NSDate?) {
+        let ref = SPSharpenerDocumentRef(url: url, thumbnail: thumbnail, modifiedDate: modifiedDate)
         documentRefs.append(ref)
         delegate?.newDocumentRefFetched(ref)
     }

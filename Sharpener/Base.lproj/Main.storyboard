@@ -33,19 +33,36 @@
                                     <constraint firstAttribute="width" constant="70" id="pA4-xZ-tZ7"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n7y-Yh-bPC" customClass="SPNavigationBar" customModule="Sharpener" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="chg-XV-V7E"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="n7y-Yh-bPC" firstAttribute="top" secondItem="d4i-Rq-Ptj" secondAttribute="bottom" constant="-20" id="5xw-ca-Q6A"/>
                             <constraint firstItem="Pon-n9-p1x" firstAttribute="top" secondItem="IWH-nK-RbY" secondAttribute="top" id="EYm-p4-YKw"/>
+                            <constraint firstItem="n7y-Yh-bPC" firstAttribute="centerX" secondItem="IWH-nK-RbY" secondAttribute="centerX" id="FEM-In-6wJ"/>
                             <constraint firstItem="Pon-n9-p1x" firstAttribute="centerX" secondItem="USl-wX-iwx" secondAttribute="centerX" id="FyN-kD-1cM"/>
+                            <constraint firstItem="n7y-Yh-bPC" firstAttribute="top" secondItem="d4i-Rq-Ptj" secondAttribute="bottom" id="HCj-dd-9pr"/>
+                            <constraint firstItem="n7y-Yh-bPC" firstAttribute="width" secondItem="IWH-nK-RbY" secondAttribute="width" id="V7C-2i-DNF"/>
                             <constraint firstItem="Pon-n9-p1x" firstAttribute="leading" secondItem="IWH-nK-RbY" secondAttribute="leading" id="XHa-JW-69U"/>
                             <constraint firstItem="USl-wX-iwx" firstAttribute="centerX" secondItem="IWH-nK-RbY" secondAttribute="centerX" id="jkM-V5-Y0e"/>
                             <constraint firstItem="Pon-n9-p1x" firstAttribute="bottom" secondItem="UM5-LR-H1d" secondAttribute="top" id="tp2-MV-afX"/>
                             <constraint firstItem="UM5-LR-H1d" firstAttribute="top" secondItem="USl-wX-iwx" secondAttribute="bottom" constant="23" id="w6Q-YF-J2f"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="HCj-dd-9pr"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Sharpener" id="akI-vk-cyp"/>
                     <connections>
+                        <outlet property="navigationBar" destination="n7y-Yh-bPC" id="mpL-Zl-Qyh"/>
                         <outlet property="newButton" destination="USl-wX-iwx" id="Ope-Pw-gvV"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="FileToCapture" id="pEd-bN-PaS"/>
                         <segue destination="aEb-6R-O8y" kind="show" identifier="FileToDetail" id="h0S-hP-ryv"/>
@@ -59,7 +76,7 @@
         <scene sceneID="HGd-JH-nBG">
             <objects>
                 <collectionViewController id="D7Q-oz-iFG" customClass="FilePreviewCollectionViewController" customModule="Sharpener" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="HXT-Li-tTv">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="HXT-Li-tTv">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -88,7 +105,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jao-mq-qLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-486" y="392"/>
+            <point key="canvasLocation" x="-484" y="377"/>
         </scene>
         <!--Capture View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -204,10 +221,10 @@
             </objects>
             <point key="canvasLocation" x="-496" y="1346"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="oL4-ve-n6z">
             <objects>
-                <viewController id="aEb-6R-O8y" sceneMemberID="viewController">
+                <viewController id="aEb-6R-O8y" customClass="DetailViewController" customModule="Sharpener" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NEi-Le-AM1"/>
                         <viewControllerLayoutGuide type="bottom" id="JIN-YV-tdZ"/>
@@ -215,8 +232,44 @@
                     <view key="view" contentMode="scaleToFill" id="86g-M6-9vd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2g-KB-syb" customClass="SPDetailToolBar" customModule="Sharpener" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="HH3-JC-0al"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Okd-Fc-Jlt" customClass="SPDetailNavigationBar" customModule="Sharpener" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="AwZ-9m-nzM"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6r9-8A-3FI">
+                                <rect key="frame" x="0.0" y="64" width="600" height="486"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6r9-8A-3FI" firstAttribute="width" secondItem="86g-M6-9vd" secondAttribute="width" id="34i-FQ-PRY"/>
+                            <constraint firstItem="6r9-8A-3FI" firstAttribute="top" secondItem="Okd-Fc-Jlt" secondAttribute="bottom" id="5kc-sG-VuG"/>
+                            <constraint firstItem="Okd-Fc-Jlt" firstAttribute="centerX" secondItem="86g-M6-9vd" secondAttribute="centerX" id="97q-dP-KBL"/>
+                            <constraint firstItem="Okd-Fc-Jlt" firstAttribute="top" secondItem="NEi-Le-AM1" secondAttribute="bottom" constant="-20" id="PS4-cQ-BpP"/>
+                            <constraint firstItem="S2g-KB-syb" firstAttribute="width" secondItem="86g-M6-9vd" secondAttribute="width" id="XKW-bP-pUT"/>
+                            <constraint firstItem="6r9-8A-3FI" firstAttribute="centerX" secondItem="86g-M6-9vd" secondAttribute="centerX" id="Yo2-Sc-SV6"/>
+                            <constraint firstItem="S2g-KB-syb" firstAttribute="centerX" secondItem="86g-M6-9vd" secondAttribute="centerX" id="h6C-gp-FA0"/>
+                            <constraint firstItem="S2g-KB-syb" firstAttribute="top" secondItem="6r9-8A-3FI" secondAttribute="bottom" id="hTs-D2-fHK"/>
+                            <constraint firstItem="JIN-YV-tdZ" firstAttribute="top" secondItem="S2g-KB-syb" secondAttribute="bottom" id="p8y-Za-qXs"/>
+                            <constraint firstItem="Okd-Fc-Jlt" firstAttribute="width" secondItem="86g-M6-9vd" secondAttribute="width" id="rRi-uD-eR3"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="navigationBar" destination="Okd-Fc-Jlt" id="GzG-ge-ZPh"/>
+                        <outlet property="scrollView" destination="6r9-8A-3FI" id="1vj-UA-bQU"/>
+                        <outlet property="toolBar" destination="S2g-KB-syb" id="uNG-a3-XY9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ehc-Uk-Xoe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -97,6 +97,9 @@
 		13E7D8351C6B7F8D0036601E /* AnglePointDetectingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */; };
 		13E7D8371C6B7FDF0036601E /* DirectionTensorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */; };
 		13E7D8391C6B83660036601E /* invertFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8381C6B83660036601E /* invertFilter.swift */; };
+		13EF71A21C7C82B800F752B2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A11C7C82B800F752B2 /* DetailViewController.swift */; };
+		13EF71A41C7C85D800F752B2 /* SPDetailToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */; };
+		13EF71A61C7C8A2A00F752B2 /* SPDetailNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */; };
 		8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB5EA983D3116ADF305711E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -196,6 +199,9 @@
 		13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnglePointDetectingFilter.swift; sourceTree = "<group>"; };
 		13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionTensorFilter.swift; sourceTree = "<group>"; };
 		13E7D8381C6B83660036601E /* invertFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = invertFilter.swift; sourceTree = "<group>"; };
+		13EF71A11C7C82B800F752B2 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDetailToolBar.swift; sourceTree = "<group>"; };
+		13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDetailNavigationBar.swift; sourceTree = "<group>"; };
 		2AB5EA983D3116ADF305711E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -256,7 +262,9 @@
 				13416C591C29A401006CB39A /* TorchSwitcher.swift */,
 				13416C511C297803006CB39A /* ShutterButton.swift */,
 				13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */,
+				13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */,
 				13D826E71C7A3FF400D183A9 /* SPNewButton.swift */,
+				13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */,
 			);
 			name = Widgets;
 			sourceTree = "<group>";
@@ -288,6 +296,7 @@
 				138A7BBD1C78CC6700D5C96D /* GuessesTableViewController.swift */,
 				13D826E91C7A41D700D183A9 /* FilesViewController.swift */,
 				13204A741C7B680000544C5B /* FilePreviewCollectionViewController.swift */,
+				13EF71A11C7C82B800F752B2 /* DetailViewController.swift */,
 				13627CA11C69C51D00DFE73C /* TestViewController.swift */,
 			);
 			name = "View Controllers";
@@ -611,6 +620,7 @@
 				13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */,
 				131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */,
 				138C42EA1C7754C400224670 /* SPTwoWaySegmentedControl.swift in Sources */,
+				13EF71A61C7C8A2A00F752B2 /* SPDetailNavigationBar.swift in Sources */,
 				13DDCE001C4CE66700072492 /* XNStack.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
 				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,
@@ -627,10 +637,12 @@
 				13D826EA1C7A41D700D183A9 /* FilesViewController.swift in Sources */,
 				13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */,
 				139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */,
+				13EF71A41C7C85D800F752B2 /* SPDetailToolBar.swift in Sources */,
 				139D56481C579BF7006106D4 /* SPCVLine.m in Sources */,
 				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
 				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
 				13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */,
+				13EF71A21C7C82B800F752B2 /* DetailViewController.swift in Sources */,
 				13D826EC1C7A464E00D183A9 /* SPGeometricCountingView.swift in Sources */,
 				13BCAC8F1C5922090029DD9F /* SPSVGGenerator.swift in Sources */,
 				13E7D8351C6B7F8D0036601E /* AnglePointDetectingFilter.swift in Sources */,

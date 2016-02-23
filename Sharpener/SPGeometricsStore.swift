@@ -64,11 +64,105 @@ extension SPGeometricsStore {
         return JSON(j)
     }
     
-    init(json: JSON) {
-        
+    convenience init(json: JSON) {
+        self.init()
+        for (_, subJson):(String, JSON) in json {
+            let s = self.geometricFromJSON(subJson)
+            if s is SPShape {
+                self.shapeStore.append(s as! SPShape)
+            } else if s is SPLineGroup {
+                self.lineStore.append(s as! SPLineGroup)
+            }
+        }
+    }
+}
+
+// MARK: - From JSON 
+extension SPGeometricsStore {
+    private func geometricFromJSON(json: JSON) -> SPGeometrics {
+        if json["type"].stringValue == "shape" {
+            let s = SPShape()
+            s.lines = curvesFromJSON(json["curves"])
+            return s
+        } else {
+            let s = SPLineGroup()
+            s.lines = curvesFromJSON(json["curves"])
+            return s
+        }
+    }
+    
+    private func curvesFromJSON(json: JSON) -> [SPCurve] {
+        var curves = [SPCurve]()
+        for j in json.arrayValue {
+            curves.append(curveFromJSON(j))
+        }
+        return curves
+    }
+    
+    private func curveFromJSON(json: JSON) -> SPCurve {
+        let curve = SPCurve(raw: [])
+        curve.guesses = guessesFromJSON(json["guesses"])
+        curve.vectorized = vectorizedFromJSON(json["vectorized"])
+        if json["applied"].isExists() {
+            curve.applied = guessFromJSON(json["applied"])
+            curve.guesses.append(curve.applied!)
+        }
+        return curve
     }
 
+    private func guessesFromJSON(json: JSON) -> [SPGuess] {
+        var guesses = [SPGuess]()
+        for j in json.arrayValue {
+            if let g = guessFromJSON(j) {
+                guesses.append(g)
+            }
+        }
+        return guesses
+    }
     
+    private func guessFromJSON(json: JSON) -> SPGuess? {
+        let type = json["type"].stringValue
+        switch type {
+        case "straight":
+            return SPGuess(guessType: .Straight(start: CGPoint(x: CGFloat(json["start_point","x"].floatValue), y: CGFloat(json["start_point","y"].floatValue)), end: CGPoint(x: CGFloat(json["end_point","x"].floatValue), y: CGFloat(json["end_point","y"].floatValue))))
+        case "circle":
+            return SPGuess(guessType: .Circle(center: CGPoint(x: CGFloat(json["center","x"].floatValue), y: CGFloat(json["center","y"].floatValue)), radius: CGFloat(json["radius"].floatValue)))
+        case "rectangle":
+            return SPGuess(guessType:
+                .Rectangle(center: CGPoint(x: CGFloat(json["center","x"].floatValue), y: CGFloat(json["center","y"].floatValue)),
+                    height: CGFloat(json["height"].floatValue),
+                    width: CGFloat(json["width"].floatValue),
+                    rotation: CGFloat(json["rotation"].floatValue),
+                    radius: CGFloat(json["radius"].floatValue)
+                )
+            )
+        case "polygon":
+            return SPGuess(guessType: .Polygon(points: json["points"].arrayValue.map({ j in
+                return CGPoint(x: CGFloat(j["x"].floatValue), y: CGFloat(j["y"].floatValue))
+            })))
+        default: break
+        }
+        return nil
+    }
+    
+    private func vectorizedFromJSON(json: JSON) -> [SPAnchorPoint] {
+        var points = [SPAnchorPoint]()
+        for pjson in json.arrayValue {
+            var p = SPAnchorPoint(point: CGPoint(x: CGFloat(pjson["anchor_point","x"].floatValue), y: CGFloat(pjson["anchor_point","y"].floatValue)))
+            if pjson["control_point_A"].isExists() {
+                p.controlPointA = CGPoint(x: CGFloat(pjson["control_point_A","x"].floatValue), y: CGFloat(pjson["control_point_A","y"].floatValue))
+            }
+            if pjson["control_point_B"].isExists() {
+                p.controlPointB = CGPoint(x: CGFloat(pjson["control_point_B","x"].floatValue), y: CGFloat(pjson["control_point_B","y"].floatValue))
+            }
+            points.append(p)
+        }
+        return points
+    }
+}
+
+// MARK: - To JSON
+extension SPGeometricsStore {
     private func jsonForGeometric(geometric: SPGeometrics) -> JSON {
         var json = [String: JSON]()
         

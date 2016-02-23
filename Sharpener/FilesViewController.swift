@@ -11,7 +11,13 @@ import UIKit
 class FilesViewController: UIViewController {
     
     var collectionViewController: FilePreviewCollectionViewController?
+    var shouldShowRef: SPSharpenerDocumentRef?
     
+    @IBOutlet weak var navigationBar: SPNavigationBar! {
+        didSet {
+            navigationBar.buttonDelegate = self
+        }
+    }
     @IBOutlet weak var newButton: SPNewButton! {
         didSet {
             newButton.addTarget(self, action: "shouldShowCaptureView", forControlEvents: .TouchUpInside)
@@ -43,6 +49,10 @@ class FilesViewController: UIViewController {
                 toVC.containerViewController = self
                 collectionViewController = toVC
             }
+        case "FileToDetail":
+            if let toVC = segue.destinationViewController as? DetailViewController {
+                toVC.docRef = shouldShowRef
+            }
         default: break
         }
     }
@@ -56,8 +66,9 @@ class FilesViewController: UIViewController {
 }
 
 extension FilesViewController: FilePreviewCollectionViewControllerDelegate {
-    func selectedCell(cell: UICollectionViewCell) {
-        
+    func selectedRef(ref: SPSharpenerDocumentRef) {
+        shouldShowRef = ref
+        performSegueWithIdentifier("FileToDetail", sender: self)
     }
 }
 
@@ -65,6 +76,12 @@ extension FilesViewController: SPSharpenerFileHandlerDelegate {
     func newDocumentRefFetched(ref: SPSharpenerDocumentRef) {
         collectionViewController?.documentRefs.append(ref)
         collectionViewController?.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forRow: collectionViewController!.documentRefs.count-1, inSection: 0)])
-        let imageView = UIImageView(image: ref.thumbnail)
     }
 }
+
+extension FilesViewController: SPNavigationBarDelegate {
+    func navigationBarButtonTapped() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+

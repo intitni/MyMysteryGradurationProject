@@ -48,7 +48,7 @@ class RefineViewController: UIViewController {
     
     // MARK: Constants
     
-    let shouldUseTestImage = true
+    let shouldUseTestImage = false
 
     // MARK: Properties
     
@@ -74,7 +74,9 @@ class RefineViewController: UIViewController {
     }
     
     private func performGeometricsFinding() {
-        let newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
+        var newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
+        newImage = newImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/newImage.scale))
+        
         finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: Preference.vectorizeSize)
         finder.delegate = self
         
