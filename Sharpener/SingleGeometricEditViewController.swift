@@ -26,7 +26,11 @@ class SingleGeometricEditViewController: UIViewController {
         }
     }
     @IBOutlet weak var editView: UIView!
-    @IBOutlet weak var smoothnessControl: UIView!
+    @IBOutlet weak var smoothnessControl: SPSmoothControl! {
+        didSet {
+            smoothnessControl.smoothDelegate = self
+        }
+    }
     
     /// The geometric that should be editted, passed on segue.
     var geometric: SPGeometrics? {
@@ -105,6 +109,15 @@ extension SingleGeometricEditViewController: ProcessingNavigationBarDelegate {
     var processingNavigationBarRightButtonText: String { return "" }
 }
 
+extension SingleGeometricEditViewController: SPSmoothControlDelegate {
+    func smoothnessChangedTo(smoothness: CGFloat) {
+        guard editingCurve != nil && editingCurve?.smoothness != smoothness else { return }
+        let approx = SPBezierPathApproximator(smoothness: smoothness)
+        approx.approximate(editingCurve!)
+        drawDispalyView()
+    }
+}
+
 extension SingleGeometricEditViewController: GuessesTableViewControllerDelegate {
     func didRevokeGuess() {
         editingCurve?.applied = nil
@@ -146,6 +159,7 @@ extension SingleGeometricEditViewController {
             if newIndex != currentIndex {
                 editingCurve = geometric?.lines[newIndex]
                 guessesTableViewController.reloadData()
+                smoothnessControl.smoothness = editingCurve?.smoothness ?? 0
             }
         }
     }
