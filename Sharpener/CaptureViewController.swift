@@ -52,6 +52,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     
     // MARK: Properties
+    var loaded: Bool = false
+    
     let context: MXNContext = MXNContext()
     var medianFilter: MedianFilter!
     var thresholdingFilter: ThresholdingFilter!
@@ -82,12 +84,9 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.sharedApplication().idleTimerDisabled = true
         prepareFilters()
         prepareCameras()
         prepareMetalView()
-        prepareCaptureSession()
-        prepareGestures()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -95,7 +94,9 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         UIApplication.sharedApplication().idleTimerDisabled = false
         metalView.shouldDraw = false
         previewLayer.connection.enabled = false
-        captureSession.stopRunning()
+        dispatch_async(GCD.userInitiatedQueue) {
+            self.captureSession.stopRunning()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -104,6 +105,12 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if !loaded {
+            prepareCaptureSession()
+            prepareGestures()
+            loaded = true
+        }
         captureSession.startRunning()
         previewLayer.connection.enabled = true
         metalView.shouldDraw = true
@@ -183,6 +190,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     func shutterClicked() {
         // grab image, segue to next view
+        previewLayer.connection.enabled = false
         var videoConnection : AVCaptureConnection?
         for connection in stillImageOutput.connections {
             for port in connection.inputPorts! {

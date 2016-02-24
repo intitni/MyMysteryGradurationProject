@@ -52,9 +52,10 @@ class SPNewButton: UIControl {
     
     // MARK: Touch Behaviour
     
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // shrink button a little bit while holding
-        UIView.animateWithDuration(0.02, animations: {
+        UIView.animateWithDuration(0.05, animations: {
             self.transform = CGAffineTransformMakeScale(0.9, 0.9)
         })
         super.touchesBegan(touches, withEvent: event)
@@ -63,8 +64,6 @@ class SPNewButton: UIControl {
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         UIView.animateWithDuration(0.1, animations: {
             self.transform = CGAffineTransformIdentity
-        }, completion: { finished in
-            
         })
         super.touchesEnded(touches, withEvent: event)
     }
@@ -72,8 +71,7 @@ class SPNewButton: UIControl {
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         UIView.animateWithDuration(0.1, animations: {
             self.transform = CGAffineTransformIdentity
-        }, completion: { finished in
-            super.touchesCancelled(touches, withEvent: event)
         })
+        super.touchesCancelled(touches, withEvent: event)
     }
 }

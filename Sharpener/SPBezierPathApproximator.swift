@@ -103,7 +103,7 @@ class SPBezierPathApproximator {
     /// - Parameter line: The `SPLine` that needs to be approximated.
     /// - Returns: A approximated result in `SPCurve`
     private func approximateSplittedLine(line: SPLine) -> SPCurve {
-        guard line.raw.count >= 2 else {
+        guard line.raw.count >= 5 else {
             let s = SPCurve()
             s.vectorized = [SPAnchorPoint(point: line.raw.first!), SPAnchorPoint(point: line.raw.last!)]
             return s
@@ -117,6 +117,7 @@ class SPBezierPathApproximator {
         var manipIndex = 0
         
         while manipIndex < splittedLines.count {
+            
             let raw = splittedLines[manipIndex].raw
             let v0 = raw.first!
             let v3 = raw.last!

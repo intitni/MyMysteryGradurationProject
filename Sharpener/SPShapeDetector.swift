@@ -200,8 +200,7 @@ class SPShapeDetector {
     }
     
     private func detectPolygon(line: SPCurve) -> SPGuess {
-        let c = CGFloat(line.raw.count)
-        let approx = SPPolygonApproximator(threshold: c * 0.3)
+        let approx = SPPolygonApproximator(threshold: 2)
         let points = approx.polygonApproximate(line.raw)
         
         return SPGuess(guessType: .Polygon(points: points))

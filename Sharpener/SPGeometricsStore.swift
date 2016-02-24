@@ -105,7 +105,9 @@ extension SPGeometricsStore {
         curve.vectorized = vectorizedFromJSON(json["vectorized"])
         if json["applied"].isExists() {
             curve.applied = guessFromJSON(json["applied"])
-            curve.guesses.append(curve.applied!)
+            if curve.applied != nil {
+                curve.guesses.append(curve.applied!)
+            }
         }
         return curve
     }

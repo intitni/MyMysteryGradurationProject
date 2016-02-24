@@ -382,7 +382,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Rq-kK-VER">
                                 <rect key="frame" x="0.0" y="50" width="600" height="800"/>
-                                <color key="backgroundColor" red="0.92941176469999998" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1Rq-kK-VER" secondAttribute="height" multiplier="3:4" id="NiV-Lm-2Fe"/>
                                 </constraints>
