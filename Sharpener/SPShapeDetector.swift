@@ -24,9 +24,9 @@ class SPShapeDetector {
                 guesses.append(g)
             }
             guesses.append(detectPolygon(line))
-            if let g = detectRectangle(line) {
-                guesses.append(g)
-            }
+            //if let g = detectRectangle(line) {
+            //    guesses.append(g)
+            //}
         } else {
             if let g = detectStraight(line) {
                 guesses.append(g)
@@ -35,9 +35,9 @@ class SPShapeDetector {
                 guesses.append(g)
             }
             guesses.append(detectPolygon(line))
-            if let g = detectRectangle(line) {
-                guesses.append(g)
-            }
+            //if let g = detectRectangle(line) {
+            //    guesses.append(g)
+            //}
         }
         
         return guesses

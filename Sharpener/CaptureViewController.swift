@@ -87,15 +87,19 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         prepareFilters()
         prepareCameras()
         prepareMetalView()
+        prepareGestures()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.sharedApplication().idleTimerDisabled = false
-        metalView.shouldDraw = false
-        previewLayer.connection.enabled = false
-        dispatch_async(GCD.userInitiatedQueue) {
-            self.captureSession.stopRunning()
+        if loaded {
+            metalView.shouldDraw = false
+            previewLayer.connection.enabled = false
+            self.shutterButton.enabled = false
+            dispatch_async(GCD.userInitiatedQueue) {
+                self.captureSession.stopRunning()
+            }
         }
     }
     
@@ -108,12 +112,18 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         super.viewDidDisappear(animated)
         if !loaded {
             prepareCaptureSession()
-            prepareGestures()
             loaded = true
+            shutterButton.enabled = true
+        } else {
+            dispatch_async(GCD.mainQueue) {
+                self.captureSession.startRunning()
+                dispatch_async(GCD.mainQueue) {
+                    self.previewLayer.connection.enabled = true
+                    self.metalView.shouldDraw = true
+                    self.shutterButton.enabled = true
+                }
+            }
         }
-        captureSession.startRunning()
-        previewLayer.connection.enabled = true
-        metalView.shouldDraw = true
     }
     
     @IBAction func unwindToCapture(sender: UIStoryboardSegue) {}

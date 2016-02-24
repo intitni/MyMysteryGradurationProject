@@ -21,7 +21,7 @@ class SPShapeVectorizor {
         
         curves.forEach { c in
             let shapeDetector = SPShapeDetector()
-            let guesses = shapeDetector.detect(c, inShape: false)
+            let guesses = shapeDetector.detect(c, inShape: true)
             c.guesses = guesses
             let approx = SPBezierPathApproximator()
             approx.approximate(c)

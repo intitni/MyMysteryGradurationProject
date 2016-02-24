@@ -52,6 +52,8 @@ class FilesViewController: UIViewController {
         case "FileToDetail":
             if let toVC = segue.destinationViewController as? DetailViewController {
                 toVC.docRef = shouldShowRef
+                toVC.transitioningDelegate = fileToDetailTransition
+                fileToDetailTransition.destinationViewController = toVC
             }
         default: break
         }
@@ -79,6 +81,8 @@ class FilesViewController: UIViewController {
     func shouldShowCaptureView() {
         performSegueWithIdentifier("FileToCapture", sender: self)
     }
+    
+    var fileToDetailTransition = FileToDetailTransitioningAnimation()
 }
 
 extension FilesViewController: FilePreviewCollectionViewControllerDelegate {

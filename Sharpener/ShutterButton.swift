@@ -10,6 +10,14 @@ import UIKit
 
 @IBDesignable
 class ShutterButton: UIControl {
+    
+    override var enabled: Bool {
+        didSet {
+            guard innerPart != nil else { return }
+            innerPart.fillColor = (enabled ? UIColor.spGreenColor() : UIColor.spLightBorderColor()).CGColor
+        }
+    }
+    
     var outline: CAShapeLayer! {
         didSet {
             let d: CGFloat = 70
@@ -30,7 +38,7 @@ class ShutterButton: UIControl {
             innerPart.path = path.CGPath
             innerPart.lineWidth = 1
             innerPart.strokeColor = UIColor.spOutlineColor().CGColor
-            innerPart.fillColor = UIColor.spGreenColor().CGColor
+            innerPart.fillColor = UIColor.spLightBorderColor().CGColor
             layer.addSublayer(innerPart)
         }
     }
@@ -54,6 +62,7 @@ class ShutterButton: UIControl {
     func setup() {
         outline = CAShapeLayer()
         innerPart = CAShapeLayer()
+        enabled = false
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
