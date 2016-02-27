@@ -56,6 +56,9 @@ class RefineViewController: UIViewController {
     var incomeImage: UIImage!
     var finder: SPRawGeometricsFinder!
     var shapes = [CAShapeLayer]()
+    var medianFilterRadius: Int = 1
+    var thresholdingFilterThreshold: Float = 0.2
+    var lineShapeFilteringFilterAttributes: (Float, Int) = (5, 0)
 
     var geometricsFindingOperation: NSBlockOperation!
     
@@ -80,7 +83,7 @@ class RefineViewController: UIViewController {
         var newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
         newImage = newImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/newImage.scale))
         
-        finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 0 ), extractorSize: Preference.vectorizeSize)
+        finder = SPRawGeometricsFinder(medianFilterRadius: medianFilterRadius, thresholdingFilterThreshold: thresholdingFilterThreshold, lineShapeFilteringFilterAttributes: lineShapeFilteringFilterAttributes, extractorSize: Preference.vectorizeSize)
         finder.delegate = self
         
         geometricsFindingOperation = NSBlockOperation { [unowned self] in

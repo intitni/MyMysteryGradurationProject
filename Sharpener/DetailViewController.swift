@@ -87,14 +87,26 @@ class DetailViewController: UIViewController {
     }
     
     func deleteCurrentDocument() {
-        let url = docRef!.url
-        let fileManager = NSFileManager()
-        do {
-            try fileManager.removeItemAtURL(url)
-            performSegueWithIdentifier("UnwindWithFileDeleted", sender: self)
-        } catch {
-            print("unable to remove file")
+        let alertView = UIAlertController(title: "Are You Sure?",
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.Alert)
+        let okButton = UIAlertAction(title: NSLocalizedString("Yes", comment: "Yes"), style: .Destructive) { _ in
+            let url = self.docRef!.url
+            let fileManager = NSFileManager()
+            do {
+                try fileManager.removeItemAtURL(url)
+                self.performSegueWithIdentifier("UnwindWithFileDeleted", sender: self)
+            } catch {
+                print("unable to remove file")
+            }
+            return
         }
+        let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .Cancel) { _ in
+            return
+        }
+        alertView.addAction(okButton)
+        alertView.addAction(cancelButton)
+        self.presentViewController(alertView, animated: true, completion: nil)
     }
     
     func shouldDeleteDocument() {

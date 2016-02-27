@@ -93,11 +93,11 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.sharedApplication().idleTimerDisabled = false
+        metalView.shouldDraw = false
+        previewLayer.connection.enabled = false
+        self.shutterButton.enabled = false
         if loaded {
-            metalView.shouldDraw = false
-            previewLayer.connection.enabled = false
-            self.shutterButton.enabled = false
-            dispatch_async(GCD.userInitiatedQueue) {
+            dispatch_async(GCD.utilityQueue) {
                 self.captureSession.stopRunning()
             }
         }
@@ -114,16 +114,22 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             prepareCaptureSession()
             loaded = true
             shutterButton.enabled = true
+            self.metalView.shouldDraw = true
         } else {
-            dispatch_async(GCD.mainQueue) {
+            self.metalView.shouldDraw = true
+            dispatch_async(GCD.utilityQueue) {
                 self.captureSession.startRunning()
                 dispatch_async(GCD.mainQueue) {
                     self.previewLayer.connection.enabled = true
-                    self.metalView.shouldDraw = true
                     self.shutterButton.enabled = true
                 }
             }
         }
+    }
+    
+    deinit {
+        metalView = nil
+        previewLayer = nil
     }
     
     @IBAction func unwindToCapture(sender: UIStoryboardSegue) {}
@@ -200,7 +206,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     
     func shutterClicked() {
         // grab image, segue to next view
-        previewLayer.connection.enabled = false
+        // previewLayer.connection.enabled = false
         var videoConnection : AVCaptureConnection?
         for connection in stillImageOutput.connections {
             for port in connection.inputPorts! {
@@ -226,6 +232,9 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         case "CaptureToRefine":
             let destination = segue.destinationViewController as? RefineViewController
             destination?.incomeImage = stillImage
+            destination?.thresholdingFilterThreshold = thresholdingFilter.thresholdingFactor
+            destination?.medianFilterRadius = medianFilter.radius
+            destination?.lineShapeFilteringFilterAttributes = (lineShapeFilteringFilter.threshold, lineShapeFilteringFilter.radius > 0 ? 4 : 0)
         default: break
         }
     }
@@ -241,7 +250,7 @@ extension CaptureViewController {
     private func prepareFilters() {
         medianFilter = MedianFilter(context: context, radius: 1)
         thresholdingFilter = ThresholdingFilter(context: context, thresholdingFactor: 0.2)
-        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 4)
+        lineShapeFilteringFilter = LineShapeFilterFilteringFilter(context: context, threshold: 5, radius: 0)
         videoProvider = MXNVideoProvider()
         
         lineShapeRe = LineShapeRefiningFilter(context: context, radius: 8)
@@ -264,9 +273,10 @@ extension CaptureViewController {
     }
     
     private func prepareMetalView() {
-        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeRe)
-        filterControlView = FilterControlView(frame: imageView.bounds, threshold: 0.2, lineWidth: 3, gearCount: 5)
+        metalView = MetalVideoView(frame: view.bounds, device: context.device!, filter: lineShapeFilteringFilter)
+        filterControlView = FilterControlView(frame: imageView.bounds, threshold: 0.2, lineWidth: 0, gearCount: 2)
         filterControlView.delegate = self
+        metalView.shouldDraw = false
     }
     
     private func prepareCaptureSession() {
@@ -313,9 +323,7 @@ extension CaptureViewController {
 extension CaptureViewController: SPSliderDelegate {
     
     private func lineWidthFromValue(value: Double) -> Int {
-        let gearCount = 5.0
-        let step = 1.0 / gearCount
-        return Int(value / step) + 1
+        return value > 0.5 ? 4 : 0
     }
     
     func sliderValueDidChangedTo(value: Double, forTag tag: String) {

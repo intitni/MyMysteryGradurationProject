@@ -45,7 +45,7 @@ class SPShapeDetector {
     
     private func detectCircle(line: SPCurve) -> SPGuess? {
         let c = CGFloat(line.raw.count)
-        let endurance: CGFloat = c / 2 / CGFloat(M_PI) * 0.1
+        let endurance: CGFloat = c / 2 / CGFloat(M_PI) * 0.3
         
         var raw = line.raw
         
@@ -192,7 +192,7 @@ class SPShapeDetector {
     private func detectStraight(line: SPCurve) -> SPGuess? {
         guard let first = line.raw.first, let last = line.raw.last where first != last else { return nil }
         
-        let endurance: CGFloat = 10
+        let endurance: CGFloat = 20
         let (a, b) = argumentsForLineStartsFrom(first, to: last)
         let deviation = deviationToLineForPoints(line.raw, toLineWithArgumentsA: a, andB: b)
         if deviation > endurance { return nil }

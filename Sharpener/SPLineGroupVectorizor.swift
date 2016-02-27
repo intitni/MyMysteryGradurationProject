@@ -111,7 +111,7 @@ class SPLineGroupVectorizor {
         var currentLine = SPLine()
         currentLine<--current
         
-        while true {
+        while currentLine.raw.count < 20000 && trackedLines.count < 20 {
             let tanCurrent = tangentialDirectionOf(current)
             let tanLast = MXNFreeVector(start: last, end: current)
             let innerProduct = tanLast • tanCurrent
