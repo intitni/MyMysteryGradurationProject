@@ -8,19 +8,20 @@
 
 import Foundation
 
-struct Stack<T> {
-    var storage: Array<T>
+public struct Stack<T> {
+    public var storage: Array<T>
     
-    var isEmpty: Bool { return storage.isEmpty }
-    var count: Int { return storage.count }
-    var bottom: T? { return storage.first }
-    var top: T? { return storage.last }
+    public var isEmpty: Bool { return storage.isEmpty }
+    public var count: Int { return storage.count }
+    public var bottom: T? { return storage.first }
+    public var top: T? { return storage.last }
+    public var peek: T? { return top }
     
-    mutating func push(elem: T) {
+    public mutating func push(elem: T) {
         storage.append(elem)
     }
     
-    mutating func pop() -> T? {
+    public mutating func pop() -> T? {
         return storage.popLast()
     }
     
