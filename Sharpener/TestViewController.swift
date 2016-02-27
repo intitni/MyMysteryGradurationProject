@@ -22,7 +22,6 @@ class TestViewController: UIViewController {
         let incomeImage = UIImage(named: "LineTrackingTestImage")
         let newImage = incomeImage!.resizedImageToSize(processSize)
 
-        // FIXME: calculated attributes for filter
         let finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: Preference.vectorizeSize)
         finder.delegate = self
         finder.process(newImage)
