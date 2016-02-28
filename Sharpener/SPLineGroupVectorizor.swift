@@ -182,16 +182,15 @@ class SPLineGroupVectorizor {
                     if let outDirectionIndex = smoothDirectionIndexFor(inDirection, of: p) {
                         let outDirection = p.directions[outDirectionIndex].poleValue
                         p.directions.removeAtIndex(outDirectionIndex)
-                        let freeTrack = freelyTrackToDirectionFrom(current, to: outDirection, steps: 15)
+                        let freeTrack = freelyTrackToDirectionFrom(current, to: outDirection, steps: 12)
                         if !freeTrack.isEmpty { current = freeTrack.last! }
                         last = p.point
                         currentLine.raw.appendContentsOf(freeTrack)
                     } else {
                         meetsEndPoint = true
                     }
-                    // FIXME: consider junction count 2 is a junction point, but fewer free track step
                 } else {
-                    if result.junctionCount < 1 {
+                    if result.directionCount <= 1 {
                         if visualTesting { print("### meets end point") }
                         meetsEndPoint = true
                     }
@@ -201,6 +200,7 @@ class SPLineGroupVectorizor {
             // End point handling
             if meetsEndPoint {
                 var needNewStartPoint = true
+                
                 if shouldTrackInvertly {
                     // should track from current start point, but invertly.
                     if let directionIndex = invertDirectionIndexFor(startDirection, of: startMagnetPoint) {
@@ -311,7 +311,12 @@ extension SPLineGroupVectorizor {
     }
     
     /// Find junction point, if nil, then it's an end.
-    private func findJunctionPointStartFrom(point: CGPoint, last lastPoint: CGPoint) -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, junctionCount: Int) {
+    /// - Returns:
+    /// point: The junction point, nil if not a junction point<br>
+    /// exist: If a junction point already exists.<br>
+    /// directionIndex: The direction's index the current point is entering the junction point.<br>
+    /// directionCount: Used when its not a junction point.<br>
+    private func findJunctionPointStartFrom(point: CGPoint, last lastPoint: CGPoint) -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, directionCount: Int) {
         
         /// The counting of parts that it should seperate a 360 degree.
         let circCount = 72
@@ -429,11 +434,18 @@ extension SPLineGroupVectorizor {
                                .sort { $0.leastLuminance < $1.leastLuminance }
         
         guard let junctionPoint = candidates.first else { return (nil, false, 0, 0) }
+        
+        if junctionPoint.magnetPoint.directions.count == 2 {
+            if junctionPoint.directions[0].poleValue.angleWith(junctionPoint.directions[1].poleValue) > 120 {
+                return (nil, false, 0, 2)
+            }
+        }
+        
         let inDirectionIndex = inDirectionIndexFor(
             MXNFreeVector(x:junctionPoint.point.x-point.x,y:junctionPoint.point.y-point.y),
             of: junctionPoint.magnetPoint
         )
-        if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point))") }
+        if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point)), count: \(directionCount)") }
         return (junctionPoint.magnetPoint, false, inDirectionIndex, 0)
     }
     
@@ -455,9 +467,9 @@ extension SPLineGroupVectorizor {
     private func inDirectionIndexFor(inDirection: MXNFreeVector, of point: MagnetPoint) -> Int? {
         var biggest: CGFloat = 0
         var index: Int? = nil
+        var angle: CGFloat = 0
         for (n, direction) in point.directions.enumerate() {
-            let angle = inDirection.angleWith(direction.poleValue)
-            // FIXME: need a threshold here to avoid loop.
+            angle = inDirection.angleWith(direction.poleValue)
             if angle > biggest {
                 biggest = angle
                 index = n
@@ -710,6 +722,7 @@ extension SPLineGroupVectorizor {
             }
         }
         // TODO: use luminance deviation to average, on maximun directions, not minimum.
+        // I guess we can use center of each maximum directions as minimum directions, and check their luminance deviation to their average.
         var leastLuminance: CGFloat = 0
         var directions = [Direction2D]()
         
@@ -724,7 +737,6 @@ extension SPLineGroupVectorizor {
         func calculateDirection() {
             guard !luminance.isEmpty else { return }
             var angleIndexes = [Int]()
-            // var correctedIndexes = [Int]()
             
             var newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(luminance)
             newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(newLuminance)
