@@ -11,6 +11,7 @@ import Foundation
 class LineTrackingFilter: MXNCompositionFilters {
     var t: ThresholdingFilter!
     var gradientTensorCalculatingFilter: GradientTensorCalculatingFilter!
+    var preBlurFilter: GaussianBlurFilter!
     var gaussianBlurFilter: GaussianBlurFilter!
     var eigenValueVectorCalculatingFilter: EigenValueVectorCalculatingFilter!
     
@@ -30,10 +31,12 @@ class LineTrackingFilter: MXNCompositionFilters {
     init(context: MXNContext) {
         t = ThresholdingFilter(context: context, thresholdingFactor: 0.5)
         
+        preBlurFilter = GaussianBlurFilter(context: context, radius: 1, sigma: 1)
         gradientTensorCalculatingFilter = GradientTensorCalculatingFilter(context: context)
         gaussianBlurFilter = GaussianBlurFilter(context: context, radius: 6, sigma: 1.5)
         eigenValueVectorCalculatingFilter = EigenValueVectorCalculatingFilter(context: context)
         
+        preBlurFilter.provider = t
         gradientTensorCalculatingFilter.provider = t
         gaussianBlurFilter.provider = gradientTensorCalculatingFilter
         eigenValueVectorCalculatingFilter.provider = gaussianBlurFilter

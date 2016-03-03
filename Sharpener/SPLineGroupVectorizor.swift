@@ -281,6 +281,9 @@ extension SPLineGroupVectorizor {
             .angleWith(tangentialDirectionOf(currentEdge.right))
         let old = tangentialDirectionOf(lastEdge.left)
             .angleWith(tangentialDirectionOf(lastEdge.right))
+        if currentEdge.left.distanceTo(currentEdge.right) - lastEdge.left.distanceTo(lastEdge.right) > 4 {
+            return true
+        }
         guard new > old else { return false }
         if case 35...180 = new {
              return true
@@ -319,15 +322,12 @@ extension SPLineGroupVectorizor {
     /// exist: If a junction point already exists.<br>
     /// directionIndex: The direction's index the current point is entering the junction point.<br>
     /// directionCount: Used when its not a junction point.<br>
-    private func findJunctionPointStartFrom(point: CGPoint, last lastPoint: CGPoint) -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, directionCount: Int) {
-        
-        /// The counting of parts that it should seperate a 360 degree.
-        let circCount = 72
-
+    private func findJunctionPointStartFrom(startPoint: CGPoint, last lastPoint: CGPoint)
+            -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, directionCount: Int) {
         var candidates = [JunctionPointCandidate]()
         let candidateCount = 6
         let step = 2
-        var current = point
+        var current = startPoint
         var last = lastPoint
         var tanLast = MXNFreeVector(start: last, end: current)
         var candidateA = [JunctionPointCandidate]()
@@ -354,8 +354,8 @@ extension SPLineGroupVectorizor {
             }
         }
         
-        let tanDefault = MXNFreeVector(start: lastPoint, end: point).normalized
-        current = point
+        let tanDefault = MXNFreeVector(start: lastPoint, end: startPoint).normalized
+        current = startPoint
         for i in 1...step*candidateCount {
             current = current.interpolateTowards(tanDefault, forward: true)
             if i % step == 0 {
@@ -374,27 +374,66 @@ extension SPLineGroupVectorizor {
         
         candidates.appendContentsOf(candidateA)
         candidates.appendContentsOf(candidateB)
+        candidates.append(JunctionPointCandidate(point: startPoint))
         
         if candidates.isEmpty { return (nil, false, 0, 0) }
         
         // find if such MagnetPoint is already found
         for c in candidates {
             for p in magnetPoints {
-                if c.point.distanceTo(p.point) <= 10 {
+                if c.point.distanceTo(p.point) <= 15 {
                     // FIXME: check for inDirection instead.
-                    if (MXNFreeVector(start: lastPoint, end: point) • MXNFreeVector(start: point, end: p.point)).isSignMinus {
+                    if (MXNFreeVector(start: lastPoint, end: startPoint) • MXNFreeVector(start: startPoint, end: p.point)).isSignMinus {
                         return (nil, false, 0, 2)
                     }
                     if visualTesting { print("### Magnet Point already exists: \(p.point)") }
-                    return (p, true, inDirectionIndexFor(MXNFreeVector(x:p.point.x-point.x,y:p.point.y-point.y), of: p), 0)
+                    return (p,
+                        true,
+                        inDirectionIndexFor(MXNFreeVector(x:p.point.x-startPoint.x,y:p.point.y-startPoint.y), of: p),
+                        0
+                    )
                 }
             }
         }
+
+        fetchLuminanceDistributionForCandidates(candidates)
+
+        // filter the ones that have fewer directions than the others
+        // also, select the one with lowest luminance value from previous result
+        candidates.sortInPlace { $0.directions.count > $1.directions.count }
+        let directionCount = candidates.first?.directions.count
         
-        // calculate luminance of candidates
+        // a junction point neeed more than 1 directions
+        if directionCount <= 1 {
+            if visualTesting { print("### not a valid Junction Point: \(directionCount)") }
+            return (nil, false, 0, directionCount!)
+        }
+        
+        candidates = candidates.filter { $0.directions.count == directionCount }
+        candidates.sortInPlace { $0.leastLuminance < $1.leastLuminance }
+        
+        guard let junctionPoint = candidates.first else { return (nil, false, 0, 0) }
+        
+        if junctionPoint.magnetPoint.directions.count == 2 {
+            if junctionPoint.directions[0].poleValue.angleWith(junctionPoint.directions[1].poleValue) > 120 {
+                return (nil, false, 0, 2)
+            }
+        }
+        
+        let inDirectionIndex = inDirectionIndexFor(
+            MXNFreeVector(x:junctionPoint.point.x-startPoint.x,y:junctionPoint.point.y-startPoint.y),
+            of: junctionPoint.magnetPoint
+        )
+        if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point)), count: \(directionCount)") }
+        return (junctionPoint.magnetPoint, false, inDirectionIndex, 0)
+    }
+
+    private func fetchLuminanceDistributionForCandidates(candidates: [JunctionPointCandidate]) {
+        let circCount = 72
         for c in candidates {
             var lumi = [CGFloat]()
             for i in 0..<circCount {
+                let circCount = 72
                 let distance = 30
                 var sum: CGFloat = 0
                 let direction = (360 / circCount * i).normalizedVector
@@ -409,47 +448,14 @@ extension SPLineGroupVectorizor {
                     } else {
                         continuousMetWhite = 0
                     }
-                    if continuousMetWhite > distance / 3 {
-                        allWhite = true
-                    }
-                    if allWhite {
-                        sum += 255
-                    }
+                    if continuousMetWhite > distance / 3 { allWhite = true }
+                    if allWhite { sum += 255 }
                 }
                 sum /= CGFloat(distance)
                 lumi.append(sum)
             }
             c.luminance = lumi // directions will be calculated
         }
-        
-        // filter the ones that have fewer directions than the others
-        // also, select the one with lowest luminance value from previous result
-        candidates.sortInPlace { $0.directions.count > $1.directions.count }
-        let directionCount = candidates.first?.directions.count
-        
-        // a junction point neeed more than 1 directions
-        if directionCount <= 1 {
-            if visualTesting { print("### not a valid Junction Point: \(directionCount)") }
-            return (nil, false, 0, directionCount!)
-        }
-        
-        candidates = candidates.filter { $0.directions.count == directionCount }
-                               .sort { $0.leastLuminance < $1.leastLuminance }
-        
-        guard let junctionPoint = candidates.first else { return (nil, false, 0, 0) }
-        
-        if junctionPoint.magnetPoint.directions.count == 2 {
-            if junctionPoint.directions[0].poleValue.angleWith(junctionPoint.directions[1].poleValue) > 120 {
-                return (nil, false, 0, 2)
-            }
-        }
-        
-        let inDirectionIndex = inDirectionIndexFor(
-            MXNFreeVector(x:junctionPoint.point.x-point.x,y:junctionPoint.point.y-point.y),
-            of: junctionPoint.magnetPoint
-        )
-        if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point)), count: \(directionCount)") }
-        return (junctionPoint.magnetPoint, false, inDirectionIndex, 0)
     }
     
     /// Find invert direction for start point.
@@ -509,14 +515,6 @@ extension SPLineGroupVectorizor {
             for _ in 1...distance {
                 point = point + direction
                 line.append(point)
-                /////////////////////////////////////////////
-                if visualTesting {
-                    dispatch_async(GCD.mainQueue) {
-                        self.testDelegate?.trackingToPoint(current)
-                    }
-                    NSThread.sleepForTimeInterval(0.1)
-                }
-                /////////////////////////////////////////////
             }
         }
         line.append(target)
@@ -532,14 +530,6 @@ extension SPLineGroupVectorizor {
         for _ in 1...steps {
             point = point + direction
             line.append(point)
-            /////////////////////////////////////////////
-            if visualTesting {
-                dispatch_async(GCD.mainQueue) {
-                    self.testDelegate?.trackingToPoint(current)
-                }
-                NSThread.sleepForTimeInterval(0.1)
-            }
-            /////////////////////////////////////////////
         }
         if visualTesting { print("~~~ free tracking end") }
         return line
@@ -627,10 +617,9 @@ extension SPLineGroupVectorizor {
     ///     - others: The other points locations and values 
     /// - Returns: The value for given point.
     func bilinearInterporlation(this this: (x: CGFloat, y: CGFloat),
-                                            bX: CGFloat, bY: CGFloat, eX: CGFloat, eY: CGFloat,
-                                            bXbY: MXNFreeVector, bXeY: MXNFreeVector,
-                                            eXbY: MXNFreeVector, eXeY:  MXNFreeVector)
-                                            -> MXNFreeVector {
+            bX: CGFloat, bY: CGFloat, eX: CGFloat, eY: CGFloat,
+            bXbY: MXNFreeVector, bXeY: MXNFreeVector,
+            eXbY: MXNFreeVector, eXeY:  MXNFreeVector) -> MXNFreeVector {
         let r11 = bXbY * (eX - this.x)
         let r21 = eXbY * (this.x - bX)
         let r12 = bXeY * (eX - this.x)
@@ -692,11 +681,14 @@ extension SPLineGroupVectorizor {
         var luminance = [CGFloat]() {
             didSet {
                 calculateDirection()
+                // calculateDeviation()
             }
         }
         // TODO: use luminance deviation to average, on maximun directions, not minimum.
         // I guess we can use center of each maximum directions as minimum directions, and check their luminance deviation to their average.
         var leastLuminance: CGFloat = 0
+        var deviation: CGFloat = 0
+        var angleIndexes = [Int]()
         var directions = [Direction2D]()
         
         init(point: CGPoint) {
@@ -709,8 +701,9 @@ extension SPLineGroupVectorizor {
         
         func calculateDirection() {
             guard !luminance.isEmpty else { return }
-            var angleIndexes = [Int]()
+            angleIndexes = [Int]()
             
+            // 2 times of gaussian blur
             var newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(luminance)
             newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(newLuminance)
             
@@ -718,9 +711,9 @@ extension SPLineGroupVectorizor {
             for var i in 0..<newLuminance.count {
                 let previousIndex = i - 1 >= 0 ? i-1 : newLuminance.endIndex-1
                 let nextIndex = i + 1 >= newLuminance.endIndex ? 0 : i+1
-                if newLuminance[i] < 130 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
+                if newLuminance[i] < 100 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
                     angleIndexes.append(i)
-                } else if newLuminance[i] < 130 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
+                } else if newLuminance[i] < 100 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
                     var count = 0
                     var next = i + 1 >= newLuminance.endIndex ? 0 : i+1
                     while next != i {
@@ -749,8 +742,34 @@ extension SPLineGroupVectorizor {
                 let newDirection = Direction2D.Pole(vector: vector)
                 directions.append(newDirection)
             }
-            
         }
+        
+        /// Taking the directions in the middle of each pair of correct directions, calculate the average of their luminance deviation to their luminance average, stores in `var deviation`.
+        func calculateDeviation() {
+            guard angleIndexes.count >= 2 else { return }
+            var deviationIndexes = [Int]()
+            for (i, index) in angleIndexes.enumerate() {
+                var newIndex = 0
+                if i == angleIndexes.endIndex - 1 {
+                    let left = luminance.count - index - 1
+                    let right = angleIndexes[0] + 1
+                    let gap = (left + right) / 2
+                    newIndex = left >= right ? index + gap : angleIndexes[0] - gap
+                } else {
+                    newIndex = (index + angleIndexes[i+1]) / 2
+                }
+                deviationIndexes.append(newIndex)
+            }
+            
+            let average = deviationIndexes.reduce(CGFloat(0), combine: {
+                return $0 + luminance[$1]
+            }) / CGFloat(deviationIndexes.count)
+            
+            deviation = deviationIndexes.reduce(CGFloat(0), combine: {
+                return $0 + abs(luminance[$1] - average)
+            })
+        }
+
     }
 }
 
