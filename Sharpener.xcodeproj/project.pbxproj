@@ -76,6 +76,7 @@
 		139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */; };
 		139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2101C2FDDA600E3464F /* SPStepSlider.swift */; };
 		139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2121C2FDE3C00E3464F /* SPSlider.swift */; };
+		13AA93531C886F6800FB520C /* Direction2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA93521C886F6800FB520C /* Direction2D.swift */; };
 		13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */; };
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
@@ -91,7 +92,6 @@
 		13D826EC1C7A464E00D183A9 /* SPGeometricCountingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */; };
 		13D826EE1C7B3EB300D183A9 /* SPSharpenerDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */; };
 		13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */; };
-		13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */; };
 		13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFB1C4BCB9800072492 /* Async.swift */; };
 		13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */; };
 		13DDCE001C4CE66700072492 /* XNStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFF1C4CE66700072492 /* XNStack.swift */; };
@@ -181,6 +181,7 @@
 		139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPContinuousSlider.swift; sourceTree = "<group>"; };
 		139EE2101C2FDDA600E3464F /* SPStepSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStepSlider.swift; sourceTree = "<group>"; };
 		139EE2121C2FDE3C00E3464F /* SPSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSlider.swift; sourceTree = "<group>"; };
+		13AA93521C886F6800FB520C /* Direction2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction2D.swift; sourceTree = "<group>"; };
 		13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalVideoView.swift; sourceTree = "<group>"; };
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
@@ -196,7 +197,6 @@
 		13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricCountingView.swift; sourceTree = "<group>"; };
 		13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerDocument.swift; sourceTree = "<group>"; };
 		13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsVectorizor.swift; sourceTree = "<group>"; };
-		13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Sharpener.swift"; sourceTree = "<group>"; };
 		13DDCDFB1C4BCB9800072492 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureData.swift; sourceTree = "<group>"; };
 		13DDCDFF1C4CE66700072492 /* XNStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNStack.swift; sourceTree = "<group>"; };
@@ -430,6 +430,7 @@
 				13988EEE1C478788000CE61B /* SPShape.swift */,
 				13988EF21C479A66000CE61B /* SPLineGroup.swift */,
 				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
+				13AA93521C886F6800FB520C /* Direction2D.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -469,7 +470,6 @@
 				13416C541C297981006CB39A /* UIColor+Custom.swift */,
 				1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */,
 				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
-				13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -678,7 +678,6 @@
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
 				13D826EA1C7A41D700D183A9 /* FilesViewController.swift in Sources */,
 				135477E61C7DEDC800B8BDAB /* SPArcApproximater.swift in Sources */,
-				13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */,
 				139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */,
 				13EF71A41C7C85D800F752B2 /* SPDetailToolBar.swift in Sources */,
 				139D56481C579BF7006106D4 /* SPCVLine.m in Sources */,
@@ -699,6 +698,7 @@
 				13627C9C1C6746D300DFE73C /* LineTrackingFilters.metal in Sources */,
 				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
 				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
+				13AA93531C886F6800FB520C /* Direction2D.swift in Sources */,
 				13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */,
 				13EF71A81C7CB4EC00F752B2 /* CancelCaptureButton.swift in Sources */,
 				13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */,

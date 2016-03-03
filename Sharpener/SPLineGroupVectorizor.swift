@@ -123,7 +123,10 @@ class SPLineGroupVectorizor {
             
             // Runge Kutta method
             let middle = current.interpolateSemiTowards(tangentialDirectionOf(current), forward: s)
-            let tanMiddle = tangentialDirectionOf(middle)
+            var tanMiddle = tangentialDirectionOf(middle)
+            if tanMiddle == MXNFreeVector.zero {
+                tanMiddle = tanLast
+            }
             let innerProduct2 = tanLast • tanMiddle
             s = !(innerProduct2).isSignMinus
             current = current.interpolateTowards(tanMiddle, forward: s)
@@ -551,37 +554,7 @@ extension SPLineGroupVectorizor {
         return (new, edges.left, edges.right)
     }
     
-    private func correctedPositionFor(var point: CGPoint, tan: MXNFreeVector) -> CGPoint {
-        let gra = gradientDirectionOf(point)
-        let left = point + (-gra)
-        let right = point + gra
-        if gradientValueOf(left) < gradientValueOf(point)
-            && tangentialDirectionOf(left).angleWith(tan) < 10
-            && !rawData.isBackgroudAtPoint(left) {
-                point = left
-        } else if gradientValueOf(right) < gradientValueOf(point)
-            && tangentialDirectionOf(right).angleWith(tan) < 10
-            && !rawData.isBackgroudAtPoint(right) {
-                point = right
-        }
-        
-        return point
-    }
     
-    private func correctedPositionWithoutAngleCorrectionFor(var point: CGPoint) -> CGPoint {
-        let gra = gradientDirectionOf(point)
-        let left = point + (-gra)
-        let right = point + gra
-        if gradientValueOf(left) < gradientValueOf(point)
-            && !rawData.isBackgroudAtPoint(left) {
-                point = left
-        } else if gradientValueOf(right) < gradientValueOf(point)
-            && !rawData.isBackgroudAtPoint(right) {
-                point = right
-        }
-        
-        return point
-    }
     
     // MARK: Direction Calculation
     
@@ -783,67 +756,6 @@ extension SPLineGroupVectorizor {
 
 
 
-// MARK: - Extensions
-
-extension Int {
-    var normalizedVector: MXNFreeVector {
-        let y = sin(CGFloat(self) * CGFloat(M_PI) / 180)
-        let x = cos(CGFloat(self) * CGFloat(M_PI) / 180)
-        return MXNFreeVector(x: x, y: y)
-    }
-}
-
-extension XYZWPixel {
-    var tangentialDirection: MXNFreeVector {
-        return tangential.normalized
-    }
-    var gradientDirection: MXNFreeVector {
-        return gradient.normalized
-    }
-    var tangential: MXNFreeVector {
-        return MXNFreeVector(x: CGFloat(z), y: CGFloat(w))
-    }
-    var gradient: MXNFreeVector {
-        return MXNFreeVector(x: CGFloat(x), y: CGFloat(y))
-    }
-}
-
-extension CGPoint {
-    var isIntegerPoint: Bool {
-        return self.x.isInteger && self.y.isInteger
-    }
-    
-    func distancePow2To(point: CGPoint) -> CGFloat {
-        let x2 = pow(point.x - x, 2)
-        let y2 = pow(point.y - y, 2)
-        return x2 + y2
-    }
-    
-    func distanceTo(point: CGPoint) -> CGFloat {
-        return sqrt(distancePow2To(point))
-    }
-    
-    func interpolateTowards(direction: MXNFreeVector, forward: Bool) -> CGPoint {
-        let newX = x + (forward ? direction.x : -direction.x)
-        let newY = y + (forward ? direction.y : -direction.y)
-        return CGPoint(x: newX, y: newY)
-    }
-    
-    func interpolateSemiTowards(direction: MXNFreeVector, forward: Bool) -> CGPoint {
-        let newDirection = MXNFreeVector(x: direction.x/2, y: direction.y/2)
-        return interpolateTowards(newDirection, forward: forward)
-    }
-    
-    static func centerPointOf(one: CGPoint, and another: CGPoint) -> CGPoint {
-        return CGPoint(x: (one.x+another.x)/2, y: (one.y+another.y)/2)
-    }
-}
-
-extension CGFloat {
-    var isInteger: Bool {
-        return floor(self) - self == 0
-    }
-}
 
 
 

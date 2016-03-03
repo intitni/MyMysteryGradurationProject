@@ -243,6 +243,19 @@ struct XYZWPixel {
     var y: Float { return g }
     var z: Float { return b }
     var w: Float { return a }
+    
+    var tangentialDirection: MXNFreeVector {
+        return tangential.normalized
+    }
+    var gradientDirection: MXNFreeVector {
+        return gradient.normalized
+    }
+    var tangential: MXNFreeVector {
+        return MXNFreeVector(x: CGFloat(z), y: CGFloat(w))
+    }
+    var gradient: MXNFreeVector {
+        return MXNFreeVector(x: CGFloat(x), y: CGFloat(y))
+    }
 }
 
 

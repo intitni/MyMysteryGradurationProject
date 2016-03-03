@@ -36,8 +36,6 @@ class SPGuess {
             path --> y
         case .Circle(center: let c, radius: let r):
             path = UIBezierPath(ovalInRect: CGRect(x: c.x-r, y: c.y-r, width: 2*r, height: 2*r))
-        case .Rectangle(center: let c, height: let h, width: let w, rotation: let r, radius: let rd):
-            break
         case .Polygon(points: let ps):
             for (i, pt) in ps.enumerate() {
                 if i == 0 { path ==> pt }
