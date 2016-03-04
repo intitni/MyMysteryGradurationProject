@@ -36,7 +36,7 @@ struct MXNFreeVector: Equatable {
     var y: CGFloat
     
     static var zero: MXNFreeVector { return MXNFreeVector(x: 0, y: 0) }
-    
+
     var absolute: CGFloat {
         return sqrt(x*x+y*y)
     }
@@ -51,6 +51,8 @@ struct MXNFreeVector: Equatable {
     
     /// Getting the Direction2D of it.
     var direction: Direction2D { return .Pole(vector: self) }
+
+    var isZeroVector: Bool { return x == 0 && y == 0 }
     
     init(x: CGFloat, y: CGFloat) {
         self.x = x
@@ -72,17 +74,7 @@ struct MXNFreeVector: Equatable {
         let cosValue = (vectorA • vectorB) / (vectorA.absolute * vectorB.absolute)
         return acos(cosValue) * 180 / CGFloat(M_PI)
     }
-    
-    var isZeroVector: Bool {
-        if x == 0 && y == 0 {
-            return true
-        }
-        return false
-    }
 }
-
-
-
 
 
 // MARK: - Operators
