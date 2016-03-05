@@ -188,7 +188,7 @@
 		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilter.swift; sourceTree = "<group>"; };
 		13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPolygonApproximator.swift; sourceTree = "<group>"; };
 		13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeVectorizor.swift; sourceTree = "<group>"; };
-		13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroupVectorizor.swift; sourceTree = "<group>"; };
+		13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroupVectorizor.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerFileHandler.swift; sourceTree = "<group>"; };
 		13BCAC8E1C5922090029DD9F /* SPSVGGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSVGGenerator.swift; sourceTree = "<group>"; };
 		13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNavigationBar.swift; sourceTree = "<group>"; };

@@ -212,7 +212,6 @@ class SPLineGroupVectorizor {
                         if !free.isEmpty { current = free.last! }
                         if free.count > 1 { last = free[free.endIndex-2] }
                         currentLine.raw.appendContentsOf(free)
-                        shouldTrackInvertly = false
                         needNewStartPoint = false
                         currentLine.raw = currentLine.raw.reverse()
                     } else {
@@ -227,7 +226,7 @@ class SPLineGroupVectorizor {
                 
                 if let next = nextStartPoint() {
                     if visualTesting { print("### new start point: \(next.point)") }
-                    // need to find a new start point from magnetPoints, and append currentLine to trackedLines.
+
                     current = next.point
                     let outDirection: MXNFreeVector = next.directions.removeFirst().poleValue
                     trackedLines.append(currentLine)
@@ -269,7 +268,10 @@ extension SPLineGroupVectorizor {
     }
     
     /// Check if current tracking point is meeting a junction ( or maybe an end )
-    private func checkIfMeetsJunction(currentEdge: (left: CGPoint, right: CGPoint), lastEdge: (left: CGPoint, right: CGPoint)) -> Bool {
+    private func checkIfMeetsJunction(
+        currentEdge: (left: CGPoint, right: CGPoint),
+        lastEdge: (left: CGPoint, right: CGPoint)
+    ) -> Bool {
         let new = tangentialDirectionOf(currentEdge.left)
             .angleWith(tangentialDirectionOf(currentEdge.right))
         let old = tangentialDirectionOf(lastEdge.left)
@@ -307,8 +309,9 @@ extension SPLineGroupVectorizor {
     /// exist: If a junction point already exists.<br>
     /// directionIndex: The direction's index the current point is entering the junction point.<br>
     /// directionCount: Used when its not a junction point.<br>
-    private func findJunctionPointStartFrom(startPoint: CGPoint, last lastPoint: CGPoint)
-            -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, directionCount: Int) {
+    private func findJunctionPointStartFrom(
+        startPoint: CGPoint, last lastPoint: CGPoint
+    ) -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, directionCount: Int) {
         var candidates = [JunctionPointCandidate]()
         let candidateCount = 6
         let step = 1
@@ -543,7 +546,6 @@ extension SPLineGroupVectorizor {
             let dUpRight = directionData[(xceil, yceil)]?.tangential,
             let dDownRight = directionData[(xceil, yfloor)]?.tangential
         else {
-            // if any of those is nil, such point should not be valid
             return MXNFreeVector(x: 0, y: 0)
         }
         
@@ -568,7 +570,6 @@ extension SPLineGroupVectorizor {
             let dUpRight = directionData[(xceil, yceil)]?.gradient,
             let dDownRight = directionData[(xceil, yfloor)]?.gradient
         else {
-            // if any of those is nil, such point should not be valid
             return MXNFreeVector(x: 0, y: 0)
         }
         
@@ -594,10 +595,12 @@ extension SPLineGroupVectorizor {
     ///     - this: The give point
     ///     - others: The other points locations and values 
     /// - Returns: The value for given point.
-    func bilinearInterporlation(this this: (x: CGFloat, y: CGFloat),
-            bX: CGFloat, bY: CGFloat, eX: CGFloat, eY: CGFloat,
-            bXbY: MXNFreeVector, bXeY: MXNFreeVector,
-            eXbY: MXNFreeVector, eXeY:  MXNFreeVector) -> MXNFreeVector {
+    func bilinearInterporlation(
+        this this: (x: CGFloat, y: CGFloat),
+        bX: CGFloat, bY: CGFloat, eX: CGFloat, eY: CGFloat,
+        bXbY: MXNFreeVector, bXeY: MXNFreeVector,
+        eXbY: MXNFreeVector, eXeY:  MXNFreeVector
+    ) -> MXNFreeVector {
         let r11 = bXbY * (eX - this.x)
         let r21 = eXbY * (this.x - bX)
         let r12 = bXeY * (eX - this.x)

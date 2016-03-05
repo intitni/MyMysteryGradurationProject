@@ -183,6 +183,20 @@ extension CGPoint  {
     var isIntegerPoint: Bool {
         return self.x.isInteger && self.y.isInteger
     }
+
+    var nearbyIntegerPoints: (upLeft: CGPoint, downLeft: CGPoint, upRight: CGPoint, downRight: CGPoint) {
+        let xceil = Int(ceil(x))
+        let xfloor = Int(floor(x))
+        let yceil = Int(ceil(y))
+        let yfloor = Int(floor(y))
+
+        return (
+            CGPoint(x: xfloor, y: yceil),
+            CGPoint(x: xfloor, y: yfloor),
+            CGPoint(x: xceil, y: yceil),
+            CGPoint(x: xceil, y: yfloor)
+        )
+    }
     
     func distancePow2To(point: CGPoint) -> CGFloat {
         let x2 = pow(point.x - x, 2)

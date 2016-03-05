@@ -156,6 +156,7 @@ public class SPRawGeometricsFinder: NSObject {
 
 // MARK: - Utility Methods
 extension SPRawGeometricsFinder {
+
     /// Used to find a shape based on a seed point, line-scanning version.
     ///
     /// It calls a generic version of `flood()`.
@@ -178,6 +179,9 @@ extension SPRawGeometricsFinder {
             for rawPointValue in cvline.raw as! [NSValue] {
                 let p = rawPointValue.CGPointValue()
                 line<--p
+            }
+            if line.raw.count > 2 && line.raw.first! != line.raw.last! {
+                line.appendRaw(line.raw.first!)
             }
             let polygonApproximator = SPPolygonApproximator(threshold: 1.5)
             polygonApproximator.polygonApproximateSPLine(&line)
@@ -237,7 +241,7 @@ extension SPRawGeometricsFinder {
             // check upper and lower line for not captured lines.
             var topFound = false, bottomFound = false
             for x in CGPoint.horizontalRangeFrom(leftPos, to: rightPos) {
-                guard !topFound || !bottomFound else { break }
+                // guard !topFound || !bottomFound else { break }
                 let thisPos = CGPoint(x: x, y: Int(rightPos.y))
                 
                 // check upper line, push leftmost point of each area found into stack
