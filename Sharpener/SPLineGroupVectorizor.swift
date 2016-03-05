@@ -28,12 +28,11 @@ class SPLineGroupVectorizor {
     var magnetPoints = [MagnetPoint]()
     var trackedPoints = [CGPoint]()
     var trackedLines = [SPLine]()
-    var harrisValues: MXNTextureDataFloat!
     
     var gradientTensorTexture: MTLTexture!
     
     var testDelegate: SPLineGroupVectorizorVisualTestDelegate? = nil
-    var visualTesting: Bool { return testDelegate == nil ? false : true }
+    var visualTesting: Bool { return testDelegate != nil }
     
     // MARK: Main Process
     func vectorize(raw: SPRawGeometric) -> SPLineGroup {
@@ -44,15 +43,13 @@ class SPLineGroupVectorizor {
         fetchDirectionData()
         trackLineGroup()
         
-        let curves = trackedLines.map { line -> SPCurve in
-            let curve = SPCurve(raw: line.raw)
-            return curve
+        let curves = trackedLines.map { line in
+            SPCurve(raw: line.raw)
         }
         
         curves.forEach { c in
             let shapeDetector = SPShapeDetector()
-            let guesses = shapeDetector.detect(c, inShape: false)
-            c.guesses = guesses
+            c.guesses = shapeDetector.detect(c, inShape: false)
             let approx = SPBezierPathApproximator()
             approx.approximate(c)
         }
@@ -148,13 +145,13 @@ class SPLineGroupVectorizor {
             // First line loop handling
             if trackedLines.count == 0 {
                 if startMagnetPoint.shouldAttract(current,
-                    withTengentialDirection: MXNFreeVector(start: current, end: startMagnetPoint.point)) {
-                        if visualTesting { print("### attracted by start point") }
-                        // go towards start point
-                        let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
-                        currentLine.raw.appendContentsOf(straight)
-                        meetsEndPoint = true
-                        startMagnetPoint.directions.removeAll()
+                        withTengentialDirection: MXNFreeVector(start: current, end: startMagnetPoint.point)) {
+                    if visualTesting { print("### attracted by start point") }
+                    // go towards start point
+                    let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
+                    currentLine.raw.appendContentsOf(straight)
+                    meetsEndPoint = true
+                    startMagnetPoint.directions.removeAll()
                 }
             }
             
@@ -268,7 +265,7 @@ extension SPLineGroupVectorizor {
                 return (CGPoint.centerPointOf(left, and: right), left, right)
             }
         }
-        return (rawGeometric.raw.first ?? CGPointZero,rawGeometric.raw.first ?? CGPointZero,rawGeometric.raw.first ?? CGPointZero)
+        return (rawGeometric.raw.first ?? CGPointZero, rawGeometric.raw.first ?? CGPointZero, rawGeometric.raw.first ?? CGPointZero)
     }
     
     /// Check if current tracking point is meeting a junction ( or maybe an end )
