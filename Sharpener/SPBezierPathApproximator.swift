@@ -34,24 +34,23 @@ class SPBezierPathApproximator {
         let curve = SPCurve(raw: line.raw)
         let raw = line.raw
         
-        // 1. smooth raw
         if line.farthestDistance == nil {
             line.farthestDistance = fetchFarthestDistanceFrom(line.raw)
         }
         line.smoothness = smoothness
-        
-        // 2. polygon approximation and split!
-        // let polyApprox = SPPolygonApproximator(threshold: (line.farthestDistance ?? CGFloat(raw.count)) * 0.3 )
-        // let splitors = polyApprox.polygonApproximate(raw)
-        
-        // let splitedLines = splitSPLine(SPLine(raw: raw), accordingTo: splitors)
-        
         let splitedLines = [SPLine(raw: raw)]
-        
-        // 3. approximate every line
+
         for line in splitedLines {
             let c = approximateSplittedLine(line)
             curve.appendCurve(c)
+        }
+
+        if let first = curve.vectorized.first, let last = curve.vectorized.last
+        where first.anchorPoint == last.anchorPoint && curve.vectorized.count >= 3{
+            let second = curve.vectorized[1]
+            let newAnchorPoints = newAnchorPointsForLast(last, andNext: second)
+            curve.vectorized[curve.vectorized.endIndex-1] = newAnchorPoints.last
+            curve.vectorized[1] = newAnchorPoints.next
         }
         
         line.vectorized = curve.vectorized
@@ -124,8 +123,9 @@ class SPBezierPathApproximator {
             let (v1, v2) = vsForPoints(raw)
             let (deviation, splitterIndex) = deviationSumForPoints(raw, v0: v0, v1: v1, v2: v2, v3: v3)
             
-            if deviation < threshold || !checkIfSplitterIndex(splitterIndex, isValidWhenLengthIs: raw.endIndex) {
-                // Accept!
+            if deviation < threshold
+            || !checkIfSplitterIndex(splitterIndex, isValidWhenLengthIs: raw.endIndex) {
+                // accept
                 let anchorPoint1 = SPAnchorPoint(point: v0)
                 var anchorPoint2 = SPAnchorPoint(point: v3, controlPointA: v1, controlPointB: v2)
                 
@@ -144,7 +144,7 @@ class SPBezierPathApproximator {
                 
                 manipIndex += 1
             } else {
-                // Split!
+                // split again
                 let (left, right) = splitSPLine(splittedLines[manipIndex], accordingTo: splitterIndex)
                 splittedLines[manipIndex].raw = left.raw
                 splittedLines.insert(right, atIndex: manipIndex+1)
@@ -154,7 +154,7 @@ class SPBezierPathApproximator {
         return curve
     }
 
-    
+    /// Fetch a new `AnchorPoint` with smoothed control points.
     private func newAnchorPointsForLast(point: SPAnchorPoint, andNext next: SPAnchorPoint) -> (last: SPAnchorPoint, next: SPAnchorPoint) {
         guard let controlPointA = point.controlPointB, let controlPointB = next.controlPointA else {
             return (point, next)
@@ -187,7 +187,7 @@ class SPBezierPathApproximator {
     
     /// Check if `splitterIndex` is valid. 
     ///
-    ///To calculate v1 and v2, we need  **at least 2 points (excluding start and end)** in a `SPLine`.
+    /// To calculate v1 and v2, we need  **at least 2 points (excluding start and end)** in a `SPLine`.
     private func checkIfSplitterIndex(splitterIndex: Int, isValidWhenLengthIs length: Int) -> Bool {
         return splitterIndex > 3 && splitterIndex <= length-5
     }
@@ -246,9 +246,9 @@ class SPBezierPathApproximator {
     private func deviationForPoint(point: CGPoint, at position: CGFloat,
         v0: CGPoint, v1: CGPoint, v2: CGPoint, v3: CGPoint) -> CGFloat {
             let q = argumentB(k: 0, forPosition: position) * v0
-                + argumentB(k: 1, forPosition: position) * v1
-                + argumentB(k: 2, forPosition: position) * v2
-                + argumentB(k: 3, forPosition: position) * v3
+                  + argumentB(k: 1, forPosition: position) * v1
+                  + argumentB(k: 2, forPosition: position) * v2
+                  + argumentB(k: 3, forPosition: position) * v3
             let deviationPoint = q - point
             return pow(deviationPoint.x, 2) + pow(deviationPoint.y, 2)
     }
@@ -267,7 +267,7 @@ class SPBezierPathApproximator {
         let a1a2 = a1*a2
         let powa12 = pow(a12, 2)
         
-        assert(a1a2 - powa12 != 0, "0")
+        assert(a1a2 - powa12 != 0, "a1a2 - powa12 = 0")
         
         let v1 = (a2*c1 - a12*c2) / (a1a2 - powa12)
         let v2 = (a1*c2 - a12*c1) / (a1a2 - powa12)
