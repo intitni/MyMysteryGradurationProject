@@ -26,8 +26,9 @@ class SPPolygonApproximator {
     /// It apply polygon-approximation *(Douglas–Peucker algorithm non-recursive)* on an array of CGPoint and returns the result.
     func polygonApproximate(points: [CGPoint]) -> [CGPoint] {
         let closed = points.last == points.first
-        var manipPoints = (closed ? points.dropLast(1) : points.dropLast(0))
-                          .map { CharacteristicPoint(point: $0) }
+        var manipPoints = (closed ? points.dropLast(1) : points.dropLast(0)).map {
+            CharacteristicPoint(point: $0)
+        }
         
         var stack = Stack(storage: [Int]())
         

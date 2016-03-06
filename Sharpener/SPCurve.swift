@@ -27,8 +27,8 @@ class SPCurve {
     
     func appendCurve(curve: SPCurve) {
         if let last = vectorized.last, let first = curve.vectorized.first
-            where last.anchorPoint == first.anchorPoint {
-                vectorized.appendContentsOf(curve.vectorized.dropFirst(1))
+        where last.anchorPoint == first.anchorPoint {
+            vectorized.appendContentsOf(curve.vectorized.dropFirst(1))
         } else {
             vectorized.appendContentsOf(curve.vectorized)
         }
@@ -48,8 +48,6 @@ class SPCurve {
             switch i {
             case 0:
                 path==>p
-            case vectorized.endIndex-1 where p.anchorPoint == vectorized.first?.anchorPoint:
-                path-->|
             default:
                 path~~>p
             }
@@ -67,8 +65,6 @@ class SPCurve {
             switch i {
             case 0:
                 path==>p
-            case vectorized.endIndex-1 where p.anchorPoint == vectorized.first?.anchorPoint:
-                path-->|
             default:
                 path~~>p
             }

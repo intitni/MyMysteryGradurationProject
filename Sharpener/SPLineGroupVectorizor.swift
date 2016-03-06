@@ -85,7 +85,6 @@ class SPLineGroupVectorizor {
     private func fetchDirectionData() {
         let filter = LineTrackingFilter(context: context)
         filter.provider = MXNImageProvider(image: UIImage(textureData: rawData), context: context)
-        
         filter.applyFilter()
         directionData = MXNTextureDataFloat(texture: filter.eigenVectors)
         gradientTensorTexture = filter.gradientTensor

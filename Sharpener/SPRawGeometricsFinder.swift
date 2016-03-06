@@ -167,7 +167,11 @@ extension SPRawGeometricsFinder {
     ///     - matching: points' pattern that should be flooded
     ///
     /// - Returns: flood result
-    private func flood(point: CGPoint, inout from textureData: MXNTextureData, matching checkIfShouldFlood: (RGBAPixel) -> Bool) -> [CGPoint] {
+    private func flood(
+        point: CGPoint,
+        inout from textureData: MXNTextureData,
+        matching checkIfShouldFlood: (RGBAPixel) -> Bool
+    ) -> [CGPoint] {
         return flood(Int(point.x), Int(point.y), from: &textureData, matching: checkIfShouldFlood)
     }
     
@@ -202,7 +206,11 @@ extension SPRawGeometricsFinder {
     ///     - matching: points' pattern that should be flooded
     ///
     /// - Returns: flood result
-    private func flood(x: Int, _ y: Int, inout from textureData: MXNTextureData, matching checkIfShouldFlood: (RGBAPixel) -> Bool) -> [CGPoint] {
+    private func flood(
+        x: Int, _ y: Int,
+        inout from textureData: MXNTextureData,
+        matching checkIfShouldFlood: (RGBAPixel) -> Bool
+    ) -> [CGPoint] {
         guard let c = textureData[(x,y)] else { return [CGPoint]() }
         guard checkIfShouldFlood(c) && !c.isTransparent else { return [CGPoint]() }
         
