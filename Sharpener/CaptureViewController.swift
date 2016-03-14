@@ -52,6 +52,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     
     // MARK: Properties
+    let visualTesting = true
     var loaded: Bool = false
     
     let context: MXNContext = MXNContext()
@@ -222,7 +223,11 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             
             let imageDataJpeg = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
             self.stillImage = UIImage(data: imageDataJpeg)
-            self.performSegueWithIdentifier("CaptureToRefine", sender: self)
+            if self.visualTesting {
+                self.performSegueWithIdentifier("ShowTestView", sender: self)
+            } else {
+                self.performSegueWithIdentifier("CaptureToRefine", sender: self)
+            }
         }
     }
     
@@ -235,6 +240,9 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             destination?.thresholdingFilterThreshold = thresholdingFilter.thresholdingFactor
             destination?.medianFilterRadius = medianFilter.radius
             destination?.lineShapeFilteringFilterAttributes = (lineShapeFilteringFilter.threshold, lineShapeFilteringFilter.radius > 0 ? 4 : 0)
+        case "ShowTestView":
+            let destination = segue.destinationViewController as? TestViewController
+            destination?.testImage = stillImage
         default: break
         }
     }

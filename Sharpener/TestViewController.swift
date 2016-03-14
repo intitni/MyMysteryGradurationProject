@@ -13,20 +13,27 @@ class TestViewController: UIViewController {
     let processSize = CGSize(width: 300, height: 400)
     let testView = UIView(frame: CGRect(origin: CGPointZero, size: Preference.vectorizeSize))
     let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+    var testImage: UIImage?
     
     override func viewDidLoad() {
         view.addSubview(scrollView)
         scrollView.snp_makeConstraints { make in
             make.edges.equalTo(self.view)
         }
-        let incomeImage = UIImage(named: "LineTrackingTestImage")
+        let incomeImage = testImage ?? UIImage(named: "LineTrackingTestImage")
         let newImage = incomeImage!.resizedImageToSize(processSize)
+        let trippleTap = UITapGestureRecognizer(target: self, action: "back")
+        trippleTap.numberOfTapsRequired = 3
+        testView.addGestureRecognizer(trippleTap)
 
         let finder = SPRawGeometricsFinder(medianFilterRadius: 1, thresholdingFilterThreshold: 0.2, lineShapeFilteringFilterAttributes: (5, 4), extractorSize: Preference.vectorizeSize)
         finder.delegate = self
         finder.process(newImage)
     }
-    
+
+    func back() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
 
 extension TestViewController: SPRawGeometricsFinderDelegate, SPLineGroupVectorizorVisualTestDelegate {
@@ -53,6 +60,15 @@ extension TestViewController: SPRawGeometricsFinderDelegate, SPLineGroupVectoriz
     
     func trackingToPoint(point: CGPoint) {
         indicatorView.frame.origin = point
+    }
+
+    func foundMagnetPoint(point: CGPoint) {
+        dispatch_async(GCD.mainQueue) {
+            let square = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
+            square.frame.origin = point
+            square.backgroundColor = UIColor.randomColor()
+            self.testView.addSubview(square)
+        }
     }
 }
 
