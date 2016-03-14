@@ -107,9 +107,6 @@ class SPBezierPathApproximator {
             s.vectorized = [SPAnchorPoint(point: line.raw.first!), SPAnchorPoint(point: line.raw.last!)]
             return s
         }
-        guard line.raw.count >= 1 else {
-            return SPCurve()
-        }
         
         var curve = SPCurve()
         var splittedLines = [line]

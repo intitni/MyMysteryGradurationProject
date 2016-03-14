@@ -99,11 +99,8 @@ class DetailViewController: UIViewController {
             } catch {
                 print("unable to remove file")
             }
-            return
         }
-        let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .Cancel) { _ in
-            return
-        }
+        let cancelButton = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .Cancel, handler: nil)
         alertView.addAction(okButton)
         alertView.addAction(cancelButton)
         self.presentViewController(alertView, animated: true, completion: nil)
@@ -111,8 +108,8 @@ class DetailViewController: UIViewController {
     
     func shouldDeleteDocument() {
         deleteCurrentDocument()
-        
     }
+    
     func shouldShareDocument() {
         let svgg = SPSVGGenerator()
         if store != nil {

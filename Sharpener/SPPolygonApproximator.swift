@@ -27,15 +27,15 @@ class SPPolygonApproximator {
     func polygonApproximate(points: [CGPoint]) -> [CGPoint] {
         let closed = points.last == points.first
         var manipPoints = (closed ? points.dropLast(1) : points.dropLast(0)).map {
-            CharacteristicPoint(point: $0)
+            FeaturePoint(point: $0)
         }
         
         var stack = Stack(storage: [Int]())
         
         var endA: Int? = manipPoints.startIndex
         var endB: Int? = manipPoints.endIndex - 1
-        manipPoints[endA!].isCharacteristicPoint = true
-        manipPoints[endB!].isCharacteristicPoint = true
+        manipPoints[endA!].isFeaturePoint = true
+        manipPoints[endB!].isFeaturePoint = true
         stack.push(endB!)
         
         repeat {
@@ -47,7 +47,7 @@ class SPPolygonApproximator {
                 continue
             }
             if manipPoints[index].distance >= threshold {
-                manipPoints[index].isCharacteristicPoint = true
+                manipPoints[index].isFeaturePoint = true
                 endB = index
                 stack.push(index)
             } else {
@@ -62,9 +62,9 @@ class SPPolygonApproximator {
         }
         
         var newPoints = manipPoints.filter { point in
-            point.isCharacteristicPoint
-        }.map { (point: CharacteristicPoint)->CGPoint in
-            return point.point
+            point.isFeaturePoint
+        }.map { point in
+            point.point
         }
         
         if closed && newPoints.first != nil {
@@ -77,7 +77,7 @@ class SPPolygonApproximator {
     /// Find the farthest point in manipPoints to given line, returning the index of it.
     /// - parameter line: The line to calculate
     /// - returns: The index of the point in manipPoints. If no point sits between, returns nil.
-    func farthestPointForLine(line: Line, indexA: Int, indexB: Int, inout manipPoints: [CharacteristicPoint] ) -> Int? {
+    func farthestPointForLine(line: Line, indexA: Int, indexB: Int, inout manipPoints: [FeaturePoint] ) -> Int? {
         guard abs(indexA - indexB) > 1 else { return nil }
         var index = 0
         var max: CGFloat = 0
@@ -97,13 +97,13 @@ class SPPolygonApproximator {
     
     // MARK: Internal Structs
     
-    struct CharacteristicPoint {
+    struct FeaturePoint {
         let point: CGPoint
-        var isCharacteristicPoint: Bool
+        var isFeaturePoint: Bool
         var distance: CGFloat
         init(point: CGPoint) {
             self.point = point
-            isCharacteristicPoint = false
+            isFeaturePoint = false
             distance = 0
         }
     }

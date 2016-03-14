@@ -41,9 +41,6 @@ class SPGuess {
                 if i == 0 { path ==> pt }
                 else { path --> pt }
             }
-            if ps.last == ps.first {
-                path-->|
-            }
         default: break
         }
         
