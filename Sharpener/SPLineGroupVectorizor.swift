@@ -112,18 +112,9 @@ class SPLineGroupVectorizor {
         while currentLine.raw.count < 20000 {
             let tanCurrent = tangentialDirectionOf(current)
             let tanLast = MXNFreeVector(start: last, end: current)
-            // FIXME: avoid affects from mid point correction
-            var s = !(tanLast • tanCurrent).isSignMinus
             last = current
-            
-            // Runge Kutta method
-            let middle = current.interpolateSemiTowards(tangentialDirectionOf(current), forward: s)
-            var tanMiddle = tangentialDirectionOf(middle)
-            if tanMiddle.isZeroVector { tanMiddle = tanLast }
-            s = !(tanLast • tanMiddle).isSignMinus
-            current = current.interpolateTowards(tanMiddle, forward: s)
-            lastLeft = currentLeft
-            lastRight = currentRight
+            current = rkInterpolate(from: current, to: tanCurrent, lastDirection: tanLast)
+            lastLeft = currentLeft; lastRight = currentRight
             (current, currentLeft, currentRight) = correctedPositionMidPointFor(current, last: last)
 
             /////////////////////////////////////////////
@@ -272,7 +263,19 @@ extension SPLineGroupVectorizor {
         }
         return (rawGeometric.raw.first ?? CGPointZero, rawGeometric.raw.first ?? CGPointZero, rawGeometric.raw.first ?? CGPointZero)
     }
-    
+
+    private func rkInterpolate(
+        from current: CGPoint,
+        to direction: MXNFreeVector, lastDirection: MXNFreeVector, scale: CGFloat = 1
+    ) -> CGPoint {
+        let middle = current.interpolateSemiTowards(direction * scale,
+            forward: !(lastDirection • direction).isSignMinus)
+        var tanMiddle = tangentialDirectionOf(middle)
+        if tanMiddle.isZeroVector { tanMiddle = lastDirection }
+        return current.interpolateTowards(tanMiddle * scale,
+            forward: !(lastDirection • tanMiddle).isSignMinus)
+    }
+
     /// Check if current tracking point is meeting a junction ( or maybe an end )
     private func checkIfMeetsJunction(
         currentEdge: (left: CGPoint, right: CGPoint),
@@ -324,22 +327,14 @@ extension SPLineGroupVectorizor {
         let stepScale: CGFloat = 0.4
         var current = startPoint
         var last = lastPoint
-        var tanLast = MXNFreeVector(start: last, end: current)
         var candidateA = [JunctionPointCandidate]()
         var candidateB = [JunctionPointCandidate]()
         
         for i in 1...step*candidateCount {
             let tanCurrent = tangentialDirectionOf(current)
-            var s = !(tanLast • tanCurrent).isSignMinus
+            let tanLast = MXNFreeVector(start: last, end: current)
             last = current
-            
-            // Runge Kutta method
-            let middle = current.interpolateSemiTowards(tanCurrent*stepScale, forward: s)
-            var tanMiddle = tangentialDirectionOf(middle)
-            if tanMiddle.isZeroVector { tanMiddle = tanLast }
-            s = !(tanLast • tanMiddle).isSignMinus
-            current = current.interpolateTowards(tanMiddle*stepScale, forward: s)
-            tanLast = tanMiddle
+            current = rkInterpolate(from: current, to: tanCurrent, lastDirection: tanLast, scale: stepScale)
             if i % step == 0 {
                 if !rawData.isBackgroudAtPoint(current) {
                     candidateA.append(JunctionPointCandidate(point: current))
@@ -368,11 +363,11 @@ extension SPLineGroupVectorizor {
         for c in candidates {
             for p in magnetPoints {
                 if c.point.distanceTo(p.point) <= 10 {
-                    if (MXNFreeVector(start: lastPoint, end: startPoint) • MXNFreeVector(start: startPoint, end: p.point)).isSignMinus {
+                    if (MXNFreeVector(start: lastPoint, end: startPoint) • MXNFreeVector(start: lastPoint, end: p.point)).isSignMinus {
                         return (nil, false, 0, 2)
                     }
                     if visualTesting { print("### Magnet Point already exists: \(p.point)") }
-                    return (p, true, inDirectionIndexFor(MXNFreeVector(start: startPoint, end: p.point), of: p), 0)
+                    return (p, true, inDirectionIndexFor(MXNFreeVector(start: lastPoint, end: p.point), of: p), 0)
                 }
             }
         }
@@ -511,21 +506,17 @@ extension SPLineGroupVectorizor {
         if visualTesting { print("=== free tracking") }
         var line = [CGPoint]()
         var point = current
+        var last = current
         var creadability = 0
         var tanLast = direction
         for _ in 1...steps {
             if creadability > 5 {
                 let tanCurrent = tangentialDirectionOf(point)
-                var s = !(tanLast • tanCurrent).isSignMinus
-
-                // Runge Kutta method
-                let middle = current.interpolateSemiTowards(tanCurrent, forward: s)
-                var tanMiddle = tangentialDirectionOf(middle)
-                if tanMiddle.isZeroVector { tanMiddle = tanLast }
-                s = !(tanLast • tanMiddle).isSignMinus
-                point = current.interpolateTowards(tanMiddle, forward: s)
-                tanLast = tanMiddle
+                tanLast = MXNFreeVector(start: last, end: current)
+                last = point
+                point = rkInterpolate(from: point, to: tanCurrent, lastDirection: tanLast)
             } else {
+                last = point
                 point = point + direction
             }
             line.append(point)

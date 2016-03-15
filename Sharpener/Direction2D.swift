@@ -207,7 +207,7 @@ extension CGPoint  {
     func distanceTo(point: CGPoint) -> CGFloat {
         return sqrt(distancePow2To(point))
     }
-    
+
     func interpolateTowards(direction: MXNFreeVector, forward: Bool) -> CGPoint {
         let newX = x + (forward ? direction.x : -direction.x)
         let newY = y + (forward ? direction.y : -direction.y)
