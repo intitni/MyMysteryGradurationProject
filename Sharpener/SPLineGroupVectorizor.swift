@@ -97,7 +97,6 @@ class SPLineGroupVectorizor {
             point: startPoint,
             directions: [(-tangentialDirectionOf(startPoint)).direction]
         )
-        magnetPoints.append(startMagnetPoint)
         var startDirection = tangentialDirectionOf(startPoint).direction
         var shouldTrackInvertly = true
         
@@ -118,7 +117,7 @@ class SPLineGroupVectorizor {
             (current, currentLeft, currentRight) = correctedPositionMidPointFor(current, last: last)
 
             /////////////////////////////////////////////
-            if visualTesting {
+            if visualTesting && magnetPoints.count > 0 {
                 dispatch_async(GCD.mainQueue) {
                     self.testDelegate?.trackingToPoint(current)
                 }
@@ -129,21 +128,8 @@ class SPLineGroupVectorizor {
             var meetsEndPoint = false
             if rawData.isBackgroudAtPoint(current) && rawData.isBackgroudAtPoint(last) {
                 meetsEndPoint = true
-            } else {
+            } else if magnetPoints.count > 0 {
                 currentLine<--current
-            }
-            
-            // First line loop handling
-            if trackedLines.count == 0 {
-                if startMagnetPoint.shouldAttract(current,
-                        withTengentialDirection: MXNFreeVector(start: current, end: startMagnetPoint.point)) {
-                    if visualTesting { print("### attracted by start point") }
-                    // go towards start point
-                    let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
-                    currentLine.raw.appendContentsOf(straight)
-                    meetsEndPoint = true
-                    startMagnetPoint.directions.removeAll()
-                }
             }
             
             // Junction detection
