@@ -483,30 +483,30 @@ extension SPLineGroupVectorizor {
         // FIXME: free track auto ends when tan is no longer messy
         if visualTesting { print("=== free tracking") }
         var line = [CGPoint]()
-        var point = current
+        var trackingPoint = current
         var last = current
         var creadability = 0
         var tanLast = direction
         for _ in 1...steps {
             if creadability > 6 {
-                let tanCurrent = tangentialDirectionOf(point)
-                tanLast = MXNFreeVector(start: last, end: current)
-                last = point
-                point = rkInterpolate(from: point, to: tanCurrent, lastDirection: tanLast)
+                let tanCurrent = tangentialDirectionOf(trackingPoint)
+                tanLast = MXNFreeVector(start: last, end: trackingPoint)
+                last = trackingPoint
+                trackingPoint = rkInterpolate(from: trackingPoint, to: tanCurrent, lastDirection: tanLast)
+                (trackingPoint, _, _) = correctedPositionMidPointFor(trackingPoint, last: last)
             } else {
-                last = point
-                point = point + direction
+                last = trackingPoint
+                trackingPoint = trackingPoint + direction
             }
-            line.append(point)
+            line.append(trackingPoint)
             if line.count > 1 {
-                let currentDirection = MXNFreeVector(start: last, end: point)
+                let currentDirection = MXNFreeVector(start: last, end: trackingPoint)
                 if currentDirection.angleWith(direction) < 30 {
                     creadability += 1
                 } else {
                     creadability -= 1
                 }
             }
-
         }
         if visualTesting { print("~~~ free tracking end") }
         return line
