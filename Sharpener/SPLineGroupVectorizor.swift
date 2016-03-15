@@ -174,7 +174,7 @@ class SPLineGroupVectorizor {
                     if let outDirectionIndex = smoothDirectionIndexFor(inDirection, of: p) {
                         let outDirection = p.directions[outDirectionIndex].poleValue
                         p.directions.removeAtIndex(outDirectionIndex)
-                        let freeTrack = freelyTrackToDirectionFrom(current, to: outDirection, steps: 12)
+                        let freeTrack = freelyTrackToDirectionFrom(current, to: outDirection, steps: 10)
                         if !freeTrack.isEmpty { current = freeTrack.last! }
                         last = p.point
                         currentLine.raw.appendContentsOf(freeTrack)
@@ -204,7 +204,7 @@ class SPLineGroupVectorizor {
                         startMagnetPoint.directions.removeAtIndex(directionIndex)
                         
                         current = startMagnetPoint.point
-                        let free = freelyTrackToDirectionFrom(current, to: startDirection.poleValue, steps: 12)
+                        let free = freelyTrackToDirectionFrom(current, to: startDirection.poleValue, steps: 10)
                         if !free.isEmpty { current = free.last! }
                         if free.count > 1 { last = free[free.endIndex-2] }
                         currentLine.raw.appendContentsOf(free)
@@ -232,7 +232,7 @@ class SPLineGroupVectorizor {
                     
                     startMagnetPoint = next
                 	    
-                    let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 12)
+                    let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 10)
                     if !free.isEmpty { current = free.last! }
                     if free.count > 1 { last = free[free.endIndex-2] }
                     currentLine.raw.appendContentsOf(free)
@@ -327,8 +327,6 @@ extension SPLineGroupVectorizor {
         let stepScale: CGFloat = 0.4
         var current = startPoint
         var last = lastPoint
-        var candidateA = [JunctionPointCandidate]()
-        var candidateB = [JunctionPointCandidate]()
         
         for i in 1...step*candidateCount {
             let tanCurrent = tangentialDirectionOf(current)
@@ -337,7 +335,7 @@ extension SPLineGroupVectorizor {
             current = rkInterpolate(from: current, to: tanCurrent, lastDirection: tanLast, scale: stepScale)
             if i % step == 0 {
                 if !rawData.isBackgroudAtPoint(current) {
-                    candidateA.append(JunctionPointCandidate(point: current))
+                    candidates.append(JunctionPointCandidate(point: current))
                 }
             }
         }
@@ -348,22 +346,18 @@ extension SPLineGroupVectorizor {
             current = current.interpolateTowards(tanDefault*stepScale, forward: true)
             if i % step == 0 {
                 if !rawData.isBackgroudAtPoint(current) {
-                    candidateB.append(JunctionPointCandidate(point: current))
+                    candidates.append(JunctionPointCandidate(point: current))
                 }
             }
         }
-        
-        candidates.appendContentsOf(candidateA)
-        candidates.appendContentsOf(candidateB)
+
         candidates.append(JunctionPointCandidate(point: startPoint))
-        
-        if candidates.isEmpty { return (nil, false, 0, 0) }
         
         // find if such MagnetPoint is already found
         for c in candidates {
             for p in magnetPoints {
-                if c.point.distanceTo(p.point) <= 10 {
-                    if (MXNFreeVector(start: lastPoint, end: startPoint) • MXNFreeVector(start: lastPoint, end: p.point)).isSignMinus {
+                if c.point.distanceTo(p.point) <= 6 {
+                    if (MXNFreeVector(start: lastPoint, end: startPoint) • MXNFreeVector(start: startPoint, end: p.point)).isSignMinus {
                         return (nil, false, 0, 2)
                     }
                     if visualTesting { print("### Magnet Point already exists: \(p.point)") }
@@ -387,20 +381,18 @@ extension SPLineGroupVectorizor {
             $0.directions.count == directionCount
         } .sort {
             $0.leastLuminance < $1.leastLuminance
-        }
-
-        let candidateSlice = candidates.dropLast(candidates.count/3).sort {
+        } .keptFirstPart(forPartsCount: 3).sort {
             $0.deviation < $1.deviation
         }
         
-        guard let junctionPoint = candidateSlice.first else { return (nil, false, 0, directionCount) }
+        guard let junctionPoint = candidates.first else { return (nil, false, 0, directionCount) }
         
         if junctionPoint.magnetPoint.directions.count == 2
         && junctionPoint.directions[0].poleValue.angleWith(junctionPoint.directions[1].poleValue) > 120 {
             return (nil, false, 0, directionCount)
         }
         
-        let inDirectionIndex = inDirectionIndexFor(MXNFreeVector(start: last, end: junctionPoint.point),
+        let inDirectionIndex = inDirectionIndexFor(MXNFreeVector(start: lastPoint, end: junctionPoint.point),
             of: junctionPoint.magnetPoint)
         if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point)), count: \(directionCount)") }
         return (junctionPoint.magnetPoint, false, inDirectionIndex, directionCount)
@@ -510,7 +502,7 @@ extension SPLineGroupVectorizor {
         var creadability = 0
         var tanLast = direction
         for _ in 1...steps {
-            if creadability > 5 {
+            if creadability > 6 {
                 let tanCurrent = tangentialDirectionOf(point)
                 tanLast = MXNFreeVector(start: last, end: current)
                 last = point
@@ -521,7 +513,7 @@ extension SPLineGroupVectorizor {
             }
             line.append(point)
             if line.count > 1 {
-                let currentDirection = MXNFreeVector(start: line[line.endIndex-2], end: line.last!)
+                let currentDirection = MXNFreeVector(start: last, end: point)
                 if currentDirection.angleWith(direction) < 30 {
                     creadability += 1
                 } else {

@@ -33,13 +33,13 @@ class TestViewController: UIViewController {
 
     func back() {
         dismissViewControllerAnimated(true, completion: nil)
+        SPGeometricsStore.universalStore.removeAll()
     }
 }
 
 extension TestViewController: SPRawGeometricsFinderDelegate, SPLineGroupVectorizorVisualTestDelegate {
     func succefullyFoundRawGeometrics() {
         // put results on screen.
-        
         let v = SPLineGroupVectorizor(size: Preference.vectorizeSize)
         v.testDelegate = self
         print(SPGeometricsStore.universalStore.rawStore.count)
@@ -59,7 +59,9 @@ extension TestViewController: SPRawGeometricsFinderDelegate, SPLineGroupVectoriz
     }
     
     func trackingToPoint(point: CGPoint) {
-        indicatorView.frame.origin = point
+        dispatch_async(GCD.mainQueue) {
+            self.indicatorView.frame.origin = point
+        }
     }
 
     func foundMagnetPoint(point: CGPoint) {
