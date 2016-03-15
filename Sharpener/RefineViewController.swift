@@ -80,8 +80,7 @@ class RefineViewController: UIViewController {
     }
     
     private func performGeometricsFinding() {
-        var newImage = incomeImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/incomeImage.scale))
-        newImage = newImage.resizedImageToSize(Preference.vectorizeSize.scaled(1/newImage.scale))
+        var newImage = incomeImage.resizedImageToSize(CGSize(width: 300, height: 400))
         
         finder = SPRawGeometricsFinder(medianFilterRadius: medianFilterRadius, thresholdingFilterThreshold: thresholdingFilterThreshold, lineShapeFilteringFilterAttributes: lineShapeFilteringFilterAttributes, extractorSize: Preference.vectorizeSize)
         finder.delegate = self

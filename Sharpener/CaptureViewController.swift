@@ -52,7 +52,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     
     // MARK: Properties
-    let visualTesting = true
+    let visualTesting = false
     var loaded: Bool = false
     
     let context: MXNContext = MXNContext()
