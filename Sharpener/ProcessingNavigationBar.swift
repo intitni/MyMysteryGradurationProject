@@ -31,7 +31,7 @@ class ProcessingNavigationBar: UINavigationBar {
     
     var backButton: SPBackButton! {
         didSet {
-            let tap = UITapGestureRecognizer(target: self, action: "tappedOnBackButton")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ProcessingNavigationBar.tappedOnBackButton))
             backButton.addGestureRecognizer(tap)
             
             addSubview(backButton)
@@ -47,7 +47,7 @@ class ProcessingNavigationBar: UINavigationBar {
         didSet {
             actionButton.enabled = false
             
-            let tap = UITapGestureRecognizer(target: self, action: "tappedOnActionButton")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ProcessingNavigationBar.tappedOnActionButton))
             actionButton.addGestureRecognizer(tap)
             
             addSubview(actionButton)

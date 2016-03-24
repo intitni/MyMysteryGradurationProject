@@ -22,7 +22,7 @@ class TestViewController: UIViewController {
         }
         let incomeImage = testImage ?? UIImage(named: "LineTrackingTestImage")
         let newImage = incomeImage!.resizedImageToSize(processSize)
-        let trippleTap = UITapGestureRecognizer(target: self, action: "back")
+        let trippleTap = UITapGestureRecognizer(target: self, action: #selector(TestViewController.back))
         trippleTap.numberOfTapsRequired = 3
         testView.addGestureRecognizer(trippleTap)
 

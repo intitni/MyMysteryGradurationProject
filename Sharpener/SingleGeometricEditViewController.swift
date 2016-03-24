@@ -17,9 +17,9 @@ class SingleGeometricEditViewController: UIViewController {
     }
     @IBOutlet weak var displayView: SPDisplayView! {
         didSet {
-            let swipeRight = UISwipeGestureRecognizer(target: self, action: "swipeOnDisplayView:")
+            let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(SingleGeometricEditViewController.swipeOnDisplayView(_:)))
             swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-            let swipeLeft = UISwipeGestureRecognizer(target: self, action: "swipeOnDisplayView:")
+            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(SingleGeometricEditViewController.swipeOnDisplayView(_:)))
             swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
             displayView.addGestureRecognizer(swipeRight)
             displayView.addGestureRecognizer(swipeLeft)

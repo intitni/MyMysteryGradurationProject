@@ -31,7 +31,9 @@ class SPPolygonApproximator {
         }
         
         var stack = Stack(storage: [Int]())
-        
+
+        guard manipPoints.count > 1 else { return points }
+
         var endA: Int? = manipPoints.startIndex
         var endB: Int? = manipPoints.endIndex - 1
         manipPoints[endA!].isFeaturePoint = true
@@ -63,7 +65,7 @@ class SPPolygonApproximator {
         
         var newPoints = manipPoints.filter { point in
             point.isFeaturePoint
-        }.map { point in
+        } .map { point in
             point.point
         }
         

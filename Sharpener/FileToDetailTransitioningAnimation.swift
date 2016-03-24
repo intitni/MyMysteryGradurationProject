@@ -14,7 +14,7 @@ class FileToDetailTransitioningAnimation: UIPercentDrivenInteractiveTransition {
     weak var destinationViewController: UIViewController? {
         didSet {
             self.quitPanGesture = UIPanGestureRecognizer()
-            self.quitPanGesture!.addTarget(self, action:"handleOnstagePan:")
+            self.quitPanGesture!.addTarget(self, action:#selector(FileToDetailTransitioningAnimation.handleOnstagePan(_:)))
             self.quitPanGesture?.delegate = self
             self.destinationViewController!.view.addGestureRecognizer(self.quitPanGesture!)
         }

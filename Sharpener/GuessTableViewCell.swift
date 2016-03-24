@@ -41,7 +41,7 @@ class GuessTableViewCell: UITableViewCell {
             frontView.snp_makeConstraints { make in
                 make.edges.equalTo(self)
             }
-            let pan = UIPanGestureRecognizer(target: self, action: "panningOnFrontView:")
+            let pan = UIPanGestureRecognizer(target: self, action: #selector(GuessTableViewCell.panningOnFrontView(_:)))
             pan.delegate = self
             frontView.addGestureRecognizer(pan)
         }

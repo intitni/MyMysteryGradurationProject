@@ -20,7 +20,7 @@ class FilesViewController: UIViewController {
     }
     @IBOutlet weak var newButton: SPNewButton! {
         didSet {
-            newButton.addTarget(self, action: "shouldShowCaptureView", forControlEvents: .TouchUpInside)
+            newButton.addTarget(self, action: #selector(FilesViewController.shouldShowCaptureView), forControlEvents: .TouchUpInside)
         }
     }
 

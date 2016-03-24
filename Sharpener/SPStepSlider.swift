@@ -38,10 +38,10 @@ class SPStepSlider: SPSlider {
     }
     
     override func setupGestures() {
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: "swipeOnHandleViewUp:")
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(SPStepSlider.swipeOnHandleViewUp(_:)))
         swipeUp.delegate = self
         swipeUp.direction = .Up
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: "swipeOnHandleViewDown:")
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(SPStepSlider.swipeOnHandleViewDown(_:)))
         swipeDown.delegate = self
         swipeDown.direction = .Down
         gestureHandleView?.addGestureRecognizer(swipeUp)

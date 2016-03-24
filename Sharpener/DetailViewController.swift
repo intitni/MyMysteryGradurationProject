@@ -48,9 +48,9 @@ class DetailViewController: UIViewController {
     }
     @IBOutlet weak var toolBar: SPDetailToolBar! {
         didSet {
-            let tapL = UITapGestureRecognizer(target: self, action: "shouldDeleteDocument")
+            let tapL = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.shouldDeleteDocument))
             toolBar.deleteButton.addGestureRecognizer(tapL)
-            let tapR = UITapGestureRecognizer(target: self, action: "shouldShareDocument")
+            let tapR = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.shouldShareDocument))
             toolBar.shareButton.addGestureRecognizer(tapR)
         }
     }

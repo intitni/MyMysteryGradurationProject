@@ -141,7 +141,7 @@ class SPLineGroupVectorizor {
                         withTengentialDirection: MXNFreeVector(start: current, end: startMagnetPoint.point)) {
                     if visualTesting { print("### attracted by start point") }
                     let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
-                    currentLine.raw.appendContentsOf(straight)
+                    baldLine.raw.appendContentsOf(straight)
                     meetsEndPoint = true
                     startMagnetPoint.directions.removeAll()
                 }
@@ -152,7 +152,13 @@ class SPLineGroupVectorizor {
                 if visualTesting { print("### meets protential junction point") }
 
                 var lastPointForJunctionDetection = last
-                if currentLine.raw.count > 4 { lastPointForJunctionDetection = currentLine.raw[currentLine.raw.endIndex - 3] }
+                if magnetPoints.count == 0 {
+                    let countMinus = baldLine.raw.count <= 3 ? baldLine.raw.count : 4
+                    if baldLine.raw.count > 3 { lastPointForJunctionDetection = baldLine.raw[baldLine.raw.endIndex - countMinus] }
+                } else {
+                    let countMinus = currentLine.raw.count <= 3 ? currentLine.raw.count : 4
+                    if currentLine.raw.count > 3 { lastPointForJunctionDetection = currentLine.raw[currentLine.raw.endIndex - countMinus] }
+                }
                 let result = findJunctionPointStartFrom(current, last: lastPointForJunctionDetection)
                 
                 if let p = result.point, let dIndex = result.directionIndex {
@@ -365,7 +371,7 @@ extension SPLineGroupVectorizor {
         // find if such MagnetPoint is already found
         for c in candidates {
             for p in magnetPoints {
-                if c.point.distanceTo(p.point) <= 15 {
+                if c.point.distanceTo(p.point) <= 10 {
                     if (MXNFreeVector(start: lastPoint, end: startPoint) • MXNFreeVector(start: startPoint, end: p.point)).isSignMinus {
                         return (nil, false, 0, 2)
                     }
@@ -387,7 +393,7 @@ extension SPLineGroupVectorizor {
             $0.directions.count == directionCount
         } .sort {
             $0.leastLuminance < $1.leastLuminance
-        } .keptFirstPart(forPartsCount: 7).sort {
+        } .keptFirstPart(forPartsCount: 6).sort {
             $0.deviation < $1.deviation
         }
         
@@ -415,7 +421,7 @@ extension SPLineGroupVectorizor {
 
     private func fetchLuminanceDistributionForCandidates(candidates: [JunctionPointCandidate]) {
         let circCount = 72
-        let distance = 50
+        let distance = 60
         let stepScaleFactor: CGFloat = 0.5
 
         for c in candidates {
@@ -434,7 +440,7 @@ extension SPLineGroupVectorizor {
                     } else {
                         continuouslyMetWhiteCounter = 0
                     }
-                    if continuouslyMetWhiteCounter > distance / 8 { shouldIgnoreTheRest = true }
+                    if continuouslyMetWhiteCounter > 2 { shouldIgnoreTheRest = true }
                     if shouldIgnoreTheRest { sum += 255 }
                 }
                 sum /= CGFloat(distance)
@@ -698,6 +704,7 @@ extension SPLineGroupVectorizor {
         var deviation: CGFloat = 0
         var angleIndexes = [Int]()
         var directions = [Direction2D]()
+        var newLuminance = [CGFloat]()
         
         init(point: CGPoint) {
             self.point = point
@@ -712,22 +719,23 @@ extension SPLineGroupVectorizor {
             angleIndexes = [Int]()
             
             // 2 times of gaussian blur
-            var newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(luminance)
+            newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(luminance)
             newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(newLuminance)
             
             // fetch every minimum value from f(angle) = luminance
             for var i in 0..<newLuminance.count {
                 let previousIndex = i - 1 >= 0 ? i-1 : newLuminance.endIndex-1
                 let nextIndex = i + 1 >= newLuminance.endIndex ? 0 : i+1
-                if newLuminance[i] < 50 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
+                if newLuminance[i] < 70 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
                     angleIndexes.append(i)
-                } else if newLuminance[i] < 50 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
+                } else if newLuminance[i] < 70 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
                     var count = 0
                     var next = i + 1 >= newLuminance.endIndex ? 0 : i+1
                     while next != i {
                         count += 1
                         if newLuminance[next] > newLuminance[i] {
                             if i+count/2 < newLuminance.count { angleIndexes.append(i+count/2) }
+                            else { angleIndexes.append(i+count/2 - newLuminance.count) }
                             break
                         } else if newLuminance[next] < newLuminance[i] {
                             break
@@ -770,12 +778,12 @@ extension SPLineGroupVectorizor {
             }
             
             let average = deviationIndexes.reduce(CGFloat(0), combine: {
-                return $0 + luminance[$1]
+                $0 + luminance[$1]
             }) / CGFloat(deviationIndexes.count)
             
             deviation = deviationIndexes.reduce(CGFloat(0), combine: {
-                return $0 + abs(luminance[$1] - average)
-            })
+                $0 + abs(luminance[$1] - average)
+            }) / CGFloat(deviationIndexes.count)
         }
 
     }

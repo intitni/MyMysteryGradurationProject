@@ -44,7 +44,7 @@ class SPNavigationBar: UIView {
         didSet {
             actionButton.enabled = false
             
-            let tap = UITapGestureRecognizer(target: self, action: "tappedOnActionButton")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(SPNavigationBar.tappedOnActionButton))
             actionButton.addGestureRecognizer(tap)
             
             addSubview(actionButton)

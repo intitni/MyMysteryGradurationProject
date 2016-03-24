@@ -21,7 +21,8 @@ class SPRawGeometric {
         self.raw = raw
     }
     
-    func imageInTextureData(var textureData: MXNTextureData, shouldThreshold threshold: Bool = true, shouldInvert invert: Bool = true) -> UIImage {
+    func imageInTextureData(textureData: MXNTextureData, shouldThreshold threshold: Bool = true, shouldInvert invert: Bool = true) -> UIImage {
+        var textureData = textureData
         let width = textureData.width
         let height = textureData.height
         let newRaw = [UInt8](count: width*height*4, repeatedValue: invert ? 0 : 255)

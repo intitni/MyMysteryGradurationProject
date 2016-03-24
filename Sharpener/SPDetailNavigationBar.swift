@@ -39,7 +39,7 @@ class SPDetailNavigationBar: UIView {
     
     var backButton: SPBackButton! {
         didSet {
-            let tap = UITapGestureRecognizer(target: self, action: "tappedOnBackButton")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(SPDetailNavigationBar.tappedOnBackButton))
             backButton.addGestureRecognizer(tap)
             
             addSubview(backButton)
