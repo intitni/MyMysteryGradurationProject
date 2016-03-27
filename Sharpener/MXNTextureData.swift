@@ -159,7 +159,7 @@ struct MXNTextureData {
         if self[CGPoint(x:x+1, y:y+1)]?.isBackgroundWhite ?? true {
             weight += 1
         }
-        return weight > 3 ? true : false
+        return weight > 2 ? true : false
     }
 }
 

@@ -10,7 +10,7 @@ import UIKit
 
 class TestViewController: UIViewController {
     let scrollView = UIScrollView()
-    let processSize = CGSize(width: 300, height: 400)
+    let processSize = CGSize(width: 375, height: 500)
     let testView = UIView(frame: CGRect(origin: CGPointZero, size: Preference.vectorizeSize))
     let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
     var testImage: UIImage?

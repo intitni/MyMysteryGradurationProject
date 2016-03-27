@@ -153,11 +153,11 @@ class SPLineGroupVectorizor {
 
                 var lastPointForJunctionDetection = last
                 if magnetPoints.count == 0 {
-                    let countMinus = baldLine.raw.count <= 3 ? baldLine.raw.count : 4
-                    if baldLine.raw.count > 3 { lastPointForJunctionDetection = baldLine.raw[baldLine.raw.endIndex - countMinus] }
+                    let countMinus = baldLine.raw.count <= 5 ? baldLine.raw.count : 6
+                    if baldLine.raw.count > 5 { lastPointForJunctionDetection = baldLine.raw[baldLine.raw.endIndex - countMinus] }
                 } else {
-                    let countMinus = currentLine.raw.count <= 3 ? currentLine.raw.count : 4
-                    if currentLine.raw.count > 3 { lastPointForJunctionDetection = currentLine.raw[currentLine.raw.endIndex - countMinus] }
+                    let countMinus = currentLine.raw.count <= 5 ? currentLine.raw.count : 6
+                    if currentLine.raw.count > 5 { lastPointForJunctionDetection = currentLine.raw[currentLine.raw.endIndex - countMinus] }
                 }
                 let result = findJunctionPointStartFrom(current, last: lastPointForJunctionDetection)
                 
@@ -185,7 +185,7 @@ class SPLineGroupVectorizor {
                     if let outDirectionIndex = smoothDirectionIndexFor(inDirection, of: p) {
                         let outDirection = p.directions[outDirectionIndex].poleValue
                         p.directions.removeAtIndex(outDirectionIndex)
-                        let freeTrack = freelyTrackToDirectionFrom(current, to: outDirection, steps: 10)
+                        let freeTrack = freelyTrackToDirectionFrom(current, to: outDirection, steps: 15)
                         if !freeTrack.isEmpty { current = freeTrack.last! }
                         last = p.point
                         currentLine.raw.appendContentsOf(freeTrack)
@@ -200,7 +200,7 @@ class SPLineGroupVectorizor {
             // End point handling
             if meetsEndPoint {
                 var needNewStartPoint = true
-                
+
                 if shouldTrackInvertly {
                     // should track from current start point, but invertly.
                     if let directionIndex = invertDirectionIndexFor(startDirection, of: startMagnetPoint) {
@@ -212,7 +212,7 @@ class SPLineGroupVectorizor {
                         startMagnetPoint.directions.removeAtIndex(directionIndex)
 
                         current = startMagnetPoint.point
-                        let free = freelyTrackToDirectionFrom(current, to: startDirection.poleValue, steps: 10)
+                        let free = freelyTrackToDirectionFrom(current, to: startDirection.poleValue, steps: 15)
                         if !free.isEmpty { current = free.last! }
                         if free.count > 1 { last = free[free.endIndex-2] }
                         if magnetPoints.count == 0 {
@@ -246,7 +246,7 @@ class SPLineGroupVectorizor {
                     
                     startMagnetPoint = next
                 	    
-                    let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 10)
+                    let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 15)
                     if !free.isEmpty { current = free.last! }
                     if free.count > 1 { last = free[free.endIndex-2] }
                     currentLine.raw.appendContentsOf(free)
@@ -341,8 +341,9 @@ extension SPLineGroupVectorizor {
         let step = 1
         let stepScale: CGFloat = 0.3
         var current = startPoint
-        var last = lastPoint
-        
+        // var last = lastPoint
+
+        /*
         for i in 1...step*candidateCount {
             let tanCurrent = tangentialDirectionOf(current)
             let tanLast = MXNFreeVector(start: last, end: current)
@@ -354,6 +355,7 @@ extension SPLineGroupVectorizor {
                 }
             }
         }
+        */
         
         let tanDefault = MXNFreeVector(start: lastPoint, end: startPoint).normalized
         current = startPoint
@@ -432,8 +434,11 @@ extension SPLineGroupVectorizor {
                 var current = c.point
                 var continuouslyMetWhiteCounter = 0
                 var shouldIgnoreTheRest = false
+                var counter = 0
                 for _ in 1...distance {
+                    counter += 1
                     current = current.interpolateTowards(direction * stepScaleFactor, forward: true)
+                    /// FIXME: consider changing isBackgroundAtPoint(_:) to calculate witch pixel it's close to.
                     if rawData.isBackgroudAtPoint(current) && !shouldIgnoreTheRest {
                         sum += 255
                         continuouslyMetWhiteCounter += 1
@@ -441,7 +446,10 @@ extension SPLineGroupVectorizor {
                         continuouslyMetWhiteCounter = 0
                     }
                     if continuouslyMetWhiteCounter > 2 { shouldIgnoreTheRest = true }
-                    if shouldIgnoreTheRest { sum += 255 }
+                    if shouldIgnoreTheRest {
+                        sum += 255 * CGFloat(distance - counter)
+                        break
+                    }
                 }
                 sum /= CGFloat(distance)
                 lumi.append(sum)
@@ -518,7 +526,6 @@ extension SPLineGroupVectorizor {
     }
     
     private func freelyTrackToDirectionFrom(current: CGPoint, to direction: MXNFreeVector, steps: Int) -> [CGPoint] {
-        // FIXME: free track auto ends when tan is no longer messy
         if visualTesting { print("=== free tracking") }
         var line = [CGPoint]()
         var trackingPoint = current
@@ -526,7 +533,7 @@ extension SPLineGroupVectorizor {
         var creadability = 0
         var tanLast = direction
         for _ in 1...steps {
-            if creadability > 6 {
+            if creadability > 7 {
                 let tanCurrent = tangentialDirectionOf(trackingPoint)
                 tanLast = MXNFreeVector(start: last, end: trackingPoint)
                 last = trackingPoint
