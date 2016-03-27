@@ -29,7 +29,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     @IBOutlet weak var torchSwitch: TorchSwitcher!
     @IBOutlet weak var cancelButton: CancelCaptureButton! {
         didSet {
-            let tap = UITapGestureRecognizer(target: self, action: "cancelCapture")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(CaptureViewController.cancelCapture))
             cancelButton.addGestureRecognizer(tap)
         }
     }
@@ -52,7 +52,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     
     // MARK: Properties
-    let visualTesting = false
+    let visualTesting = true
     var loaded: Bool = false
     
     let context: MXNContext = MXNContext()
@@ -323,8 +323,8 @@ extension CaptureViewController {
     }
     
     private func prepareGestures() {
-        shutterButton.addTarget(self, action: "shutterClicked", forControlEvents: .TouchUpInside)
-        torchSwitch.addTarget(self, action: "torchSwitchClicked", forControlEvents: .TouchUpInside)
+        shutterButton.addTarget(self, action: #selector(CaptureViewController.shutterClicked), forControlEvents: .TouchUpInside)
+        torchSwitch.addTarget(self, action: #selector(CaptureViewController.torchSwitchClicked), forControlEvents: .TouchUpInside)
     }
 }
 

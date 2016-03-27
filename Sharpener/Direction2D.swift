@@ -69,6 +69,12 @@ struct MXNFreeVector: Equatable {
     func angleWith(another: MXNFreeVector) -> CGFloat {
         return MXNFreeVector.angleBetween(self, vectorB: another)
     }
+
+    func absoluteAngleWithXPlus() -> CGFloat {
+        let sinValue = y / absolute
+        let angle = asin(sinValue) * 180 / CGFloat(M_PI)
+        return angle < 0 ? 360 + angle : angle
+    }
     
     static func angleBetween(vectorA: MXNFreeVector, vectorB: MXNFreeVector) -> CGFloat {
         let cosValue = (vectorA • vectorB) / (vectorA.absolute * vectorB.absolute)

@@ -162,21 +162,20 @@ class SPBezierPathApproximator {
         let vA = MXNFreeVector(start: point.anchorPoint, end: controlPointA)
         let vB = MXNFreeVector(start: point.anchorPoint, end: controlPointB)
         
-        guard vA.angleWith(vB) > 140 else { return (point, next) }
+        guard vA.angleWith(vB) > 120 else { return (point, next) }
         guard vA.absolute > point.anchorPoint.distanceTo(next.anchorPoint) || vB.absolute > point.anchorPoint.distanceTo(next.anchorPoint) else { return (point, next) }
-        
-        let xplus = MXNFreeVector(start: CGPointZero, end: CGPoint(x: 1, y: 0))
-        var alpha = vA.angleWith(xplus)
-        alpha = alpha > 90 ? 180 - alpha : alpha
-        var beta = vB.angleWith(xplus)
-        beta = beta > 90 ? 180 - beta : beta
-        
+
+        let alpha = vA.absoluteAngleWithXPlus()
+        let beta = vB.absoluteAngleWithXPlus()
+
+        let vAToClockWise = beta > alpha && beta < 180 + alpha || beta < alpha && beta < alpha - 180
+
         let theta = 180 - vA.angleWith(vB)
         let thetaB = theta * vA.absolute / (vA.absolute + vB.absolute)
         let thetaA = theta - thetaB
         
-        let newControlPointA = controlPointA.rotateAround(point.anchorPoint, forDegree: thetaA, clockWise: alpha >= beta)
-        let newControlPointB = controlPointB.rotateAround(point.anchorPoint, forDegree: thetaB, clockWise: beta > alpha)
+        let newControlPointA = controlPointA.rotateAround(point.anchorPoint, forDegree: thetaA, clockWise: vAToClockWise)
+        let newControlPointB = controlPointB.rotateAround(point.anchorPoint, forDegree: thetaB, clockWise: !vAToClockWise)
         
         return (SPAnchorPoint(point: point.anchorPoint, controlPointA: point.controlPointA, controlPointB: newControlPointA),
             SPAnchorPoint(point: next.anchorPoint, controlPointA: newControlPointB, controlPointB: next.controlPointB))
