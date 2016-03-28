@@ -145,21 +145,7 @@ struct MXNTextureData {
         if point.isIntegerPoint {
             return self[point]?.isBackgroundWhite ?? true
         }
-        var weight = 0
-        let x = floor(point.x), y = floor(point.y)
-        if self[CGPoint(x:x, y:y)]?.isBackgroundWhite ?? true {
-            weight += 1
-        }
-        if self[CGPoint(x:x+1, y:y)]?.isBackgroundWhite ?? true {
-            weight += 1
-        }
-        if self[CGPoint(x:x, y:y+1)]?.isBackgroundWhite ?? true {
-            weight += 1
-        }
-        if self[CGPoint(x:x+1, y:y+1)]?.isBackgroundWhite ?? true {
-            weight += 1
-        }
-        return weight > 2 ? true : false
+        return self[point.rounded]?.isBackgroundWhite ?? true
     }
 }
 

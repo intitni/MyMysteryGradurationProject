@@ -51,6 +51,7 @@ struct MXNFreeVector: Equatable {
     
     /// Getting the Direction2D of it.
     var direction: Direction2D { return .Pole(vector: self) }
+    var verticalVector: MXNFreeVector { return MXNFreeVector(x: -y, y: x) }
 
     var isZeroVector: Bool { return x == 0 && y == 0 }
     
@@ -227,5 +228,9 @@ extension CGPoint  {
     
     static func centerPointOf(one: CGPoint, and another: CGPoint) -> CGPoint {
         return CGPoint(x: (one.x+another.x)/2, y: (one.y+another.y)/2)
+    }
+
+    var rounded: CGPoint {
+        return CGPoint(x: round(x), y: round(y))
     }
 }
