@@ -147,19 +147,24 @@ class SPLineGroupVectorizor {
             }
             
             // junction detection
-            if checkIfMeetsJunction((currentLeft,currentRight), lastEdge: (lastLeft, lastRight)) && !meetsEndPoint && lineBeforeJunctionFound.raw.count > 3 {
+            if checkIfMeetsJunction((currentLeft,currentRight), lastEdge: (lastLeft, lastRight))
+            && !meetsEndPoint
+            && lineBeforeJunctionFound.raw.count > 3 {
                 if visualTesting { print("### meets protential junction point") }
 
                 var lastPointForJunctionDetection = last
+                var currentPointForJunctionDetection = current
                 if noMagnetPointFound {
                     let countMinus = lineBeforeJunctionFound.raw.count <= 5 ? lineBeforeJunctionFound.raw.count : 6
                     if lineBeforeJunctionFound.raw.count > 5 { lastPointForJunctionDetection = lineBeforeJunctionFound.raw[lineBeforeJunctionFound.raw.endIndex - countMinus] }
+                    if lineBeforeJunctionFound.raw.count > 2 { currentPointForJunctionDetection = last }
                 } else {
                     let countMinus = lineAfterJunctionFound.raw.count <= 5 ? lineAfterJunctionFound.raw.count : 6
                     if lineAfterJunctionFound.raw.count > 5 { lastPointForJunctionDetection = lineAfterJunctionFound.raw[lineAfterJunctionFound.raw.endIndex - countMinus] }
+                    if lineAfterJunctionFound.raw.count > 2 { currentPointForJunctionDetection = last }
                 }
 
-                let result = findJunctionPointStartFrom(current, last: lastPointForJunctionDetection)
+                let result = findJunctionPointStartFrom(currentPointForJunctionDetection, last: lastPointForJunctionDetection)
                 
                 if let p = result.point, let dIndex = result.directionIndex {
                     if visualTesting {
@@ -282,12 +287,10 @@ extension SPLineGroupVectorizor {
         from current: CGPoint,
         to direction: MXNFreeVector, lastDirection: MXNFreeVector, scale: CGFloat = 1
     ) -> CGPoint {
-        let middle = current.interpolateSemiTowards(direction * scale,
-            forward: !(lastDirection • direction).isSignMinus)
+        let middle = current.interpolateSemiTowards(direction * scale, forward: !(lastDirection • direction).isSignMinus)
         var tanMiddle = tangentialDirectionOf(middle)
         if tanMiddle.isZeroVector { tanMiddle = lastDirection }
-        return current.interpolateTowards(tanMiddle * scale,
-            forward: !(lastDirection • tanMiddle).isSignMinus)
+        return current.interpolateTowards(tanMiddle * scale, forward: !(lastDirection • tanMiddle).isSignMinus)
     }
 
     /// Check if current tracking point is meeting a junction ( or maybe an end )
@@ -353,35 +356,39 @@ extension SPLineGroupVectorizor {
                 candidates.append(JunctionPointCandidate(point: right))
             }
         }
-
-        candidates.append(JunctionPointCandidate(point: startPoint))
         
         // find if such MagnetPoint is already found
         let closestMagnetPointResult = closestConnectedMagnetPoint(forPoint: startPoint, andLast: lastPoint)
         if let p = closestMagnetPointResult.point {
-            if closestMagnetPointResult.distance <= 15 {
+            if closestMagnetPointResult.distance <= 12 {
                 if visualTesting { print("### Magnet Point already exists: \(p.point)") }
                 return (p, true, inDirectionIndexFor(MXNFreeVector(start: lastPoint, end: p.point), of: p, shouldGuard: true), 0)
             }
         }
-
+        if visualTesting {
+            print("\(candidates.count) candidates found")
+        }
         fetchLuminanceDistributionForCandidates(candidates)
 
         // filter the ones that have fewer directions than the others
         // also, select the one with lowest luminance value from previous result
-        let directionCount = candidates.reduce(0, combine: { count, candidate in
+        let directionCount = candidates.reduce(0) { count, candidate in
             candidate.directions.count > count ? candidate.directions.count : count
-        })
+        }
+        if visualTesting {
+            print("max direction count: \(directionCount)")
+        }
 
         var leastLuminance: CGFloat = 255
         
         candidates = candidates.filter {
             $0.directions.count == directionCount
         } .sort {
-            if $0.leastLuminance < leastLuminance { leastLuminance = $0.leastLuminance }
             return $0.leastLuminance < $1.leastLuminance
+        } .performed {
+            if let first = $0.first { leastLuminance = first.leastLuminance }
         } .filter {
-            $0.leastLuminance - leastLuminance < 10
+            $0.leastLuminance - leastLuminance < 5
         } .sort {
             $0.deviation < $1.deviation
         }
@@ -404,18 +411,19 @@ extension SPLineGroupVectorizor {
         
         let inDirectionIndex = inDirectionIndexFor(MXNFreeVector(start: lastPoint, end: junctionPoint.point),
             of: junctionPoint.magnetPoint)
+
         if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point)), count: \(directionCount)") }
         return (junctionPoint.magnetPoint, false, inDirectionIndex, directionCount)
     }
 
     private func closestConnectedMagnetPoint(forPoint point: CGPoint, andLast last: CGPoint) -> (point: MagnetPoint?, distance: CGFloat) {
-        var shortestDistancePow2: CGFloat = 300
+        var shortestDistancePow2: CGFloat = 244
         var matchedMagnetPoint: MagnetPoint? = nil
         for p in magnetPoints {
             let distance = point.distancePow2To(p.point)
 
             // point with shorter distance, not lying behind, connected.
-            if distance < shortestDistancePow2
+            if distance <= shortestDistancePow2
             && !(MXNFreeVector(start: last, end: point) • MXNFreeVector(start: point, end: p.point)).isSignMinus
             && checkIfConnected(forPoint: point, and: p.point) {
                 shortestDistancePow2 = distance
@@ -747,9 +755,9 @@ extension SPLineGroupVectorizor {
             for var i in 0..<newLuminance.count {
                 let previousIndex = i - 1 >= 0 ? i-1 : newLuminance.endIndex-1
                 let nextIndex = i + 1 >= newLuminance.endIndex ? 0 : i+1
-                if newLuminance[i] < 50 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
+                if newLuminance[i] < 80 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
                     angleIndexes.append(i)
-                } else if newLuminance[i] < 50 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
+                } else if newLuminance[i] < 80 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
                     var count = 0
                     var next = i + 1 >= newLuminance.endIndex ? 0 : i+1
                     while next != i {

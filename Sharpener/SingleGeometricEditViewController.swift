@@ -68,9 +68,7 @@ class SingleGeometricEditViewController: UIViewController {
         super.viewDidAppear(animated)
         drawDispalyView()
     }
-    
-    
-    
+
     func drawDispalyView() {
         guard editingCurve != nil && geometric != nil && displayView != nil else { return }
         displayView.showGeometric(geometric!, andHighlightCurve: editingCurve!)
@@ -91,7 +89,6 @@ class SingleGeometricEditViewController: UIViewController {
         default: break
         }
     }
-    
 
 }
 
