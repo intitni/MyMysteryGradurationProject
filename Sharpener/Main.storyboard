@@ -231,7 +231,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fa-kr-YG8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-496" y="1346"/>
+            <point key="canvasLocation" x="1982" y="-388"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="oL4-ve-n6z">
@@ -475,11 +475,19 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Op6-Bi-jDe" secondAttribute="height" multiplier="2:1" id="1tG-ha-Jva"/>
+                                    <constraint firstAttribute="width" secondItem="Op6-Bi-jDe" secondAttribute="height" multiplier="2:1" id="CjP-UB-tYg"/>
                                     <constraint firstAttribute="width" secondItem="Op6-Bi-jDe" secondAttribute="height" multiplier="1:1" id="GsD-MJ-bcE"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="1tG-ha-Jva"/>
+                                        <exclude reference="CjP-UB-tYg"/>
                                         <exclude reference="GsD-MJ-bcE"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="CjP-UB-tYg"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
@@ -489,6 +497,24 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HsU-lW-H4o">
+                                <rect key="frame" x="0.0" y="50" width="600" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="HsU-lW-H4o" secondAttribute="height" multiplier="2:1" id="LEJ-h0-27z"/>
+                                    <constraint firstAttribute="width" secondItem="HsU-lW-H4o" secondAttribute="height" multiplier="1:1" id="p3L-F4-yfS"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="p3L-F4-yfS"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="LEJ-h0-27z"/>
+                                        <include reference="p3L-F4-yfS"/>
+                                    </mask>
+                                </variation>
+                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezk-b7-obb" customClass="ProcessingNavigationBar" customModule="Sharpener" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -533,23 +559,29 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="L5N-Jj-kS0" firstAttribute="top" secondItem="Op6-Bi-jDe" secondAttribute="bottom" id="1Qh-FR-whK"/>
+                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="width" secondItem="HsU-lW-H4o" secondAttribute="width" id="3Qb-vm-UcF"/>
                             <constraint firstItem="ezk-b7-obb" firstAttribute="top" secondItem="HhM-kp-yHy" secondAttribute="bottom" id="5yr-0o-FrH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Op6-Bi-jDe" secondAttribute="trailing" constant="-20" id="G9U-Un-nz4"/>
-                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="width" secondItem="I1K-jU-cVt" secondAttribute="width" id="U9F-kc-4Om"/>
-                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="top" secondItem="ezk-b7-obb" secondAttribute="bottom" id="VY8-hm-Za8"/>
+                            <constraint firstItem="HsU-lW-H4o" firstAttribute="top" secondItem="ezk-b7-obb" secondAttribute="bottom" id="6Bo-W4-1kA"/>
+                            <constraint firstItem="fZJ-Kf-Ja6" firstAttribute="top" secondItem="HsU-lW-H4o" secondAttribute="bottom" id="7cb-Oc-kzy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HsU-lW-H4o" secondAttribute="trailing" constant="-20" id="JHD-k2-0cu"/>
+                            <constraint firstItem="HsU-lW-H4o" firstAttribute="leading" secondItem="I1K-jU-cVt" secondAttribute="leadingMargin" constant="-20" id="S6p-3S-zUS"/>
                             <constraint firstItem="L5N-Jj-kS0" firstAttribute="width" secondItem="I1K-jU-cVt" secondAttribute="width" id="WjQ-wp-8bj"/>
+                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="centerY" secondItem="HsU-lW-H4o" secondAttribute="centerY" id="a4z-Qy-zSB"/>
                             <constraint firstItem="0sa-Rt-gwV" firstAttribute="top" secondItem="L5N-Jj-kS0" secondAttribute="bottom" id="eZK-oY-D0k"/>
+                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="centerX" secondItem="HsU-lW-H4o" secondAttribute="centerX" id="exs-et-FRh"/>
                             <constraint firstItem="ezk-b7-obb" firstAttribute="centerX" secondItem="I1K-jU-cVt" secondAttribute="centerX" id="mXt-4K-LAP"/>
                             <constraint firstItem="ezk-b7-obb" firstAttribute="width" secondItem="I1K-jU-cVt" secondAttribute="width" id="o7J-m8-g4Q"/>
-                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="leading" secondItem="I1K-jU-cVt" secondAttribute="leadingMargin" constant="-20" id="q1i-rR-NKo"/>
-                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="centerX" secondItem="I1K-jU-cVt" secondAttribute="centerX" id="t9I-75-d9t"/>
+                            <constraint firstItem="L5N-Jj-kS0" firstAttribute="top" secondItem="HsU-lW-H4o" secondAttribute="bottom" id="tYm-jD-0Ob"/>
+                            <constraint firstItem="HsU-lW-H4o" firstAttribute="width" secondItem="I1K-jU-cVt" secondAttribute="width" id="vwa-m5-AZV"/>
                             <constraint firstItem="L5N-Jj-kS0" firstAttribute="centerX" secondItem="I1K-jU-cVt" secondAttribute="centerX" id="wC1-mJ-AtR"/>
+                            <constraint firstItem="HsU-lW-H4o" firstAttribute="centerX" secondItem="I1K-jU-cVt" secondAttribute="centerX" id="y6n-ln-bu5"/>
+                            <constraint firstItem="Op6-Bi-jDe" firstAttribute="height" secondItem="HsU-lW-H4o" secondAttribute="height" id="yzR-R2-Ug2"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="U9F-kc-4Om"/>
-                                <exclude reference="t9I-75-d9t"/>
+                                <exclude reference="JHD-k2-0cu"/>
+                                <exclude reference="S6p-3S-zUS"/>
+                                <exclude reference="7cb-Oc-kzy"/>
                             </mask>
                         </variation>
                     </view>
@@ -557,6 +589,7 @@
                         <outlet property="displayView" destination="Op6-Bi-jDe" id="afy-TQ-OWd"/>
                         <outlet property="editView" destination="L5N-Jj-kS0" id="5uw-dX-b6L"/>
                         <outlet property="navigationBar" destination="ezk-b7-obb" id="AKu-MT-xkg"/>
+                        <outlet property="scrollView" destination="HsU-lW-H4o" id="U0i-rh-H40"/>
                         <outlet property="smoothnessControl" destination="gE3-hZ-SWP" id="dMJ-f0-a05"/>
                         <segue destination="Sws-xJ-agb" kind="unwind" identifier="UnwindEditToVectorize" unwindAction="unwindFromEdit:" id="gLx-D2-vKt"/>
                     </connections>

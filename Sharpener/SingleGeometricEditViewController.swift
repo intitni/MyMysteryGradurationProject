@@ -15,14 +15,26 @@ class SingleGeometricEditViewController: UIViewController {
             navigationBar.buttonDelegate = self
         }
     }
-    @IBOutlet weak var displayView: SPDisplayView! {
+    @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
+            scrollView.delegate = self
+            scrollView.contentSize = CGSize(width: Preference.vectorizeSize.height, height: Preference.vectorizeSize.height)
+            scrollView.zoomScale = 1
+            scrollView.minimumZoomScale = 0.1
+            scrollView.maximumZoomScale = 2
+            scrollView.scrollEnabled = false
+            scrollView.multipleTouchEnabled = false
             let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(SingleGeometricEditViewController.swipeOnDisplayView(_:)))
             swipeRight.direction = UISwipeGestureRecognizerDirection.Right
             let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(SingleGeometricEditViewController.swipeOnDisplayView(_:)))
             swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-            displayView.addGestureRecognizer(swipeRight)
-            displayView.addGestureRecognizer(swipeLeft)
+            scrollView.addGestureRecognizer(swipeRight)
+            scrollView.addGestureRecognizer(swipeLeft)
+        }
+    }
+    @IBOutlet weak var displayView: SPDisplayView! {
+        didSet {
+
         }
     }
     @IBOutlet weak var editView: UIView!
@@ -72,6 +84,15 @@ class SingleGeometricEditViewController: UIViewController {
     func drawDispalyView() {
         guard editingCurve != nil && geometric != nil && displayView != nil else { return }
         displayView.showGeometric(geometric!, andHighlightCurve: editingCurve!)
+        let actualSize = displayView.layer.preferredFrameSize()
+        let smallestEdge = min(actualSize.height, actualSize.width)
+        let scrollViewSmallestEdge = min(scrollView.frame.width, scrollView.frame.height)
+
+        if smallestEdge / scrollViewSmallestEdge > 0.8 {
+            let zoom = scrollViewSmallestEdge * 0.4 / smallestEdge
+            scrollView.zoomScale = zoom
+            scrollView.center = CGPoint(x: scrollView.contentSize.width, y: scrollView.contentSize.height)
+        }
     }
     
     // MARK: - Navigation
@@ -159,5 +180,11 @@ extension SingleGeometricEditViewController {
                 smoothnessControl.smoothness = editingCurve?.smoothness ?? 0
             }
         }
+    }
+}
+
+extension SingleGeometricEditViewController: UIScrollViewDelegate {
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return displayView
     }
 }

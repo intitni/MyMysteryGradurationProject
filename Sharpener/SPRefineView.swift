@@ -73,8 +73,14 @@ class SPRefineView: UIView {
             let location = touch.locationInView(self)
             for shape in shapes {
                 if CGPathContainsPoint(shape.path, nil, location, true) {
-                    delegate?.didTouchShape(shape)
-                    break
+                    var testingPath = shape.path
+                    if (shape.valueForKey("geometric") as? SPGeometrics)?.type == .Line {
+                        testingPath = CGPathCreateCopyByStrokingPath(testingPath, nil, 10, .Round, .Round, 100)
+                    }
+                    if CGPathContainsPoint(testingPath, nil, location, true) {
+                        delegate?.didTouchShape(shape)
+                        break
+                    }
                 }
             }
         }

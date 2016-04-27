@@ -9,7 +9,7 @@
 import Foundation
 
 class SPSVGGenerator {
-    static let header: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<svg width=\"600px\" height=\"800px\" viewBox=\"0 0 600 800\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
+    static let header: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<svg width=\"600px\" height=\"800px\" viewBox=\"0 0 750 1000\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
     static let closer: String = "\n</svg>"
     
     func title(title: String) -> String {
