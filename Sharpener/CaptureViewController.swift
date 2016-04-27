@@ -52,7 +52,8 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     }
     var liveButton: UIButton! {
         didSet {
-            // controlPanel.addSubview(liveButton)
+            controlPanel.addSubview(liveButton)
+            liveButton.alpha = 0
             liveButton.snp_makeConstraints { make in
                 make.centerY.equalTo(self.controlPanel)
                 make.right.equalTo(-16)
