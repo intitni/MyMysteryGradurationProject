@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1300EFDE1CD0FE6100A6A28A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1300EFDD1CD0FE6100A6A28A /* Main.storyboard */; };
+		1300EFE01CD10DDE00A6A28A /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */; };
 		131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337F91C5F99DF0086C96C /* SPRefineView.swift */; };
 		131337FC1C5FBA640086C96C /* SPBezierPathApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */; };
 		131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */; };
@@ -66,7 +67,6 @@
 		13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */; };
 		13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */; };
 		13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13988F041C494CE6000CE61B /* LineShapeRefining.metal */; };
-		139D56201C5210DE006106D4 /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D561F1C5210DE006106D4 /* XNUsefuls.swift */; };
 		139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 139D563E1C5776BC006106D4 /* CVWrapper.mm */; };
 		139D56481C579BF7006106D4 /* SPCVLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 139D56471C579BF7006106D4 /* SPCVLine.m */; };
 		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
@@ -106,6 +106,7 @@
 
 /* Begin PBXFileReference section */
 		1300EFDD1CD0FE6100A6A28A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNUsefuls.swift; sourceTree = "<group>"; };
 		131337F91C5F99DF0086C96C /* SPRefineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRefineView.swift; sourceTree = "<group>"; };
 		131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBezierPathApproximator.swift; sourceTree = "<group>"; };
 		131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeDetector.swift; sourceTree = "<group>"; };
@@ -166,7 +167,6 @@
 		13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNCompositionFilters.swift; sourceTree = "<group>"; };
 		13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeRefiningFilter.swift; sourceTree = "<group>"; };
 		13988F041C494CE6000CE61B /* LineShapeRefining.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeRefining.metal; sourceTree = "<group>"; };
-		139D561F1C5210DE006106D4 /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XNUsefuls.swift; path = ../../XNUsefuls/XNUsefuls.swift; sourceTree = "<group>"; };
 		139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sharpener-Bridging-Header.h"; sourceTree = "<group>"; };
 		139D563E1C5776BC006106D4 /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
 		139D56401C5776D1006106D4 /* CVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVWrapper.h; sourceTree = "<group>"; };
@@ -387,9 +387,9 @@
 				1300EFDD1CD0FE6100A6A28A /* Main.storyboard */,
 				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
 				13835D691C2013850047F0C0 /* AppDelegate.swift */,
+				1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */,
 				13DDCDFF1C4CE66700072492 /* XNStack.swift */,
 				13DDCDFB1C4BCB9800072492 /* Async.swift */,
-				139D561F1C5210DE006106D4 /* XNUsefuls.swift */,
 				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
 				13988EF41C479B06000CE61B /* CustomOperators.swift */,
 				138C42E21C75FBBE00224670 /* Preference.swift */,
@@ -644,6 +644,7 @@
 				131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */,
 				13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */,
 				13988EF31C479A66000CE61B /* SPLineGroup.swift in Sources */,
+				1300EFE01CD10DDE00A6A28A /* XNUsefuls.swift in Sources */,
 				13988EFE1C492613000CE61B /* GeometricsFilteringFilter.swift in Sources */,
 				13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */,
 				13988EF51C479B06000CE61B /* CustomOperators.swift in Sources */,
@@ -660,7 +661,6 @@
 				13DDCE001C4CE66700072492 /* XNStack.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
 				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,
-				139D56201C5210DE006106D4 /* XNUsefuls.swift in Sources */,
 				13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */,
 				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
 				13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */,
