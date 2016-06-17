@@ -145,7 +145,7 @@ class SPSmoothControl: UIControl {
         clipsToBounds = true
         
         backgroundColor = UIColor.spGrayishWhiteColor()
-        let pan = UIPanGestureRecognizer(target: self, action: "pan:")
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(SPSmoothControl.pan(_:)))
         addGestureRecognizer(pan)
     }
     

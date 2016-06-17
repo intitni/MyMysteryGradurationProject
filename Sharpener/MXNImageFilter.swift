@@ -77,7 +77,8 @@ class MXNImageFilter: MXNTextureProvider, MXNTextureConsumer, MXNDrawablePresent
         if shouldWaitUntilCompleted { commandBuffer.waitUntilCompleted() }
     }
     
-    func putBufferUniforms(var uniform: Any, into commandEncoder: MTLComputeCommandEncoder, size: Int, offset: Int, atIndex index: Int) {
+    func putBufferUniforms(uniform: Any, into commandEncoder: MTLComputeCommandEncoder, size: Int, offset: Int, atIndex index: Int) {
+        var uniform = uniform
         if uniformBuffer == nil {
             uniformBuffer = context.device?.newBufferWithLength(size, options: MTLResourceOptions.OptionCPUCacheModeDefault)
         }

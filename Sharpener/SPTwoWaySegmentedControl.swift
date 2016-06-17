@@ -37,7 +37,7 @@ class SPTwoWaySegmentedControl: UIControl {
     var leftPart: LeftPart! {
         didSet {
             addSubview(leftPart)
-            let tap = UITapGestureRecognizer(target: self, action: "tappedOnLeftPart")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(SPTwoWaySegmentedControl.tappedOnLeftPart))
             leftPart.addGestureRecognizer(tap)
             
             leftPart.snp_makeConstraints { make in
@@ -51,7 +51,7 @@ class SPTwoWaySegmentedControl: UIControl {
     var rightPart: RightPart! {
         didSet {
             addSubview(rightPart)
-            let tap = UITapGestureRecognizer(target: self, action: "tappedOnRightPart")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(SPTwoWaySegmentedControl.tappedOnRightPart))
             rightPart.addGestureRecognizer(tap)
             
             rightPart.snp_makeConstraints { make in

@@ -14,15 +14,13 @@ class SPShapeVectorizor {
     func vectorize(raw: SPRawGeometric) -> SPShape {
         let shape = SPShape()
         
-        let curves = raw.borders.map { line -> SPCurve in
-            let curve = SPCurve(raw: line.raw)
-            return curve
+        let curves = raw.borders.map { line in
+            SPCurve(raw: line.raw)
         }
         
         curves.forEach { c in
             let shapeDetector = SPShapeDetector()
-            let guesses = shapeDetector.detect(c, inShape: true)
-            c.guesses = guesses
+            c.guesses = shapeDetector.detect(c, inShape: true)
             let approx = SPBezierPathApproximator()
             approx.approximate(c)
         }

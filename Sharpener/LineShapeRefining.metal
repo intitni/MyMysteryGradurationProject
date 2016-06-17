@@ -80,9 +80,5 @@ kernel void lineShapeRefining(texture2d<float, access::read> inTexture [[texture
         }
     }
     
-    for (int i = 0; i < stepper; i++) {
-        
-    }
-    
     outTexture.write(float4(0.26, 0.52, 0.84, 1), gid);
 }

@@ -25,7 +25,7 @@ class SPContinuousSlider: SPSlider {
     }
     
     override func setupGestures() {
-        let pan = UIPanGestureRecognizer(target: self, action: "panOnHandleView:")
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(SPContinuousSlider.panOnHandleView(_:)))
         pan.delegate = self
         gestureHandleView?.addGestureRecognizer(pan)
     }

@@ -24,9 +24,6 @@ class SPShapeDetector {
                 guesses.append(g)
             }
             guesses.append(detectPolygon(line))
-            //if let g = detectRectangle(line) {
-            //    guesses.append(g)
-            //}
         } else {
             if let g = detectStraight(line) {
                 guesses.append(g)
@@ -35,9 +32,6 @@ class SPShapeDetector {
                 guesses.append(g)
             }
             guesses.append(detectPolygon(line))
-            //if let g = detectRectangle(line) {
-            //    guesses.append(g)
-            //}
         }
         
         return guesses
@@ -192,7 +186,7 @@ class SPShapeDetector {
     private func detectStraight(line: SPCurve) -> SPGuess? {
         guard let first = line.raw.first, let last = line.raw.last where first != last else { return nil }
         
-        let endurance: CGFloat = 20
+        let endurance: CGFloat = 5
         let (a, b) = argumentsForLineStartsFrom(first, to: last)
         let deviation = deviationToLineForPoints(line.raw, toLineWithArgumentsA: a, andB: b)
         if deviation > endurance { return nil }
@@ -200,7 +194,7 @@ class SPShapeDetector {
     }
     
     private func detectPolygon(line: SPCurve) -> SPGuess {
-        let approx = SPPolygonApproximator(threshold: 2)
+        let approx = SPPolygonApproximator(threshold: 4)
         let points = approx.polygonApproximate(line.raw)
         
         return SPGuess(guessType: .Polygon(points: points))
@@ -220,7 +214,7 @@ extension SPShapeDetector {
     private func deviationToLineForPoints(points: [CGPoint], toLineWithArgumentsA a: CGFloat, andB b: CGFloat) -> CGFloat {
         var deviation: CGFloat = 0
         for p in points {
-            deviation += p.y - a * p.y + b
+            deviation += p.y - a * p.x - b
         }
         return deviation / CGFloat(points.count)
     }

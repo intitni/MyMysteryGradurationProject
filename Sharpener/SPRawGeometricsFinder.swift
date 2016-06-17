@@ -156,6 +156,7 @@ public class SPRawGeometricsFinder: NSObject {
 
 // MARK: - Utility Methods
 extension SPRawGeometricsFinder {
+
     /// Used to find a shape based on a seed point, line-scanning version.
     ///
     /// It calls a generic version of `flood()`.
@@ -166,7 +167,11 @@ extension SPRawGeometricsFinder {
     ///     - matching: points' pattern that should be flooded
     ///
     /// - Returns: flood result
-    private func flood(point: CGPoint, inout from textureData: MXNTextureData, matching checkIfShouldFlood: (RGBAPixel) -> Bool) -> [CGPoint] {
+    private func flood(
+        point: CGPoint,
+        inout from textureData: MXNTextureData,
+        matching checkIfShouldFlood: (RGBAPixel) -> Bool
+    ) -> [CGPoint] {
         return flood(Int(point.x), Int(point.y), from: &textureData, matching: checkIfShouldFlood)
     }
     
@@ -178,6 +183,9 @@ extension SPRawGeometricsFinder {
             for rawPointValue in cvline.raw as! [NSValue] {
                 let p = rawPointValue.CGPointValue()
                 line<--p
+            }
+            if line.raw.count > 2 && line.raw.first! != line.raw.last! {
+                line.appendRaw(line.raw.first!)
             }
             let polygonApproximator = SPPolygonApproximator(threshold: 1.5)
             polygonApproximator.polygonApproximateSPLine(&line)
@@ -198,7 +206,11 @@ extension SPRawGeometricsFinder {
     ///     - matching: points' pattern that should be flooded
     ///
     /// - Returns: flood result
-    private func flood(x: Int, _ y: Int, inout from textureData: MXNTextureData, matching checkIfShouldFlood: (RGBAPixel) -> Bool) -> [CGPoint] {
+    private func flood(
+        x: Int, _ y: Int,
+        inout from textureData: MXNTextureData,
+        matching checkIfShouldFlood: (RGBAPixel) -> Bool
+    ) -> [CGPoint] {
         guard let c = textureData[(x,y)] else { return [CGPoint]() }
         guard checkIfShouldFlood(c) && !c.isTransparent else { return [CGPoint]() }
         
@@ -237,7 +249,7 @@ extension SPRawGeometricsFinder {
             // check upper and lower line for not captured lines.
             var topFound = false, bottomFound = false
             for x in CGPoint.horizontalRangeFrom(leftPos, to: rightPos) {
-                guard !topFound || !bottomFound else { break }
+                // guard !topFound || !bottomFound else { break }
                 let thisPos = CGPoint(x: x, y: Int(rightPos.y))
                 
                 // check upper line, push leftmost point of each area found into stack

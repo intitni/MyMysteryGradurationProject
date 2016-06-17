@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1300EFDE1CD0FE6100A6A28A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1300EFDD1CD0FE6100A6A28A /* Main.storyboard */; };
+		1300EFE01CD10DDE00A6A28A /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */; };
 		131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337F91C5F99DF0086C96C /* SPRefineView.swift */; };
 		131337FC1C5FBA640086C96C /* SPBezierPathApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */; };
-		131337FE1C5FBA720086C96C /* SPStraightLineApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */; };
 		131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */; };
 		131C846D1C79A0790041C06F /* GuessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C846C1C79A0790041C06F /* GuessTableViewCell.swift */; };
 		131C846F1C79E2930041C06F /* SPDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C846E1C79E2930041C06F /* SPDisplayView.swift */; };
@@ -29,7 +30,6 @@
 		13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9C1C324F0700EE9525 /* RefineViewController.swift */; };
 		13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */; };
 		135477E31C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135477E21C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift */; };
-		135477E61C7DEDC800B8BDAB /* SPArcApproximater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135477E51C7DEDC800B8BDAB /* SPArcApproximater.swift */; };
 		13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C971C67355300DFE73C /* GaussianBlurFilter.swift */; };
 		13627C9A1C67357700DFE73C /* GradientTensorCalculatingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C991C67357700DFE73C /* GradientTensorCalculatingFilter.swift */; };
 		13627C9C1C6746D300DFE73C /* LineTrackingFilters.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13627C9B1C6746D300DFE73C /* LineTrackingFilters.metal */; };
@@ -43,7 +43,6 @@
 		13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */; };
 		13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF71C2AEC710086CAB3 /* MedianFilter.swift */; };
 		13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13835D691C2013850047F0C0 /* AppDelegate.swift */; };
-		13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D6D1C2013850047F0C0 /* Main.storyboard */; };
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
 		138A7BB61C78497C00D5C96D /* SPVectorIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BB51C78497C00D5C96D /* SPVectorIcons.swift */; };
@@ -68,7 +67,6 @@
 		13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */; };
 		13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */; };
 		13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13988F041C494CE6000CE61B /* LineShapeRefining.metal */; };
-		139D56201C5210DE006106D4 /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139D561F1C5210DE006106D4 /* XNUsefuls.swift */; };
 		139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 139D563E1C5776BC006106D4 /* CVWrapper.mm */; };
 		139D56481C579BF7006106D4 /* SPCVLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 139D56471C579BF7006106D4 /* SPCVLine.m */; };
 		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
@@ -76,6 +74,7 @@
 		139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */; };
 		139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2101C2FDDA600E3464F /* SPStepSlider.swift */; };
 		139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2121C2FDE3C00E3464F /* SPSlider.swift */; };
+		13AA93531C886F6800FB520C /* Direction2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA93521C886F6800FB520C /* Direction2D.swift */; };
 		13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */; };
 		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
 		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
@@ -91,7 +90,6 @@
 		13D826EC1C7A464E00D183A9 /* SPGeometricCountingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */; };
 		13D826EE1C7B3EB300D183A9 /* SPSharpenerDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */; };
 		13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */; };
-		13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */; };
 		13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFB1C4BCB9800072492 /* Async.swift */; };
 		13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */; };
 		13DDCE001C4CE66700072492 /* XNStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFF1C4CE66700072492 /* XNStack.swift */; };
@@ -107,9 +105,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1300EFDD1CD0FE6100A6A28A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNUsefuls.swift; sourceTree = "<group>"; };
 		131337F91C5F99DF0086C96C /* SPRefineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRefineView.swift; sourceTree = "<group>"; };
 		131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBezierPathApproximator.swift; sourceTree = "<group>"; };
-		131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStraightLineApproximator.swift; sourceTree = "<group>"; };
 		131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeDetector.swift; sourceTree = "<group>"; };
 		131C846C1C79A0790041C06F /* GuessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessTableViewCell.swift; sourceTree = "<group>"; };
 		131C846E1C79E2930041C06F /* SPDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDisplayView.swift; sourceTree = "<group>"; };
@@ -129,7 +128,6 @@
 		13481C9C1C324F0700EE9525 /* RefineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefineViewController.swift; sourceTree = "<group>"; };
 		13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingNavigationBar.swift; sourceTree = "<group>"; };
 		135477E21C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileToDetailTransitioningAnimation.swift; sourceTree = "<group>"; };
-		135477E51C7DEDC800B8BDAB /* SPArcApproximater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPArcApproximater.swift; sourceTree = "<group>"; };
 		13627C971C67355300DFE73C /* GaussianBlurFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaussianBlurFilter.swift; sourceTree = "<group>"; };
 		13627C991C67357700DFE73C /* GradientTensorCalculatingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientTensorCalculatingFilter.swift; sourceTree = "<group>"; };
 		13627C9B1C6746D300DFE73C /* LineTrackingFilters.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineTrackingFilters.metal; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 		13772AF71C2AEC710086CAB3 /* MedianFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedianFilter.swift; sourceTree = "<group>"; };
 		13835D661C2013850047F0C0 /* Sharpener.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharpener.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13835D691C2013850047F0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		13835D6E1C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13835D701C2013850047F0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13835D731C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -170,7 +167,6 @@
 		13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNCompositionFilters.swift; sourceTree = "<group>"; };
 		13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeRefiningFilter.swift; sourceTree = "<group>"; };
 		13988F041C494CE6000CE61B /* LineShapeRefining.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeRefining.metal; sourceTree = "<group>"; };
-		139D561F1C5210DE006106D4 /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XNUsefuls.swift; path = ../../XNUsefuls/XNUsefuls.swift; sourceTree = "<group>"; };
 		139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sharpener-Bridging-Header.h"; sourceTree = "<group>"; };
 		139D563E1C5776BC006106D4 /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
 		139D56401C5776D1006106D4 /* CVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVWrapper.h; sourceTree = "<group>"; };
@@ -181,13 +177,14 @@
 		139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPContinuousSlider.swift; sourceTree = "<group>"; };
 		139EE2101C2FDDA600E3464F /* SPStepSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStepSlider.swift; sourceTree = "<group>"; };
 		139EE2121C2FDE3C00E3464F /* SPSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSlider.swift; sourceTree = "<group>"; };
+		13AA93521C886F6800FB520C /* Direction2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction2D.swift; sourceTree = "<group>"; };
 		13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalVideoView.swift; sourceTree = "<group>"; };
 		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
 		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilter.swift; sourceTree = "<group>"; };
 		13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPolygonApproximator.swift; sourceTree = "<group>"; };
 		13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeVectorizor.swift; sourceTree = "<group>"; };
-		13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroupVectorizor.swift; sourceTree = "<group>"; };
+		13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroupVectorizor.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerFileHandler.swift; sourceTree = "<group>"; };
 		13BCAC8E1C5922090029DD9F /* SPSVGGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSVGGenerator.swift; sourceTree = "<group>"; };
 		13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNavigationBar.swift; sourceTree = "<group>"; };
@@ -196,7 +193,6 @@
 		13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricCountingView.swift; sourceTree = "<group>"; };
 		13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerDocument.swift; sourceTree = "<group>"; };
 		13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsVectorizor.swift; sourceTree = "<group>"; };
-		13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Sharpener.swift"; sourceTree = "<group>"; };
 		13DDCDFB1C4BCB9800072492 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureData.swift; sourceTree = "<group>"; };
 		13DDCDFF1C4CE66700072492 /* XNStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNStack.swift; sourceTree = "<group>"; };
@@ -319,8 +315,6 @@
 			children = (
 				13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */,
 				131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */,
-				131337FD1C5FBA720086C96C /* SPStraightLineApproximator.swift */,
-				135477E51C7DEDC800B8BDAB /* SPArcApproximater.swift */,
 			);
 			name = Approximators;
 			sourceTree = "<group>";
@@ -390,12 +384,12 @@
 				139D563A1C5769C7006106D4 /* OpenCV */,
 				139D56391C5769B7006106D4 /* Extensions */,
 				13835D701C2013850047F0C0 /* Assets.xcassets */,
-				13835D6D1C2013850047F0C0 /* Main.storyboard */,
+				1300EFDD1CD0FE6100A6A28A /* Main.storyboard */,
 				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
 				13835D691C2013850047F0C0 /* AppDelegate.swift */,
+				1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */,
 				13DDCDFF1C4CE66700072492 /* XNStack.swift */,
 				13DDCDFB1C4BCB9800072492 /* Async.swift */,
-				139D561F1C5210DE006106D4 /* XNUsefuls.swift */,
 				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
 				13988EF41C479B06000CE61B /* CustomOperators.swift */,
 				138C42E21C75FBBE00224670 /* Preference.swift */,
@@ -430,6 +424,7 @@
 				13988EEE1C478788000CE61B /* SPShape.swift */,
 				13988EF21C479A66000CE61B /* SPLineGroup.swift */,
 				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
+				13AA93521C886F6800FB520C /* Direction2D.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -469,7 +464,6 @@
 				13416C541C297981006CB39A /* UIColor+Custom.swift */,
 				1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */,
 				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
-				13D942111C4E2A3200E33663 /* CGPoint+Sharpener.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -567,7 +561,7 @@
 			files = (
 				13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */,
 				13835D711C2013850047F0C0 /* Assets.xcassets in Resources */,
-				13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */,
+				1300EFDE1CD0FE6100A6A28A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +644,7 @@
 				131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */,
 				13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */,
 				13988EF31C479A66000CE61B /* SPLineGroup.swift in Sources */,
+				1300EFE01CD10DDE00A6A28A /* XNUsefuls.swift in Sources */,
 				13988EFE1C492613000CE61B /* GeometricsFilteringFilter.swift in Sources */,
 				13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */,
 				13988EF51C479B06000CE61B /* CustomOperators.swift in Sources */,
@@ -666,19 +661,15 @@
 				13DDCE001C4CE66700072492 /* XNStack.swift in Sources */,
 				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
 				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,
-				139D56201C5210DE006106D4 /* XNUsefuls.swift in Sources */,
 				13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */,
 				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
 				13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */,
 				13204A731C7B67D000544C5B /* FilePreviewCollectionViewCell.swift in Sources */,
 				13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */,
-				131337FE1C5FBA720086C96C /* SPStraightLineApproximator.swift in Sources */,
 				138A7BBC1C78C56F00D5C96D /* SingleGeometricEditViewController.swift in Sources */,
 				13627CA41C6A1ACF00DFE73C /* LineTrackingFilter.swift in Sources */,
 				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
 				13D826EA1C7A41D700D183A9 /* FilesViewController.swift in Sources */,
-				135477E61C7DEDC800B8BDAB /* SPArcApproximater.swift in Sources */,
-				13D942121C4E2A3200E33663 /* CGPoint+Sharpener.swift in Sources */,
 				139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */,
 				13EF71A41C7C85D800F752B2 /* SPDetailToolBar.swift in Sources */,
 				139D56481C579BF7006106D4 /* SPCVLine.m in Sources */,
@@ -699,6 +690,7 @@
 				13627C9C1C6746D300DFE73C /* LineTrackingFilters.metal in Sources */,
 				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
 				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
+				13AA93531C886F6800FB520C /* Direction2D.swift in Sources */,
 				13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */,
 				13EF71A81C7CB4EC00F752B2 /* CancelCaptureButton.swift in Sources */,
 				13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */,
@@ -725,14 +717,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		13835D6D1C2013850047F0C0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13835D6E1C2013850047F0C0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		13835D721C2013850047F0C0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -836,7 +820,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.SharpenerPresenting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sharpener/Sharpener-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -853,7 +837,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.SharpenerPresenting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Sharpener/Sharpener-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;

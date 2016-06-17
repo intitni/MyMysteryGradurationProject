@@ -20,7 +20,7 @@ class FilesViewController: UIViewController {
     }
     @IBOutlet weak var newButton: SPNewButton! {
         didSet {
-            newButton.addTarget(self, action: "shouldShowCaptureView", forControlEvents: .TouchUpInside)
+            newButton.addTarget(self, action: #selector(FilesViewController.shouldShowCaptureView), forControlEvents: .TouchUpInside)
         }
     }
 
@@ -94,8 +94,8 @@ extension FilesViewController: FilePreviewCollectionViewControllerDelegate {
 
 extension FilesViewController: SPSharpenerFileHandlerDelegate {
     func newDocumentRefFetched(ref: SPSharpenerDocumentRef) {
-        collectionViewController?.documentRefs.append(ref)
-        collectionViewController?.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forRow: collectionViewController!.documentRefs.count-1, inSection: 0)])
+        collectionViewController?.documentRefs.insert(ref, atIndex: 0)
+        collectionViewController?.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)])
     }
 }
 

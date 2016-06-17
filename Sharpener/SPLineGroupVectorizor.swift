@@ -10,6 +10,7 @@ import Foundation
 
 protocol SPLineGroupVectorizorVisualTestDelegate {
     func trackingToPoint(point: CGPoint)
+    func foundMagnetPoint(point: CGPoint)
 }
 
 /// SPLineGroupVectorizor is used to track lines into a thin enough vector line, then using things like bezierpath-approximation
@@ -28,31 +29,28 @@ class SPLineGroupVectorizor {
     var magnetPoints = [MagnetPoint]()
     var trackedPoints = [CGPoint]()
     var trackedLines = [SPLine]()
-    var harrisValues: MXNTextureDataFloat!
-    
+    var noMagnetPointFound: Bool { return magnetPoints.isEmpty }
     var gradientTensorTexture: MTLTexture!
     
     var testDelegate: SPLineGroupVectorizorVisualTestDelegate? = nil
-    var visualTesting: Bool { return testDelegate == nil ? false : true }
+    var visualTesting: Bool { return testDelegate != nil }
     
     // MARK: Main Process
     func vectorize(raw: SPRawGeometric) -> SPLineGroup {
         let lineGroup = SPLineGroup()
         
         rawGeometric = raw
-        rawData = fetchRawDataFromRawLineGroup(rawGeometric)
+        fetchRawDataFromRawLineGroup()
         fetchDirectionData()
         trackLineGroup()
         
-        let curves = trackedLines.map { line -> SPCurve in
-            let curve = SPCurve(raw: line.raw)
-            return curve
+        let curves = trackedLines.map { line in
+            SPCurve(raw: line.raw)
         }
         
         curves.forEach { c in
             let shapeDetector = SPShapeDetector()
-            let guesses = shapeDetector.detect(c, inShape: false)
-            c.guesses = guesses
+            c.guesses = shapeDetector.detect(c, inShape: false)
             let approx = SPBezierPathApproximator()
             approx.approximate(c)
         }
@@ -79,8 +77,8 @@ class SPLineGroupVectorizor {
     /// - Parameters:
     ///     - raw: The SPRawGeometric that needs to be analysed.
     /// - Returns: The texuture data.
-    private func fetchRawDataFromRawLineGroup(raw: SPRawGeometric) -> MXNTextureData {
-        return MXNTextureData(points: raw.raw, width: width, height: height)
+    private func fetchRawDataFromRawLineGroup() {
+        rawData = MXNTextureData(points: rawGeometric.raw, width: width, height: height)
     }
     
     /// It applys gradientFieldDetectingFilter on raw and returns a direction data containg 2 vectors representing
@@ -88,7 +86,6 @@ class SPLineGroupVectorizor {
     private func fetchDirectionData() {
         let filter = LineTrackingFilter(context: context)
         filter.provider = MXNImageProvider(image: UIImage(textureData: rawData), context: context)
-        
         filter.applyFilter()
         directionData = MXNTextureDataFloat(texture: filter.eigenVectors)
         gradientTensorTexture = filter.gradientTensor
@@ -100,7 +97,6 @@ class SPLineGroupVectorizor {
             point: startPoint,
             directions: [(-tangentialDirectionOf(startPoint)).direction]
         )
-        magnetPoints.append(startMagnetPoint)
         var startDirection = tangentialDirectionOf(startPoint).direction
         var shouldTrackInvertly = true
         
@@ -108,96 +104,108 @@ class SPLineGroupVectorizor {
         var currentLeft = left, currentRight = right
         var lastLeft = left, lastRight = right
         var current = startPoint
-        var currentLine = SPLine()
-        currentLine<--current
-        
-        while currentLine.raw.count < 20000 && trackedLines.count < 20 {
+        var lineAfterJunctionFound = SPLine()
+        var lineBeforeJunctionFound = SPLine()
+        lineBeforeJunctionFound<--current
+
+        while lineAfterJunctionFound.raw.count < 20000 {
             let tanCurrent = tangentialDirectionOf(current)
             let tanLast = MXNFreeVector(start: last, end: current)
-            let innerProduct = tanLast • tanCurrent
-            // FIXME: avoid affects from mid point correction
-            var s = !(innerProduct).isSignMinus
-            if innerProduct == 0 { s = true }
             last = current
-            
-            // Runge Kutta method
-            let middle = current.interpolateSemiTowards(tangentialDirectionOf(current), forward: s)
-            let tanMiddle = tangentialDirectionOf(middle)
-            let innerProduct2 = tanLast • tanMiddle
-            s = !(innerProduct2).isSignMinus
-            current = current.interpolateTowards(tanMiddle, forward: s)
+            current = rkInterpolate(from: current, to: tanCurrent, lastDirection: tanLast)
             lastLeft = currentLeft; lastRight = currentRight
-            (current, currentLeft, currentRight) = correctedPositionMidPointFor(current)
-            currentLine<--current
+            (current, currentLeft, currentRight) = correctedPositionMidPointFor(current, last: last)
 
             /////////////////////////////////////////////
             if visualTesting {
                 dispatch_async(GCD.mainQueue) {
                     self.testDelegate?.trackingToPoint(current)
                 }
-                NSThread.sleepForTimeInterval(0.1)
+                NSThread.sleepForTimeInterval(0.05)
             }
             /////////////////////////////////////////////
             
             var meetsEndPoint = false
             if rawData.isBackgroudAtPoint(current) && rawData.isBackgroudAtPoint(last) {
                 meetsEndPoint = true
+            } else if noMagnetPointFound {
+                lineBeforeJunctionFound<--current
+            } else {
+                lineAfterJunctionFound<--current
             }
-            if trackedLines.count == 0 {
-                if startMagnetPoint.shouldAttract(current,
-                    withTengentialDirection: MXNFreeVector(start: current, end: startMagnetPoint.point)) {
-                        if testDelegate != nil { print("### attracted by start point") }
-                        // go towards start point
-                        let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
-                        currentLine.raw.appendContentsOf(straight)
-                        meetsEndPoint = true
-                        startMagnetPoint.directions.removeAll()
-                }
+
+            // First line loop handling
+            if magnetPoints.count == 0
+            && lineBeforeJunctionFound.raw.count > 10
+            && startMagnetPoint.shouldAttract(current, withTengentialDirection: MXNFreeVector(start: current, end: startMagnetPoint.point))
+            && checkIfConnected(forPoint: current, and: startMagnetPoint.point) {
+                if visualTesting { print("### attracted by start point") }
+                let straight = straightlyTrackToPointFrom(current, to: startMagnetPoint.point)
+                lineBeforeJunctionFound.raw.appendContentsOf(straight)
+                meetsEndPoint = true
+                startMagnetPoint.directions.removeAll()
             }
             
-            if checkIfMeetsJunction((currentLeft,currentRight), lastEdge: (lastLeft, lastRight)) && !meetsEndPoint {
+            // junction detection
+            if checkIfMeetsJunction((currentLeft,currentRight), lastEdge: (lastLeft, lastRight))
+            && !meetsEndPoint
+            && lineBeforeJunctionFound.raw.count > 3 {
                 if visualTesting { print("### meets protential junction point") }
-                
-                let result = findJunctionPointStartFrom(current, last: last)
+
+                var lastPointForJunctionDetection = last
+                var currentPointForJunctionDetection = current
+                if noMagnetPointFound {
+                    let countMinus = lineBeforeJunctionFound.raw.count <= 5 ? lineBeforeJunctionFound.raw.count : 6
+                    if lineBeforeJunctionFound.raw.count > 5 { lastPointForJunctionDetection = lineBeforeJunctionFound.raw[lineBeforeJunctionFound.raw.endIndex - countMinus] }
+                    if lineBeforeJunctionFound.raw.count > 2 { currentPointForJunctionDetection = last }
+                } else {
+                    let countMinus = lineAfterJunctionFound.raw.count <= 5 ? lineAfterJunctionFound.raw.count : 6
+                    if lineAfterJunctionFound.raw.count > 5 { lastPointForJunctionDetection = lineAfterJunctionFound.raw[lineAfterJunctionFound.raw.endIndex - countMinus] }
+                    if lineAfterJunctionFound.raw.count > 2 { currentPointForJunctionDetection = last }
+                }
+
+                let result = findJunctionPointStartFrom(currentPointForJunctionDetection, last: lastPointForJunctionDetection)
                 
                 if let p = result.point, let dIndex = result.directionIndex {
-                    if visualTesting { print("### found junction point, \(result.exist ? "exist" : "new")") }
-                    
-                    if !result.exist {
-                        magnetPoints.append(p)
+                    if visualTesting {
+                        print("### found junction point, \(result.exist ? "exist" : "new")")
+                        if !result.exist { testDelegate?.foundMagnetPoint((result.point?.point)!) }
                     }
+
+                    if noMagnetPointFound {
+                        startMagnetPoint = p
+                        shouldTrackInvertly = true
+                    }
+                    if !result.exist { magnetPoints.append(p) }
                 
                     let inDirection = p.directions[dIndex]
-                    p.directions.removeAtIndex(dIndex)
+                    if result.exist || magnetPoints.count != 1 { p.directions.removeAtIndex(dIndex) }
                     
                     // go towards junctionPoint
                     let straight = straightlyTrackToPointFrom(current, to: result.point!.point)
                     if !straight.isEmpty { current = straight.last! }
                     if straight.count > 1 { last = straight[straight.endIndex-2] }
-                    currentLine.raw.appendContentsOf(straight)
+                    lineAfterJunctionFound.raw.appendContentsOf(straight)
                 
                     if let outDirectionIndex = smoothDirectionIndexFor(inDirection, of: p) {
-                        // shoot!
                         let outDirection = p.directions[outDirectionIndex].poleValue
                         p.directions.removeAtIndex(outDirectionIndex)
                         let freeTrack = freelyTrackToDirectionFrom(current, to: outDirection, steps: 15)
                         if !freeTrack.isEmpty { current = freeTrack.last! }
                         last = p.point
-                        currentLine.raw.appendContentsOf(freeTrack)
+                        lineAfterJunctionFound.raw.appendContentsOf(freeTrack)
                     } else {
                         meetsEndPoint = true
                     }
-                    // FIXME: consider junction count 2 is a junction point, but fewer free track step
-                } else {
-                    if result.junctionCount < 2 {
-                        if visualTesting { print("### meets end point") }
-                        meetsEndPoint = true
-                    }
+                } else if result.directionCount <= 1 {
+                    meetsEndPoint = true
                 }
             }
             
+            // end point handling
             if meetsEndPoint {
                 var needNewStartPoint = true
+
                 if shouldTrackInvertly {
                     // should track from current start point, but invertly.
                     if let directionIndex = invertDirectionIndexFor(startDirection, of: startMagnetPoint) {
@@ -207,15 +215,20 @@ class SPLineGroupVectorizor {
                         shouldTrackInvertly = false
                         startDirection = startMagnetPoint.directions[directionIndex]
                         startMagnetPoint.directions.removeAtIndex(directionIndex)
-                        
+
                         current = startMagnetPoint.point
                         let free = freelyTrackToDirectionFrom(current, to: startDirection.poleValue, steps: 15)
                         if !free.isEmpty { current = free.last! }
                         if free.count > 1 { last = free[free.endIndex-2] }
-                        currentLine.raw.appendContentsOf(free)
-                        shouldTrackInvertly = false
+                        if noMagnetPointFound {
+                            lineBeforeJunctionFound.raw = lineBeforeJunctionFound.raw.reverse()
+                            lineBeforeJunctionFound.raw.appendContentsOf(free)
+                        } else {
+                            lineAfterJunctionFound.raw = lineAfterJunctionFound.raw.reverse()
+                            lineAfterJunctionFound.raw.appendContentsOf(free)
+                        }
+
                         needNewStartPoint = false
-                        currentLine.raw = currentLine.raw.reverse()
                     } else {
                         shouldTrackInvertly = true
                     }
@@ -228,28 +241,29 @@ class SPLineGroupVectorizor {
                 
                 if let next = nextStartPoint() {
                     if visualTesting { print("### new start point: \(next.point)") }
-                    // need to find a new start point from magnetPoints, and append currentLine to trackedLines.
+
                     current = next.point
                     let outDirection: MXNFreeVector = next.directions.removeFirst().poleValue
-                    trackedLines.append(currentLine)
-                    currentLine = SPLine()
-                    currentLine<--current
+                    startDirection = Direction2D.Pole(vector: outDirection)
+                    trackedLines.append(lineAfterJunctionFound)
+                    lineAfterJunctionFound = SPLine()
+                    lineAfterJunctionFound<--current
                     
                     startMagnetPoint = next
                 	    
-                    let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 10)
+                    let free = freelyTrackToDirectionFrom(current, to: outDirection, steps: 15)
                     if !free.isEmpty { current = free.last! }
                     if free.count > 1 { last = free[free.endIndex-2] }
-                    currentLine.raw.appendContentsOf(free)
+                    lineAfterJunctionFound.raw.appendContentsOf(free)
                 } else {
                     // when start points are exausted.
                     if visualTesting { print("!!! end") }
+                    if trackedLines.count == 0 { trackedLines.append(lineBeforeJunctionFound) }
                     break
                 }
             }
         }
     }
-
 }
 
 
@@ -266,19 +280,30 @@ extension SPLineGroupVectorizor {
                 return (CGPoint.centerPointOf(left, and: right), left, right)
             }
         }
-        return (rawGeometric.raw.first ?? CGPointZero,rawGeometric.raw.first ?? CGPointZero,rawGeometric.raw.first ?? CGPointZero)
+        return (rawGeometric.raw.first ?? CGPointZero, rawGeometric.raw.first ?? CGPointZero, rawGeometric.raw.first ?? CGPointZero)
     }
-    
+
+    private func rkInterpolate(
+        from current: CGPoint,
+        to direction: MXNFreeVector, lastDirection: MXNFreeVector, scale: CGFloat = 1
+    ) -> CGPoint {
+        let middle = current.interpolateSemiTowards(direction * scale, forward: !(lastDirection • direction).isSignMinus)
+        var tanMiddle = tangentialDirectionOf(middle)
+        if tanMiddle.isZeroVector { tanMiddle = lastDirection }
+        return current.interpolateTowards(tanMiddle * scale, forward: !(lastDirection • tanMiddle).isSignMinus)
+    }
+
     /// Check if current tracking point is meeting a junction ( or maybe an end )
-    private func checkIfMeetsJunction(currentEdge: (left: CGPoint, right: CGPoint), lastEdge: (left: CGPoint, right: CGPoint)) -> Bool {
-        let new = tangentialDirectionOf(currentEdge.left)
-            .angleWith(tangentialDirectionOf(currentEdge.right))
-        let old = tangentialDirectionOf(lastEdge.left)
-            .angleWith(tangentialDirectionOf(lastEdge.right))
-        guard new > old else { return false }
-        if case 35...180 = new {
-             return true
+    private func checkIfMeetsJunction(
+        currentEdge: (left: CGPoint, right: CGPoint),
+        lastEdge: (left: CGPoint, right: CGPoint)
+    ) -> Bool {
+        let new = tangentialDirectionOf(currentEdge.left).angleWith(tangentialDirectionOf(currentEdge.right))
+        let old = tangentialDirectionOf(lastEdge.left).angleWith(tangentialDirectionOf(lastEdge.right))
+        if currentEdge.left.distanceTo(currentEdge.right) - lastEdge.left.distanceTo(lastEdge.right) > 2 {
+            return true
         }
+        if case 30...180 = new where new > old { return true }
         return false
     }
     
@@ -286,118 +311,163 @@ extension SPLineGroupVectorizor {
     private func edgePointsOf(point: CGPoint) -> (left: CGPoint, right: CGPoint) {
         var left = point
         var right = point
-        let gradient = gradientDirectionOf(point)
+        let gradient = gradientDirectionOf(point) * CGFloat(0.2)
         if gradient.absolute == 0 { return (point, point) }
-        while !rawData.isBackgroudAtPoint(left) {
-            left = left + (-gradient)
-        }
-        while !rawData.isBackgroudAtPoint(right) {
-            right = right + gradient
-        }
+        while !rawData.isBackgroudAtPoint(left) { left = left + (-gradient) }
+        while !rawData.isBackgroudAtPoint(right) { right = right + gradient }
         return (left, right)
     }
     
     /// Find next start point from magnetPoints.
     private func nextStartPoint() -> MagnetPoint? {
         for point in magnetPoints {
-            if !point.directions.isEmpty {
-                return point
-            }
+            if !point.directions.isEmpty { return point }
         }
         return nil
     }
     
     /// Find junction point, if nil, then it's an end.
-    private func findJunctionPointStartFrom(point: CGPoint, last lastPoint: CGPoint) -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, junctionCount: Int) {
-        let circCount = 72
+    /// - Returns:
+    /// point: The junction point, nil if not a junction point<br>
+    /// exist: If a junction point already exists.<br>
+    /// directionIndex: The direction's index the current point is entering the junction point.<br>
+    /// directionCount: Used when its not a junction point.<br>
+    private func findJunctionPointStartFrom(
+        startPoint: CGPoint, last lastPoint: CGPoint
+    ) -> (point: MagnetPoint?, exist: Bool, directionIndex: Int?, directionCount: Int) {
         var candidates = [JunctionPointCandidate]()
-        let candidateCount = 6
-        let step = 2
-        var current = point
-        var last = lastPoint
-        var tanLast = MXNFreeVector(start: last, end: current)
-        var candidateA = [JunctionPointCandidate]()
-        var candidateB = [JunctionPointCandidate]()
-        for i in 1...step*candidateCount {
-            let tanCurrent = tangentialDirectionOf(current)
-            let innerProduct = tanLast • tanCurrent
-            var s = !(innerProduct).isSignMinus
-            if innerProduct == 0 { s = true }
-            last = current
-            
-            // Runge Kutta method
-            let middle = current.interpolateSemiTowards(tanCurrent, forward: s)
-            let tanMiddle = tangentialDirectionOf(middle)
-            let innerProduct2 = tanLast • tanMiddle
-            s = !(innerProduct2).isSignMinus
-            current = current.interpolateTowards(tanMiddle, forward: s)
-            tanLast = tanMiddle
-            if i % step == 0 {
-                if !rawData.isBackgroudAtPoint(current) {
-                    candidateA.append(JunctionPointCandidate(point: current))
-                }
-            }
-        }
-        
-        let tanDefault = MXNFreeVector(start: lastPoint, end: point).normalized
-        current = point
-        for i in 1...step*candidateCount {
-            current = current.interpolateTowards(tanDefault, forward: true)
-            if i % step == 0 {
-                if !rawData.isBackgroudAtPoint(current) {
-                    candidateB.append(JunctionPointCandidate(point: current))
-                }
-            }
-        }
+        let candidateCount = 13
+        let stepScale: CGFloat = 0.7
+        var current = startPoint
 
-        for i in 0..<min(candidateA.count, candidateB.count) {
-            let p = CGPoint.centerPointOf(candidateA[i].point, and: candidateB[i].point)
-            if !rawData.isBackgroudAtPoint(p) {
-                candidates.append(JunctionPointCandidate(point: p))
+        let tanDefault = MXNFreeVector(start: lastPoint, end: startPoint).normalized * stepScale
+        let verticalOftanDefault = tanDefault.verticalVector
+        for _ in 1...candidateCount {
+            current = current.interpolateTowards(tanDefault, forward: true)
+            let left = current.interpolateTowards(verticalOftanDefault, forward: true)
+            let right = current.interpolateTowards(verticalOftanDefault, forward: false)
+            if !rawData.isBackgroudAtPoint(current) {
+                candidates.append(JunctionPointCandidate(point: current))
+            }
+            if !rawData.isBackgroudAtPoint(left) {
+                candidates.append(JunctionPointCandidate(point: left))
+            }
+            if !rawData.isBackgroudAtPoint(right) {
+                candidates.append(JunctionPointCandidate(point: right))
             }
         }
-        
-        candidates.appendContentsOf(candidateA)
-        candidates.appendContentsOf(candidateB)
-        
-        if candidates.isEmpty { return (nil, false, 0, 0) }
         
         // find if such MagnetPoint is already found
-        for c in candidates {
-            for p in magnetPoints {
-                if c.point.distanceTo(p.point) <= 10 {
-                    if (MXNFreeVector(start: lastPoint, end: point) • MXNFreeVector(start: point, end: p.point)).isSignMinus {
-                        return (nil, false, 0, 2)
-                    }
-                    if visualTesting { print("### Magnet Point already exists: \(p.point)") }
-                    return (p, true, inDirectionIndexFor(MXNFreeVector(x:p.point.x-point.x,y:p.point.y-point.y), of: p), 0)
-                }
+        let closestMagnetPointResult = closestConnectedMagnetPoint(forPoint: startPoint, andLast: lastPoint)
+        if let p = closestMagnetPointResult.point {
+            if closestMagnetPointResult.distance <= 12 {
+                if visualTesting { print("### Magnet Point already exists: \(p.point)") }
+                return (p, true, inDirectionIndexFor(MXNFreeVector(start: lastPoint, end: p.point), of: p, shouldGuard: true), 0)
             }
         }
+        if visualTesting {
+            print("\(candidates.count) candidates found")
+        }
+        fetchLuminanceDistributionForCandidates(candidates)
+
+        // filter the ones that have fewer directions than the others
+        // also, select the one with lowest luminance value from previous result
+        let directionCount = candidates.reduce(0) { count, candidate in
+            candidate.directions.count > count ? candidate.directions.count : count
+        }
+        if visualTesting {
+            print("max direction count: \(directionCount)")
+        }
+
+        var leastLuminance: CGFloat = 255
         
-        // Calculate luminance of candidates
+        candidates = candidates.filter {
+            $0.directions.count == directionCount
+        } .sort {
+            return $0.leastLuminance < $1.leastLuminance
+        } .performed {
+            if let first = $0.first { leastLuminance = first.leastLuminance }
+        } .filter {
+            $0.leastLuminance - leastLuminance < 5
+        } .sort {
+            $0.deviation < $1.deviation
+        }
+        
+        guard let junctionPoint = candidates.first else { return (nil, false, 0, directionCount) }
+
+        // a junction point neeed more than 1 directions
+        guard directionCount > 1 else {
+            if directionCount == 1
+            && (MXNFreeVector(start: lastPoint, end: startPoint) • junctionPoint.directions.first!.poleValue).isSignMinus {
+                return (nil, false, 0, directionCount)
+            }
+            return (nil, false, 0, 2)
+        }
+        
+        if junctionPoint.magnetPoint.directions.count == 2
+        && junctionPoint.directions[0].poleValue.angleWith(junctionPoint.directions[1].poleValue) > 120 {
+            return (nil, false, 0, directionCount)
+        }
+        
+        let inDirectionIndex = inDirectionIndexFor(MXNFreeVector(start: lastPoint, end: junctionPoint.point),
+            of: junctionPoint.magnetPoint)
+
+        if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point)), count: \(directionCount)") }
+        return (junctionPoint.magnetPoint, false, inDirectionIndex, directionCount)
+    }
+
+    private func closestConnectedMagnetPoint(forPoint point: CGPoint, andLast last: CGPoint) -> (point: MagnetPoint?, distance: CGFloat) {
+        var shortestDistancePow2: CGFloat = 244
+        var matchedMagnetPoint: MagnetPoint? = nil
+        for p in magnetPoints {
+            let distance = point.distancePow2To(p.point)
+
+            // point with shorter distance, not lying behind, connected.
+            if distance <= shortestDistancePow2
+            && !(MXNFreeVector(start: last, end: point) • MXNFreeVector(start: point, end: p.point)).isSignMinus
+            && checkIfConnected(forPoint: point, and: p.point) {
+                shortestDistancePow2 = distance
+                matchedMagnetPoint = p
+            }
+        }
+        return (matchedMagnetPoint, sqrt(shortestDistancePow2))
+    }
+
+    private func checkIfConnected(forPoint point: CGPoint, and anotherPoint: CGPoint) -> Bool {
+        let points = straightlyTrackToPointFrom(point, to: anotherPoint)
+        for p in points {
+            if rawData.isBackgroudAtPoint(p) { return false }
+        }
+        return true
+    }
+
+    private func fetchLuminanceDistributionForCandidates(candidates: [JunctionPointCandidate]) {
+        let circCount = 72
+        let distance = 40
+        let stepScaleFactor: CGFloat = 0.8
+
         for c in candidates {
             var lumi = [CGFloat]()
             for i in 0..<circCount {
-                let distance = 30
                 var sum: CGFloat = 0
                 let direction = (360 / circCount * i).normalizedVector
-                var this = c.point
-                var continuousMetWhite = 0
-                var allWhite = false
+                var current = c.point
+                var continuouslyMetWhiteCounter = 0
+                var shouldIgnoreTheRest = false
+                var counter = 0
                 for _ in 1...distance {
-                    this = this.interpolateTowards(direction, forward: true)
-                    if rawData.isBackgroudAtPoint(this) && !allWhite {
+                    counter += 1
+                    current = current.interpolateTowards(direction * stepScaleFactor, forward: true)
+                    if rawData.isBackgroudAtPoint(current) && !shouldIgnoreTheRest {
                         sum += 255
-                        continuousMetWhite += 1
+                        continuouslyMetWhiteCounter += 1
                     } else {
-                        continuousMetWhite = 0
+                        continuouslyMetWhiteCounter = 0
                     }
-                    if continuousMetWhite > distance / 3 {
-                        allWhite = true
-                    }
-                    if allWhite {
-                        sum += 255
+                    if continuouslyMetWhiteCounter > 2 { shouldIgnoreTheRest = true }
+                    if shouldIgnoreTheRest {
+                        sum += 255 * CGFloat(distance - counter)
+                        break
                     }
                 }
                 sum /= CGFloat(distance)
@@ -405,70 +475,48 @@ extension SPLineGroupVectorizor {
             }
             c.luminance = lumi // directions will be calculated
         }
-        
-        // filter the ones that have fewer directions than the others
-        // also, select the one with lowest luminance value from previous result
-        candidates.sortInPlace { $0.directions.count > $1.directions.count }
-        let directionCount = candidates.first?.directions.count
-        
-        // a junction point neeed more than 2 directions
-        if directionCount <= 2 {
-            if visualTesting { print("### not a valid Junction Point: \(directionCount)") }
-            return (nil, false, 0, directionCount!)
-        }
-        
-        candidates = candidates.filter { $0.directions.count == directionCount }
-                               .sort { $0.leastLuminance < $1.leastLuminance }
-        
-        guard let junctionPoint = candidates.first else {
-            return (nil, false, 0, 0)
-        }
-        let inDirectionIndex = inDirectionIndexFor(
-            MXNFreeVector(x:junctionPoint.point.x-point.x,y:junctionPoint.point.y-point.y),
-            of: junctionPoint.magnetPoint
-        )
-        if visualTesting { print("### Junction Point: \(junctionPoint.magnetPoint.point))") }
-        return (junctionPoint.magnetPoint, false, inDirectionIndex, 0)
     }
     
     /// Find invert direction for start point.
     private func invertDirectionIndexFor(direction: Direction2D, of point: MagnetPoint) -> Int? {
         let directionVector = direction.poleValue
         guard !directionVector.isZeroVector else { return nil }
-        
+        var maxIndex: Int? = nil
+        var maxAngle: CGFloat = 0
         for (n, direction) in point.directions.enumerate() {
-            if directionVector.angleWith(direction.poleValue) > 140 {
-                return n
+            let angle = directionVector.angleWith(direction.poleValue)
+            if angle > 140 && angle > maxAngle {
+                maxAngle = angle
+                maxIndex = n
             }
         }
         
-        return nil
+        return maxIndex
     }
     
-    /// 
-    private func inDirectionIndexFor(inDirection: MXNFreeVector, of point: MagnetPoint) -> Int? {
-        var biggest: CGFloat = 0
-        var index: Int? = nil
+    ///  Find the indirection for given direction vector, if a angle is small enough than return it, if not, return nil.
+    private func inDirectionIndexFor(inDirection: MXNFreeVector, of point: MagnetPoint, shouldGuard: Bool = false) -> Int? {
+        var maxAngle: CGFloat = 0
+        var maxIndex: Int? = nil
         for (n, direction) in point.directions.enumerate() {
             let angle = inDirection.angleWith(direction.poleValue)
-            if angle > biggest {
-                biggest = angle
-                index = n
+            if angle > maxAngle {
+                maxAngle = angle
+                maxIndex = n
             }
         }
-        return index
+        return shouldGuard ? (maxAngle > 150 ? maxIndex : nil) : maxIndex
     }
     
     /// Find smooth direction for juntion point.
     private func smoothDirectionIndexFor(direction: Direction2D, of point: MagnetPoint) -> Int? {
         let directionVector = direction.poleValue
         guard !directionVector.isZeroVector else { return nil }
-        
         var maxIndex: Int? = nil
         var maxAngle: CGFloat = 0
         for (n, direction) in point.directions.enumerate() {
             let angle = directionVector.angleWith(direction.poleValue)
-            if  angle > 120 && angle > maxAngle {
+            if angle > 120 && angle > maxAngle {
                 maxIndex = n
                 maxAngle = angle
             }
@@ -478,90 +526,69 @@ extension SPLineGroupVectorizor {
     }
     
     private func straightlyTrackToPointFrom(current: CGPoint, to target: CGPoint) -> [CGPoint] {
-        if visualTesting { print("=== straight tracking") }
         var line = [CGPoint]()
         var point = current
-        let direction = MXNFreeVector(x: target.x-current.x, y: target.y-current.y).normalized
+        let direction = MXNFreeVector(start: current, end: target).normalized
         let distance = Int(current.distanceTo(target))
         if distance > 0 {
-            for _ in 1...distance {
+            for _ in 1..<distance {
                 point = point + direction
                 line.append(point)
-                /////////////////////////////////////////////
-                if visualTesting {
-                    dispatch_async(GCD.mainQueue) {
-                        self.testDelegate?.trackingToPoint(current)
-                    }
-                    NSThread.sleepForTimeInterval(0.1)
-                }
-                /////////////////////////////////////////////
             }
-                
         }
         line.append(target)
-        if visualTesting { print("~~~ straight tracking end") }
         return line
     }
     
     private func freelyTrackToDirectionFrom(current: CGPoint, to direction: MXNFreeVector, steps: Int) -> [CGPoint] {
-        // FIXME: free track auto ends when tan is no longer messy
         if visualTesting { print("=== free tracking") }
         var line = [CGPoint]()
-        var point = current
+        var trackingPoint = current
+        var last = current
+        var creadability = 0
+        var tanLast = direction
         for _ in 1...steps {
-            point = point + direction
-            line.append(point)
-            /////////////////////////////////////////////
-            if visualTesting {
-                dispatch_async(GCD.mainQueue) {
-                    self.testDelegate?.trackingToPoint(current)
-                }
-                NSThread.sleepForTimeInterval(0.1)
+            if creadability > 7 {
+                let tanCurrent = tangentialDirectionOf(trackingPoint)
+                tanLast = MXNFreeVector(start: last, end: trackingPoint)
+                last = trackingPoint
+                trackingPoint = rkInterpolate(from: trackingPoint, to: tanCurrent, lastDirection: tanLast)
+                (trackingPoint, _, _) = correctedPositionMidPointFor(trackingPoint, last: last)
+            } else {
+                last = trackingPoint
+                trackingPoint = trackingPoint + direction
             }
-            /////////////////////////////////////////////
+
+            if rawData.isBackgroudAtPoint(trackingPoint) { break }
+            line.append(trackingPoint)
+
+            if line.count > 1 {
+                let currentDirection = MXNFreeVector(start: last, end: trackingPoint)
+                if currentDirection.angleWith(direction) < 30 {
+                    creadability += 1
+                } else {
+                    creadability -= 1
+                }
+            }
         }
         if visualTesting { print("~~~ free tracking end") }
         return line
     }
     
-    private func correctedPositionMidPointFor(point: CGPoint) -> (start: CGPoint, left: CGPoint, right: CGPoint) {
+    /// Correcting by moving a tracking position 0.2 pixel towards its center point.
+    private func correctedPositionMidPointFor(point: CGPoint, last: CGPoint)
+    -> (start: CGPoint, left: CGPoint, right: CGPoint) {
         let edges = edgePointsOf(point)
         let midPoint = CGPoint.centerPointOf(edges.left, and: edges.right)
-        let v = MXNFreeVector(start: point, end: midPoint).normalized
+        let v = MXNFreeVector(start: point, end: midPoint)
+        if rawData.isBackgroudAtPoint(midPoint) {
+            return (point, edges.left, edges.right)
+        }
         let new = point.interpolateTowards(v*CGFloat(0.5), forward: true)
+        if rawData.isBackgroudAtPoint(new) {
+            return (point, edges.left, edges.right)
+        }
         return (new, edges.left, edges.right)
-    }
-    
-    private func correctedPositionFor(var point: CGPoint, tan: MXNFreeVector) -> CGPoint {
-        let gra = gradientDirectionOf(point)
-        let left = point + (-gra)
-        let right = point + gra
-        if gradientValueOf(left) < gradientValueOf(point)
-            && tangentialDirectionOf(left).angleWith(tan) < 10
-            && !rawData.isBackgroudAtPoint(left) {
-                point = left
-        } else if gradientValueOf(right) < gradientValueOf(point)
-            && tangentialDirectionOf(right).angleWith(tan) < 10
-            && !rawData.isBackgroudAtPoint(right) {
-                point = right
-        }
-        
-        return point
-    }
-    
-    private func correctedPositionWithoutAngleCorrectionFor(var point: CGPoint) -> CGPoint {
-        let gra = gradientDirectionOf(point)
-        let left = point + (-gra)
-        let right = point + gra
-        if gradientValueOf(left) < gradientValueOf(point)
-            && !rawData.isBackgroudAtPoint(left) {
-                point = left
-        } else if gradientValueOf(right) < gradientValueOf(point)
-            && !rawData.isBackgroudAtPoint(right) {
-                point = right
-        }
-        
-        return point
     }
     
     // MARK: Direction Calculation
@@ -583,7 +610,6 @@ extension SPLineGroupVectorizor {
             let dUpRight = directionData[(xceil, yceil)]?.tangential,
             let dDownRight = directionData[(xceil, yfloor)]?.tangential
         else {
-            // if any of those is nil, such point should not be valid
             return MXNFreeVector(x: 0, y: 0)
         }
         
@@ -608,7 +634,6 @@ extension SPLineGroupVectorizor {
             let dUpRight = directionData[(xceil, yceil)]?.gradient,
             let dDownRight = directionData[(xceil, yfloor)]?.gradient
         else {
-            // if any of those is nil, such point should not be valid
             return MXNFreeVector(x: 0, y: 0)
         }
         
@@ -634,12 +659,12 @@ extension SPLineGroupVectorizor {
     ///     - this: The give point
     ///     - others: The other points locations and values 
     /// - Returns: The value for given point.
-    func bilinearInterporlation(this this: (x: CGFloat, y: CGFloat),
-                                            bX: CGFloat, bY: CGFloat, eX: CGFloat, eY: CGFloat,
-                                            bXbY: MXNFreeVector, bXeY: MXNFreeVector,
-                                            eXbY: MXNFreeVector, eXeY:  MXNFreeVector)
-                                            -> MXNFreeVector {
-                                                
+    func bilinearInterporlation(
+        this this: (x: CGFloat, y: CGFloat),
+        bX: CGFloat, bY: CGFloat, eX: CGFloat, eY: CGFloat,
+        bXbY: MXNFreeVector, bXeY: MXNFreeVector,
+        eXbY: MXNFreeVector, eXeY:  MXNFreeVector
+    ) -> MXNFreeVector {
         let r11 = bXbY * (eX - this.x)
         let r21 = eXbY * (this.x - bX)
         let r12 = bXeY * (eX - this.x)
@@ -663,7 +688,7 @@ extension SPLineGroupVectorizor {
     class MagnetPoint {
         var point: CGPoint
         var directions: [Direction2D]
-        let attractZoneRadiusPow2: CGFloat = 100
+        let attractZoneRadiusPow2: CGFloat = 50
         
         init(point: CGPoint, directions: [Direction2D]) {
             self.point = point
@@ -671,24 +696,22 @@ extension SPLineGroupVectorizor {
         }
         
         func shouldAttract(point: CGPoint,withTengentialDirection tan: MXNFreeVector) -> Bool {
-                if distancePow2To(point) < attractZoneRadiusPow2 {
-                    let result = isOfTheSameDirection(point, withTengentialDirection: tan)
-                    if result.yes {
-                        return true
-                    }
-                }
-                return false
+            if distancePow2To(point) < attractZoneRadiusPow2 {
+                let result = isOfTheSameDirection(point, withTengentialDirection: tan)
+                if result.yes { return true }
+            }
+            return false
         }
         
         /// If the tangential direction of self and given point matches one of the directions, then true.
         private func isOfTheSameDirection(point: CGPoint,
-            withTengentialDirection tan: MXNFreeVector) -> (yes: Bool, directionIndex: Int) {
-                for (n, d) in directions.enumerate() {
-                    if case .Pole(let v) = d where v.angleWith(tan) > 160 {
-                        return (true, n)
-                    }
+                withTengentialDirection tan: MXNFreeVector) -> (yes: Bool, directionIndex: Int) {
+            for (n, d) in directions.enumerate() {
+                if case .Pole(let v) = d where v.angleWith(tan) > 160 {
+                    return (true, n)
                 }
-                return (false, 0)
+            }
+            return (false, 0)
         }
         
         func distancePow2To(point: CGPoint) -> CGFloat {
@@ -701,11 +724,16 @@ extension SPLineGroupVectorizor {
         var luminance = [CGFloat]() {
             didSet {
                 calculateDirection()
+                calculateDeviation()
             }
         }
         // TODO: use luminance deviation to average, on maximun directions, not minimum.
+        // I guess we can use center of each maximum directions as minimum directions, and check their luminance deviation to their average.
         var leastLuminance: CGFloat = 0
+        var deviation: CGFloat = 0
+        var angleIndexes = [Int]()
         var directions = [Direction2D]()
+        var newLuminance = [CGFloat]()
         
         init(point: CGPoint) {
             self.point = point
@@ -717,25 +745,26 @@ extension SPLineGroupVectorizor {
         
         func calculateDirection() {
             guard !luminance.isEmpty else { return }
-            var angleIndexes = [Int]()
-            // var correctedIndexes = [Int]()
+            angleIndexes = [Int]()
             
-            var newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(luminance)
+            // 2 times of gaussian blur
+            newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(luminance)
             newLuminance = Array<CGFloat>.smoothingWithStandardGaussianBlurOn(newLuminance)
             
             // fetch every minimum value from f(angle) = luminance
             for var i in 0..<newLuminance.count {
                 let previousIndex = i - 1 >= 0 ? i-1 : newLuminance.endIndex-1
                 let nextIndex = i + 1 >= newLuminance.endIndex ? 0 : i+1
-                if newLuminance[i] < 130 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
+                if newLuminance[i] < 80 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] > newLuminance[i] {
                     angleIndexes.append(i)
-                } else if newLuminance[i] < 130 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
+                } else if newLuminance[i] < 80 && newLuminance[previousIndex] > newLuminance[i] && newLuminance[nextIndex] == newLuminance[i] {
                     var count = 0
                     var next = i + 1 >= newLuminance.endIndex ? 0 : i+1
                     while next != i {
                         count += 1
                         if newLuminance[next] > newLuminance[i] {
-                            angleIndexes.append(i+count/2)
+                            if i+count/2 < newLuminance.count { angleIndexes.append(i+count/2) }
+                            else { angleIndexes.append(i+count/2 - newLuminance.count) }
                             break
                         } else if newLuminance[next] < newLuminance[i] {
                             break
@@ -750,7 +779,7 @@ extension SPLineGroupVectorizor {
             // fetch minimum luminace value
             leastLuminance = angleIndexes.reduce(0) { sum, this in
                 return sum + luminance[this]
-            }
+            } / CGFloat(angleIndexes.count)
             
             // fetch directions
             for i in angleIndexes {
@@ -758,74 +787,38 @@ extension SPLineGroupVectorizor {
                 let newDirection = Direction2D.Pole(vector: vector)
                 directions.append(newDirection)
             }
+        }
+        
+        /// Taking the directions in the middle of each pair of correct directions, calculate the average of their luminance deviation to their luminance average, stores in `var deviation`.
+        func calculateDeviation() {
+            guard angleIndexes.count >= 2 else { return }
+            var deviationIndexes = [Int]()
+            for (i, index) in angleIndexes.enumerate() {
+                var newIndex = 0
+                if i == angleIndexes.endIndex - 1 {
+                    let left = luminance.count - index - 1
+                    let right = angleIndexes[0] + 1
+                    let gap = (left + right) / 2
+                    newIndex = left >= right ? index + gap : angleIndexes[0] - gap
+                } else {
+                    newIndex = (index + angleIndexes[i+1]) / 2
+                }
+                deviationIndexes.append(newIndex)
+            }
             
+            let average = deviationIndexes.reduce(CGFloat(0), combine: {
+                $0 + luminance[$1]
+            }) / CGFloat(deviationIndexes.count)
+            
+            deviation = deviationIndexes.reduce(CGFloat(0), combine: {
+                $0 + abs(luminance[$1] - average)
+            }) / CGFloat(deviationIndexes.count)
         }
     }
 }
 
 
 
-// MARK: - Extensions
-
-extension Int {
-    var normalizedVector: MXNFreeVector {
-        let y = sin(CGFloat(self) * CGFloat(M_PI) / 180)
-        let x = cos(CGFloat(self) * CGFloat(M_PI) / 180)
-        return MXNFreeVector(x: x, y: y)
-    }
-}
-
-extension XYZWPixel {
-    var tangentialDirection: MXNFreeVector {
-        return tangential.normalized
-    }
-    var gradientDirection: MXNFreeVector {
-        return gradient.normalized
-    }
-    var tangential: MXNFreeVector {
-        return MXNFreeVector(x: CGFloat(z), y: CGFloat(w))
-    }
-    var gradient: MXNFreeVector {
-        return MXNFreeVector(x: CGFloat(x), y: CGFloat(y))
-    }
-}
-
-extension CGPoint {
-    var isIntegerPoint: Bool {
-        return self.x.isInteger && self.y.isInteger
-    }
-    
-    func distancePow2To(point: CGPoint) -> CGFloat {
-        let x2 = pow(point.x - x, 2)
-        let y2 = pow(point.y - y, 2)
-        return x2 + y2
-    }
-    
-    func distanceTo(point: CGPoint) -> CGFloat {
-        return sqrt(distancePow2To(point))
-    }
-    
-    func interpolateTowards(direction: MXNFreeVector, forward: Bool) -> CGPoint {
-        let newX = x + (forward ? direction.x : -direction.x)
-        let newY = y + (forward ? direction.y : -direction.y)
-        return CGPoint(x: newX, y: newY)
-    }
-    
-    func interpolateSemiTowards(direction: MXNFreeVector, forward: Bool) -> CGPoint {
-        let newDirection = MXNFreeVector(x: direction.x/2, y: direction.y/2)
-        return interpolateTowards(newDirection, forward: forward)
-    }
-    
-    static func centerPointOf(one: CGPoint, and another: CGPoint) -> CGPoint {
-        return CGPoint(x: (one.x+another.x)/2, y: (one.y+another.y)/2)
-    }
-}
-
-extension CGFloat {
-    var isInteger: Bool {
-        return floor(self) - self == 0
-    }
-}
 
 
 

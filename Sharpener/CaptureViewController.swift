@@ -29,7 +29,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
     @IBOutlet weak var torchSwitch: TorchSwitcher!
     @IBOutlet weak var cancelButton: CancelCaptureButton! {
         didSet {
-            let tap = UITapGestureRecognizer(target: self, action: "cancelCapture")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(CaptureViewController.cancelCapture))
             cancelButton.addGestureRecognizer(tap)
         }
     }
@@ -38,7 +38,7 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             imageView.addSubview(metalView)
             guard context.device != nil else { return }
             metalView.framebufferOnly = false
-            // Texture for Y
+            // Texture
             CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, context.device!, nil, &videoTextureCache)
         }
     }
@@ -50,8 +50,23 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             }
         }
     }
+    var liveButton: UIButton! {
+        didSet {
+            controlPanel.addSubview(liveButton)
+            liveButton.alpha = 0
+            liveButton.snp_makeConstraints { make in
+                make.centerY.equalTo(self.controlPanel)
+                make.right.equalTo(-16)
+            }
+            let tap = UITapGestureRecognizer(target: self, action: #selector(CaptureViewController.shutterLongPressed))
+            liveButton.addGestureRecognizer(tap)
+            liveButton.setTitle("live", forState: .Normal)
+            liveButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        }
+    }
     
     // MARK: Properties
+    var visualTesting = false
     var loaded: Bool = false
     
     let context: MXNContext = MXNContext()
@@ -138,7 +153,9 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
         return true
     }
     
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
+    func captureOutput(captureOutput: AVCaptureOutput!,
+                       didOutputSampleBuffer sampleBuffer: CMSampleBuffer!,
+                       fromConnection connection: AVCaptureConnection!) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         connection.videoOrientation = .Portrait
@@ -222,8 +239,18 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             
             let imageDataJpeg = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
             self.stillImage = UIImage(data: imageDataJpeg)
-            self.performSegueWithIdentifier("CaptureToRefine", sender: self)
+            if self.visualTesting {
+                self.visualTesting = false
+                self.performSegueWithIdentifier("ShowTestView", sender: self)
+            } else {
+                self.performSegueWithIdentifier("CaptureToRefine", sender: self)
+            }
         }
+    }
+
+    func shutterLongPressed() {
+        visualTesting = true
+        shutterClicked()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -235,6 +262,9 @@ class CaptureViewController: UIViewController, AVCaptureVideoDataOutputSampleBuf
             destination?.thresholdingFilterThreshold = thresholdingFilter.thresholdingFactor
             destination?.medianFilterRadius = medianFilter.radius
             destination?.lineShapeFilteringFilterAttributes = (lineShapeFilteringFilter.threshold, lineShapeFilteringFilter.radius > 0 ? 4 : 0)
+        case "ShowTestView":
+            let destination = segue.destinationViewController as? TestViewController
+            destination?.testImage = stillImage
         default: break
         }
     }
@@ -315,8 +345,9 @@ extension CaptureViewController {
     }
     
     private func prepareGestures() {
-        shutterButton.addTarget(self, action: "shutterClicked", forControlEvents: .TouchUpInside)
-        torchSwitch.addTarget(self, action: "torchSwitchClicked", forControlEvents: .TouchUpInside)
+        liveButton = UIButton()
+        shutterButton.addTarget(self, action: #selector(CaptureViewController.shutterClicked), forControlEvents: .TouchUpInside)
+        torchSwitch.addTarget(self, action: #selector(CaptureViewController.torchSwitchClicked), forControlEvents: .TouchUpInside)
     }
 }
 

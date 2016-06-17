@@ -9,7 +9,7 @@
 import Foundation
 
 class Preference {
-    static var vectorizeSize = CGSize(width: 600, height: 800)
+    static var vectorizeSize = CGSize(width: 750, height: 1000)
     
     class func versionString() -> String? {
         return NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String
