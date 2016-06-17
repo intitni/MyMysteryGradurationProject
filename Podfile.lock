@@ -1,0 +1,25 @@
+PODS:
+  - OpenCV (3.0.0)
+  - SnapKit (0.15.0)
+  - SwiftyJSON (2.3.2)
+
+DEPENDENCIES:
+  - OpenCV
+  - SnapKit (~> 0.15.0)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+
+EXTERNAL SOURCES:
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  SwiftyJSON:
+    :commit: 42bdb102d2624b143c07850ebdc1537d5b6579b6
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+SPEC CHECKSUMS:
+  OpenCV: be07c02f0d8f125f1d40d261e66a66cb66ece3b3
+  SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+
+COCOAPODS: 0.39.0

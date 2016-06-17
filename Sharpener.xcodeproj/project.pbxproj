@@ -7,21 +7,206 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1300EFDE1CD0FE6100A6A28A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1300EFDD1CD0FE6100A6A28A /* Main.storyboard */; };
+		1300EFE01CD10DDE00A6A28A /* XNUsefuls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */; };
+		131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337F91C5F99DF0086C96C /* SPRefineView.swift */; };
+		131337FC1C5FBA640086C96C /* SPBezierPathApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */; };
+		131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */; };
+		131C846D1C79A0790041C06F /* GuessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C846C1C79A0790041C06F /* GuessTableViewCell.swift */; };
+		131C846F1C79E2930041C06F /* SPDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C846E1C79E2930041C06F /* SPDisplayView.swift */; };
+		13204A731C7B67D000544C5B /* FilePreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13204A721C7B67D000544C5B /* FilePreviewCollectionViewCell.swift */; };
+		13204A751C7B680000544C5B /* FilePreviewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13204A741C7B680000544C5B /* FilePreviewCollectionViewController.swift */; };
+		1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */; };
+		133E0A501C269D350058B103 /* MXNContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A4F1C269D350058B103 /* MXNContext.swift */; };
+		133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A531C26D50D0058B103 /* MXNImageFilter.swift */; };
+		133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */; };
+		133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E0A571C26E19F0058B103 /* MXNImageProvider.swift */; };
+		13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C4D1C296450006CB39A /* ThresholdingFilter.swift */; };
+		13416C501C296470006CB39A /* Thresholding.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13416C4F1C296470006CB39A /* Thresholding.metal */; };
+		13416C521C297803006CB39A /* ShutterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C511C297803006CB39A /* ShutterButton.swift */; };
+		13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C541C297981006CB39A /* UIColor+Custom.swift */; };
+		13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C561C299C6A006CB39A /* CaptureImageView.swift */; };
+		13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13416C591C29A401006CB39A /* TorchSwitcher.swift */; };
+		13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9C1C324F0700EE9525 /* RefineViewController.swift */; };
+		13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */; };
+		135477E31C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135477E21C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift */; };
+		13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C971C67355300DFE73C /* GaussianBlurFilter.swift */; };
+		13627C9A1C67357700DFE73C /* GradientTensorCalculatingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C991C67357700DFE73C /* GradientTensorCalculatingFilter.swift */; };
+		13627C9C1C6746D300DFE73C /* LineTrackingFilters.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13627C9B1C6746D300DFE73C /* LineTrackingFilters.metal */; };
+		13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627C9F1C68930800DFE73C /* EigenValueCalculatingFilter.swift */; };
+		13627CA21C69C51D00DFE73C /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627CA11C69C51D00DFE73C /* TestViewController.swift */; };
+		13627CA41C6A1ACF00DFE73C /* LineTrackingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13627CA31C6A1ACF00DFE73C /* LineTrackingFilter.swift */; };
+		1374CE391C704D3A003E9D88 /* Array+Smoothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */; };
+		1374CE3B1C72F445003E9D88 /* SPCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1374CE3A1C72F445003E9D88 /* SPCurve.swift */; };
+		1374CE3D1C72F474003E9D88 /* SPGuess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1374CE3C1C72F474003E9D88 /* SPGuess.swift */; };
+		13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */; };
+		13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */; };
+		13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13772AF71C2AEC710086CAB3 /* MedianFilter.swift */; };
 		13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13835D691C2013850047F0C0 /* AppDelegate.swift */; };
-		13835D6C1C2013850047F0C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13835D6B1C2013850047F0C0 /* ViewController.swift */; };
-		13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D6D1C2013850047F0C0 /* Main.storyboard */; };
 		13835D711C2013850047F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13835D701C2013850047F0C0 /* Assets.xcassets */; };
 		13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13835D721C2013850047F0C0 /* LaunchScreen.storyboard */; };
+		138A7BB61C78497C00D5C96D /* SPVectorIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BB51C78497C00D5C96D /* SPVectorIcons.swift */; };
+		138A7BB81C784ADA00D5C96D /* SPControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BB71C784ADA00D5C96D /* SPControlPanel.swift */; };
+		138A7BBA1C784FD900D5C96D /* SPBigProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BB91C784FD900D5C96D /* SPBigProgressBar.swift */; };
+		138A7BBC1C78C56F00D5C96D /* SingleGeometricEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BBB1C78C56F00D5C96D /* SingleGeometricEditViewController.swift */; };
+		138A7BBE1C78CC6700D5C96D /* GuessesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BBD1C78CC6700D5C96D /* GuessesTableViewController.swift */; };
+		138A7BC01C79921700D5C96D /* SPSmoothControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A7BBF1C79921700D5C96D /* SPSmoothControl.swift */; };
+		138C42E31C75FBBE00224670 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E21C75FBBE00224670 /* Preference.swift */; };
+		138C42E81C76065C00224670 /* VectorizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E71C76065C00224670 /* VectorizeViewController.swift */; };
+		138C42EA1C7754C400224670 /* SPTwoWaySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */; };
+		13918C111C5F408B008DD316 /* SPLineRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13918C101C5F408B008DD316 /* SPLineRepresentable.swift */; };
+		13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EE91C478538000CE61B /* SPGeometricsStore.swift */; };
+		13988EED1C478694000CE61B /* SPGeometrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EEC1C478694000CE61B /* SPGeometrics.swift */; };
+		13988EEF1C478788000CE61B /* SPShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EEE1C478788000CE61B /* SPShape.swift */; };
+		13988EF11C478951000CE61B /* SPLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF01C478951000CE61B /* SPLine.swift */; };
+		13988EF31C479A66000CE61B /* SPLineGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF21C479A66000CE61B /* SPLineGroup.swift */; };
+		13988EF51C479B06000CE61B /* CustomOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF41C479B06000CE61B /* CustomOperators.swift */; };
+		13988EF71C47A1D6000CE61B /* SPRawGeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EF61C47A1D6000CE61B /* SPRawGeometric.swift */; };
+		13988EFB1C47F802000CE61B /* SPRawGeometricsFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */; };
+		13988EFE1C492613000CE61B /* GeometricsFilteringFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988EFD1C492613000CE61B /* GeometricsFilteringFilter.swift */; };
+		13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */; };
+		13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */; };
+		13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13988F041C494CE6000CE61B /* LineShapeRefining.metal */; };
+		139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 139D563E1C5776BC006106D4 /* CVWrapper.mm */; };
+		139D56481C579BF7006106D4 /* SPCVLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 139D56471C579BF7006106D4 /* SPCVLine.m */; };
+		139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */; };
+		139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20C1C2FC6B500E3464F /* FilterControlView.swift */; };
+		139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */; };
+		139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2101C2FDDA600E3464F /* SPStepSlider.swift */; };
+		139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EE2121C2FDE3C00E3464F /* SPSlider.swift */; };
+		13AA93531C886F6800FB520C /* Direction2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AA93521C886F6800FB520C /* Direction2D.swift */; };
+		13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */; };
+		13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */; };
+		13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */; };
+		13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */; };
+		13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */; };
+		13BCAC891C5921B90029DD9F /* SPShapeVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */; };
+		13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */; };
+		13BCAC8D1C5921EA0029DD9F /* SPSharpenerFileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileHandler.swift */; };
+		13BCAC8F1C5922090029DD9F /* SPSVGGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BCAC8E1C5922090029DD9F /* SPSVGGenerator.swift */; };
+		13D826E61C7A3FAB00D183A9 /* SPNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */; };
+		13D826E81C7A3FF400D183A9 /* SPNewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826E71C7A3FF400D183A9 /* SPNewButton.swift */; };
+		13D826EA1C7A41D700D183A9 /* FilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826E91C7A41D700D183A9 /* FilesViewController.swift */; };
+		13D826EC1C7A464E00D183A9 /* SPGeometricCountingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */; };
+		13D826EE1C7B3EB300D183A9 /* SPSharpenerDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */; };
+		13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */; };
+		13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFB1C4BCB9800072492 /* Async.swift */; };
+		13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */; };
+		13DDCE001C4CE66700072492 /* XNStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DDCDFF1C4CE66700072492 /* XNStack.swift */; };
+		13E7D8331C6B435E0036601E /* HarrisFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8321C6B435E0036601E /* HarrisFilter.swift */; };
+		13E7D8351C6B7F8D0036601E /* AnglePointDetectingFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */; };
+		13E7D8371C6B7FDF0036601E /* DirectionTensorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */; };
+		13E7D8391C6B83660036601E /* invertFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E7D8381C6B83660036601E /* invertFilter.swift */; };
+		13EF71A21C7C82B800F752B2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A11C7C82B800F752B2 /* DetailViewController.swift */; };
+		13EF71A41C7C85D800F752B2 /* SPDetailToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */; };
+		13EF71A61C7C8A2A00F752B2 /* SPDetailNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */; };
+		13EF71A81C7CB4EC00F752B2 /* CancelCaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF71A71C7CB4EC00F752B2 /* CancelCaptureButton.swift */; };
+		8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB5EA983D3116ADF305711E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1300EFDD1CD0FE6100A6A28A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNUsefuls.swift; sourceTree = "<group>"; };
+		131337F91C5F99DF0086C96C /* SPRefineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRefineView.swift; sourceTree = "<group>"; };
+		131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBezierPathApproximator.swift; sourceTree = "<group>"; };
+		131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeDetector.swift; sourceTree = "<group>"; };
+		131C846C1C79A0790041C06F /* GuessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessTableViewCell.swift; sourceTree = "<group>"; };
+		131C846E1C79E2930041C06F /* SPDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDisplayView.swift; sourceTree = "<group>"; };
+		13204A721C7B67D000544C5B /* FilePreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		13204A741C7B680000544C5B /* FilePreviewCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePreviewCollectionViewController.swift; sourceTree = "<group>"; };
+		1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBezierPath+Sharpener.swift"; sourceTree = "<group>"; };
+		133E0A4F1C269D350058B103 /* MXNContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNContext.swift; sourceTree = "<group>"; };
+		133E0A531C26D50D0058B103 /* MXNImageFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNImageFilter.swift; sourceTree = "<group>"; };
+		133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureConsumerAndProvider.swift; sourceTree = "<group>"; };
+		133E0A571C26E19F0058B103 /* MXNImageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNImageProvider.swift; sourceTree = "<group>"; };
+		13416C4D1C296450006CB39A /* ThresholdingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdingFilter.swift; sourceTree = "<group>"; };
+		13416C4F1C296470006CB39A /* Thresholding.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Thresholding.metal; sourceTree = "<group>"; };
+		13416C511C297803006CB39A /* ShutterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShutterButton.swift; sourceTree = "<group>"; };
+		13416C541C297981006CB39A /* UIColor+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
+		13416C561C299C6A006CB39A /* CaptureImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
+		13416C591C29A401006CB39A /* TorchSwitcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchSwitcher.swift; sourceTree = "<group>"; };
+		13481C9C1C324F0700EE9525 /* RefineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefineViewController.swift; sourceTree = "<group>"; };
+		13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingNavigationBar.swift; sourceTree = "<group>"; };
+		135477E21C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileToDetailTransitioningAnimation.swift; sourceTree = "<group>"; };
+		13627C971C67355300DFE73C /* GaussianBlurFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GaussianBlurFilter.swift; sourceTree = "<group>"; };
+		13627C991C67357700DFE73C /* GradientTensorCalculatingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientTensorCalculatingFilter.swift; sourceTree = "<group>"; };
+		13627C9B1C6746D300DFE73C /* LineTrackingFilters.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineTrackingFilters.metal; sourceTree = "<group>"; };
+		13627C9F1C68930800DFE73C /* EigenValueCalculatingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EigenValueCalculatingFilter.swift; sourceTree = "<group>"; };
+		13627CA11C69C51D00DFE73C /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		13627CA31C6A1ACF00DFE73C /* LineTrackingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineTrackingFilter.swift; sourceTree = "<group>"; };
+		1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Smoothing.swift"; sourceTree = "<group>"; };
+		1374CE3A1C72F445003E9D88 /* SPCurve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCurve.swift; sourceTree = "<group>"; };
+		1374CE3C1C72F474003E9D88 /* SPGuess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGuess.swift; sourceTree = "<group>"; };
+		13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalEnums.swift; sourceTree = "<group>"; };
+		13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MedianFilter.metal; sourceTree = "<group>"; };
+		13772AF71C2AEC710086CAB3 /* MedianFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedianFilter.swift; sourceTree = "<group>"; };
 		13835D661C2013850047F0C0 /* Sharpener.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharpener.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13835D691C2013850047F0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		13835D6B1C2013850047F0C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		13835D6E1C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13835D701C2013850047F0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13835D731C2013850047F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13835D751C2013850047F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		138A7BB51C78497C00D5C96D /* SPVectorIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPVectorIcons.swift; sourceTree = "<group>"; };
+		138A7BB71C784ADA00D5C96D /* SPControlPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPControlPanel.swift; sourceTree = "<group>"; };
+		138A7BB91C784FD900D5C96D /* SPBigProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPBigProgressBar.swift; sourceTree = "<group>"; };
+		138A7BBB1C78C56F00D5C96D /* SingleGeometricEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleGeometricEditViewController.swift; sourceTree = "<group>"; };
+		138A7BBD1C78CC6700D5C96D /* GuessesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessesTableViewController.swift; sourceTree = "<group>"; };
+		138A7BBF1C79921700D5C96D /* SPSmoothControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSmoothControl.swift; sourceTree = "<group>"; };
+		138C42E21C75FBBE00224670 /* Preference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
+		138C42E71C76065C00224670 /* VectorizeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorizeViewController.swift; sourceTree = "<group>"; };
+		138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPTwoWaySegmentedControl.swift; sourceTree = "<group>"; };
+		13918C101C5F408B008DD316 /* SPLineRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineRepresentable.swift; sourceTree = "<group>"; };
+		13988EE91C478538000CE61B /* SPGeometricsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsStore.swift; sourceTree = "<group>"; };
+		13988EEC1C478694000CE61B /* SPGeometrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometrics.swift; sourceTree = "<group>"; };
+		13988EEE1C478788000CE61B /* SPShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShape.swift; sourceTree = "<group>"; };
+		13988EF01C478951000CE61B /* SPLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLine.swift; sourceTree = "<group>"; };
+		13988EF21C479A66000CE61B /* SPLineGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroup.swift; sourceTree = "<group>"; };
+		13988EF41C479B06000CE61B /* CustomOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOperators.swift; sourceTree = "<group>"; };
+		13988EF61C47A1D6000CE61B /* SPRawGeometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRawGeometric.swift; sourceTree = "<group>"; };
+		13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPRawGeometricsFinder.swift; sourceTree = "<group>"; };
+		13988EFD1C492613000CE61B /* GeometricsFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometricsFilteringFilter.swift; sourceTree = "<group>"; };
+		13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNCompositionFilters.swift; sourceTree = "<group>"; };
+		13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeRefiningFilter.swift; sourceTree = "<group>"; };
+		13988F041C494CE6000CE61B /* LineShapeRefining.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeRefining.metal; sourceTree = "<group>"; };
+		139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sharpener-Bridging-Header.h"; sourceTree = "<group>"; };
+		139D563E1C5776BC006106D4 /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
+		139D56401C5776D1006106D4 /* CVWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVWrapper.h; sourceTree = "<group>"; };
+		139D56461C579BF7006106D4 /* SPCVLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPCVLine.h; sourceTree = "<group>"; };
+		139D56471C579BF7006106D4 /* SPCVLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPCVLine.m; sourceTree = "<group>"; };
+		139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNVideoProvider.swift; sourceTree = "<group>"; };
+		139EE20C1C2FC6B500E3464F /* FilterControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterControlView.swift; sourceTree = "<group>"; };
+		139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPContinuousSlider.swift; sourceTree = "<group>"; };
+		139EE2101C2FDDA600E3464F /* SPStepSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStepSlider.swift; sourceTree = "<group>"; };
+		139EE2121C2FDE3C00E3464F /* SPSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSlider.swift; sourceTree = "<group>"; };
+		13AA93521C886F6800FB520C /* Direction2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction2D.swift; sourceTree = "<group>"; };
+		13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalVideoView.swift; sourceTree = "<group>"; };
+		13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
+		13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LineShapeFiltering.metal; sourceTree = "<group>"; };
+		13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineShapeFilteringFilter.swift; sourceTree = "<group>"; };
+		13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPolygonApproximator.swift; sourceTree = "<group>"; };
+		13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPShapeVectorizor.swift; sourceTree = "<group>"; };
+		13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = SPLineGroupVectorizor.swift; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
+		13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerFileHandler.swift; sourceTree = "<group>"; };
+		13BCAC8E1C5922090029DD9F /* SPSVGGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSVGGenerator.swift; sourceTree = "<group>"; };
+		13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNavigationBar.swift; sourceTree = "<group>"; };
+		13D826E71C7A3FF400D183A9 /* SPNewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNewButton.swift; sourceTree = "<group>"; };
+		13D826E91C7A41D700D183A9 /* FilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesViewController.swift; sourceTree = "<group>"; };
+		13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricCountingView.swift; sourceTree = "<group>"; };
+		13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPSharpenerDocument.swift; sourceTree = "<group>"; };
+		13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGeometricsVectorizor.swift; sourceTree = "<group>"; };
+		13DDCDFB1C4BCB9800072492 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXNTextureData.swift; sourceTree = "<group>"; };
+		13DDCDFF1C4CE66700072492 /* XNStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XNStack.swift; sourceTree = "<group>"; };
+		13E7D8321C6B435E0036601E /* HarrisFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarrisFilter.swift; sourceTree = "<group>"; };
+		13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnglePointDetectingFilter.swift; sourceTree = "<group>"; };
+		13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionTensorFilter.swift; sourceTree = "<group>"; };
+		13E7D8381C6B83660036601E /* invertFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = invertFilter.swift; sourceTree = "<group>"; };
+		13EF71A11C7C82B800F752B2 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDetailToolBar.swift; sourceTree = "<group>"; };
+		13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPDetailNavigationBar.swift; sourceTree = "<group>"; };
+		13EF71A71C7CB4EC00F752B2 /* CancelCaptureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelCaptureButton.swift; sourceTree = "<group>"; };
+		2AB5EA983D3116ADF305711E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +214,152 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD3B56766EB55C5E43B5E21 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		133E0A591C26EF640058B103 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				13772AF21C2AC0760086CAB3 /* Metal Shaders */,
+				13988EFF1C4928B1000CE61B /* Filters */,
+				13988EFC1C4925D4000CE61B /* Composition Filters */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		133E0A5A1C26EF7D0058B103 /* Image Proccessing */ = {
+			isa = PBXGroup;
+			children = (
+				133E0A551C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift */,
+				139EE20A1C2BA4D700E3464F /* MXNVideoProvider.swift */,
+				133E0A571C26E19F0058B103 /* MXNImageProvider.swift */,
+				133E0A4F1C269D350058B103 /* MXNContext.swift */,
+				13DDCDFD1C4BF69B00072492 /* MXNTextureData.swift */,
+			);
+			name = "Image Proccessing";
+			sourceTree = "<group>";
+		};
+		133E0A5B1C26EFB50058B103 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				13835D751C2013850047F0C0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		13416C531C297810006CB39A /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				138A7BBF1C79921700D5C96D /* SPSmoothControl.swift */,
+				138A7BB71C784ADA00D5C96D /* SPControlPanel.swift */,
+				13481C9E1C32500F00EE9525 /* ProcessingNavigationBar.swift */,
+				139EE20E1C2FDD9C00E3464F /* SPContinuousSlider.swift */,
+				139EE2101C2FDDA600E3464F /* SPStepSlider.swift */,
+				139EE2121C2FDE3C00E3464F /* SPSlider.swift */,
+				138C42E91C7754C400224670 /* SPTwoWaySegmentedControl.swift */,
+				13416C591C29A401006CB39A /* TorchSwitcher.swift */,
+				13416C511C297803006CB39A /* ShutterButton.swift */,
+				13D826E51C7A3FAB00D183A9 /* SPNavigationBar.swift */,
+				13EF71A51C7C8A2A00F752B2 /* SPDetailNavigationBar.swift */,
+				13D826E71C7A3FF400D183A9 /* SPNewButton.swift */,
+				13EF71A31C7C85D800F752B2 /* SPDetailToolBar.swift */,
+			);
+			name = Widgets;
+			sourceTree = "<group>";
+		};
+		13416C581C299C70006CB39A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				13B87B6D1C27DA3100E91FA0 /* MetalVideoView.swift */,
+				131C846C1C79A0790041C06F /* GuessTableViewCell.swift */,
+				139EE20C1C2FC6B500E3464F /* FilterControlView.swift */,
+				131C846E1C79E2930041C06F /* SPDisplayView.swift */,
+				131337F91C5F99DF0086C96C /* SPRefineView.swift */,
+				13416C561C299C6A006CB39A /* CaptureImageView.swift */,
+				138A7BB51C78497C00D5C96D /* SPVectorIcons.swift */,
+				138A7BB91C784FD900D5C96D /* SPBigProgressBar.swift */,
+				13D826EB1C7A464E00D183A9 /* SPGeometricCountingView.swift */,
+				13204A721C7B67D000544C5B /* FilePreviewCollectionViewCell.swift */,
+				13EF71A71C7CB4EC00F752B2 /* CancelCaptureButton.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		13481C9B1C3173FE00EE9525 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				135477E91C7DEE0F00B8BDAB /* Capturing and Vectorizing */,
+				13D826E91C7A41D700D183A9 /* FilesViewController.swift */,
+				13204A741C7B680000544C5B /* FilePreviewCollectionViewController.swift */,
+				13EF71A11C7C82B800F752B2 /* DetailViewController.swift */,
+				13627CA11C69C51D00DFE73C /* TestViewController.swift */,
+				135477E41C7DDBC400B8BDAB /* Transitioning Animations */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		135477E41C7DDBC400B8BDAB /* Transitioning Animations */ = {
+			isa = PBXGroup;
+			children = (
+				135477E21C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift */,
+			);
+			name = "Transitioning Animations";
+			sourceTree = "<group>";
+		};
+		135477E71C7DEDD100B8BDAB /* Approximators */ = {
+			isa = PBXGroup;
+			children = (
+				13BCAC861C57D6E40029DD9F /* SPPolygonApproximator.swift */,
+				131337FB1C5FBA640086C96C /* SPBezierPathApproximator.swift */,
+			);
+			name = Approximators;
+			sourceTree = "<group>";
+		};
+		135477E81C7DEDEE00B8BDAB /* Vectorizers */ = {
+			isa = PBXGroup;
+			children = (
+				13D9420F1C4E1D9000E33663 /* SPGeometricsVectorizor.swift */,
+				13BCAC881C5921B90029DD9F /* SPShapeVectorizor.swift */,
+				13BCAC8A1C5921C30029DD9F /* SPLineGroupVectorizor.swift */,
+			);
+			name = Vectorizers;
+			sourceTree = "<group>";
+		};
+		135477E91C7DEE0F00B8BDAB /* Capturing and Vectorizing */ = {
+			isa = PBXGroup;
+			children = (
+				138C42E71C76065C00224670 /* VectorizeViewController.swift */,
+				13B87B6F1C27DB9400E91FA0 /* CaptureViewController.swift */,
+				13481C9C1C324F0700EE9525 /* RefineViewController.swift */,
+				138A7BBB1C78C56F00D5C96D /* SingleGeometricEditViewController.swift */,
+				138A7BBD1C78CC6700D5C96D /* GuessesTableViewController.swift */,
+			);
+			name = "Capturing and Vectorizing";
+			sourceTree = "<group>";
+		};
+		13772AF21C2AC0760086CAB3 /* Metal Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				13B87BA51C29469900E91FA0 /* LineShapeFiltering.metal */,
+				13988F041C494CE6000CE61B /* LineShapeRefining.metal */,
+				13416C4F1C296470006CB39A /* Thresholding.metal */,
+				13772AF51C2ADFA90086CAB3 /* MedianFilter.metal */,
+				13627C9B1C6746D300DFE73C /* LineTrackingFilters.metal */,
+			);
+			name = "Metal Shaders";
+			sourceTree = "<group>";
+		};
 		13835D5D1C2013850047F0C0 = {
 			isa = PBXGroup;
 			children = (
 				13835D681C2013850047F0C0 /* Sharpener */,
 				13835D671C2013850047F0C0 /* Products */,
+				6EDEEB3F7785A6D3A44FB657 /* Pods */,
+				F20416152BEEAC4CA9C832B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +374,127 @@
 		13835D681C2013850047F0C0 /* Sharpener */ = {
 			isa = PBXGroup;
 			children = (
-				13835D691C2013850047F0C0 /* AppDelegate.swift */,
-				13835D6B1C2013850047F0C0 /* ViewController.swift */,
-				13835D6D1C2013850047F0C0 /* Main.storyboard */,
+				13988EEB1C478686000CE61B /* Models */,
+				13988EE41C463418000CE61B /* Managers */,
+				13481C9B1C3173FE00EE9525 /* View Controllers */,
+				13416C581C299C70006CB39A /* Views */,
+				13416C531C297810006CB39A /* Widgets */,
+				133E0A591C26EF640058B103 /* Filters */,
+				133E0A5A1C26EF7D0058B103 /* Image Proccessing */,
+				139D563A1C5769C7006106D4 /* OpenCV */,
+				139D56391C5769B7006106D4 /* Extensions */,
 				13835D701C2013850047F0C0 /* Assets.xcassets */,
+				1300EFDD1CD0FE6100A6A28A /* Main.storyboard */,
 				13835D721C2013850047F0C0 /* LaunchScreen.storyboard */,
-				13835D751C2013850047F0C0 /* Info.plist */,
+				13835D691C2013850047F0C0 /* AppDelegate.swift */,
+				1300EFDF1CD10DDE00A6A28A /* XNUsefuls.swift */,
+				13DDCDFF1C4CE66700072492 /* XNStack.swift */,
+				13DDCDFB1C4BCB9800072492 /* Async.swift */,
+				13772AEE1C2AB3B00086CAB3 /* GlobalEnums.swift */,
+				13988EF41C479B06000CE61B /* CustomOperators.swift */,
+				138C42E21C75FBBE00224670 /* Preference.swift */,
+				133E0A5B1C26EFB50058B103 /* Supporting Files */,
 			);
 			path = Sharpener;
+			sourceTree = "<group>";
+		};
+		13988EE41C463418000CE61B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				135477E71C7DEDD100B8BDAB /* Approximators */,
+				135477E81C7DEDEE00B8BDAB /* Vectorizers */,
+				13988EFA1C47F802000CE61B /* SPRawGeometricsFinder.swift */,
+				131337FF1C5FBA7D0086C96C /* SPShapeDetector.swift */,
+				13BCAC8C1C5921EA0029DD9F /* SPSharpenerFileHandler.swift */,
+				13BCAC8E1C5922090029DD9F /* SPSVGGenerator.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		13988EEB1C478686000CE61B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				13918C101C5F408B008DD316 /* SPLineRepresentable.swift */,
+				13988EF01C478951000CE61B /* SPLine.swift */,
+				1374CE3C1C72F474003E9D88 /* SPGuess.swift */,
+				1374CE3A1C72F445003E9D88 /* SPCurve.swift */,
+				13D826ED1C7B3EB300D183A9 /* SPSharpenerDocument.swift */,
+				13988EF61C47A1D6000CE61B /* SPRawGeometric.swift */,
+				13988EEC1C478694000CE61B /* SPGeometrics.swift */,
+				13988EEE1C478788000CE61B /* SPShape.swift */,
+				13988EF21C479A66000CE61B /* SPLineGroup.swift */,
+				13988EE91C478538000CE61B /* SPGeometricsStore.swift */,
+				13AA93521C886F6800FB520C /* Direction2D.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		13988EFC1C4925D4000CE61B /* Composition Filters */ = {
+			isa = PBXGroup;
+			children = (
+				13988F001C492C8C000CE61B /* MXNCompositionFilters.swift */,
+				13988EFD1C492613000CE61B /* GeometricsFilteringFilter.swift */,
+				13E7D8341C6B7F8D0036601E /* AnglePointDetectingFilter.swift */,
+				13627CA31C6A1ACF00DFE73C /* LineTrackingFilter.swift */,
+			);
+			name = "Composition Filters";
+			sourceTree = "<group>";
+		};
+		13988EFF1C4928B1000CE61B /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				133E0A531C26D50D0058B103 /* MXNImageFilter.swift */,
+				13B87BA71C294A4600E91FA0 /* LineShapeFilteringFilter.swift */,
+				13416C4D1C296450006CB39A /* ThresholdingFilter.swift */,
+				13E7D8381C6B83660036601E /* invertFilter.swift */,
+				13772AF71C2AEC710086CAB3 /* MedianFilter.swift */,
+				13988F021C494733000CE61B /* LineShapeRefiningFilter.swift */,
+				13627C971C67355300DFE73C /* GaussianBlurFilter.swift */,
+				13627C991C67357700DFE73C /* GradientTensorCalculatingFilter.swift */,
+				13E7D8361C6B7FDF0036601E /* DirectionTensorFilter.swift */,
+				13627C9F1C68930800DFE73C /* EigenValueCalculatingFilter.swift */,
+				13E7D8321C6B435E0036601E /* HarrisFilter.swift */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		139D56391C5769B7006106D4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				13416C541C297981006CB39A /* UIColor+Custom.swift */,
+				1374CE381C704D3A003E9D88 /* Array+Smoothing.swift */,
+				1326AE231C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		139D563A1C5769C7006106D4 /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				139D56351C576976006106D4 /* Sharpener-Bridging-Header.h */,
+				139D56401C5776D1006106D4 /* CVWrapper.h */,
+				139D563E1C5776BC006106D4 /* CVWrapper.mm */,
+				139D56461C579BF7006106D4 /* SPCVLine.h */,
+				139D56471C579BF7006106D4 /* SPCVLine.m */,
+			);
+			name = OpenCV;
+			sourceTree = "<group>";
+		};
+		6EDEEB3F7785A6D3A44FB657 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */,
+				B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F20416152BEEAC4CA9C832B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2AB5EA983D3116ADF305711E /* Pods.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +504,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13835D781C2013850047F0C0 /* Build configuration list for PBXNativeTarget "Sharpener" */;
 			buildPhases = (
+				5E464CCEA84C0B5D688D5783 /* Check Pods Manifest.lock */,
 				13835D621C2013850047F0C0 /* Sources */,
 				13835D631C2013850047F0C0 /* Frameworks */,
 				13835D641C2013850047F0C0 /* Resources */,
+				344A966D54F6944D9AA1F48B /* Embed Pods Frameworks */,
+				18CE7DD8C614A576816764CB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -125,33 +561,162 @@
 			files = (
 				13835D741C2013850047F0C0 /* LaunchScreen.storyboard in Resources */,
 				13835D711C2013850047F0C0 /* Assets.xcassets in Resources */,
-				13835D6F1C2013850047F0C0 /* Main.storyboard in Resources */,
+				1300EFDE1CD0FE6100A6A28A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		18CE7DD8C614A576816764CB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		344A966D54F6944D9AA1F48B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E464CCEA84C0B5D688D5783 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		13835D621C2013850047F0C0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13835D6C1C2013850047F0C0 /* ViewController.swift in Sources */,
+				138C42E31C75FBBE00224670 /* Preference.swift in Sources */,
+				138A7BBE1C78CC6700D5C96D /* GuessesTableViewController.swift in Sources */,
+				1374CE3B1C72F445003E9D88 /* SPCurve.swift in Sources */,
+				13627CA21C69C51D00DFE73C /* TestViewController.swift in Sources */,
+				133E0A501C269D350058B103 /* MXNContext.swift in Sources */,
+				138C42E81C76065C00224670 /* VectorizeViewController.swift in Sources */,
+				13772AF61C2ADFA90086CAB3 /* MedianFilter.metal in Sources */,
+				13E7D8331C6B435E0036601E /* HarrisFilter.swift in Sources */,
+				138A7BB81C784ADA00D5C96D /* SPControlPanel.swift in Sources */,
+				133E0A541C26D50D0058B103 /* MXNImageFilter.swift in Sources */,
+				13772AF81C2AEC710086CAB3 /* MedianFilter.swift in Sources */,
+				13988EF71C47A1D6000CE61B /* SPRawGeometric.swift in Sources */,
+				13204A751C7B680000544C5B /* FilePreviewCollectionViewController.swift in Sources */,
+				139EE20F1C2FDD9C00E3464F /* SPContinuousSlider.swift in Sources */,
+				135477E31C7DDBBB00B8BDAB /* FileToDetailTransitioningAnimation.swift in Sources */,
+				13988EEF1C478788000CE61B /* SPShape.swift in Sources */,
+				138A7BB61C78497C00D5C96D /* SPVectorIcons.swift in Sources */,
+				13D826E81C7A3FF400D183A9 /* SPNewButton.swift in Sources */,
+				13E7D8391C6B83660036601E /* invertFilter.swift in Sources */,
+				13988EF11C478951000CE61B /* SPLine.swift in Sources */,
+				1374CE391C704D3A003E9D88 /* Array+Smoothing.swift in Sources */,
+				131338001C5FBA7D0086C96C /* SPShapeDetector.swift in Sources */,
+				13627C981C67355300DFE73C /* GaussianBlurFilter.swift in Sources */,
+				13988EF31C479A66000CE61B /* SPLineGroup.swift in Sources */,
+				1300EFE01CD10DDE00A6A28A /* XNUsefuls.swift in Sources */,
+				13988EFE1C492613000CE61B /* GeometricsFilteringFilter.swift in Sources */,
+				13481C9D1C324F0700EE9525 /* RefineViewController.swift in Sources */,
+				13988EF51C479B06000CE61B /* CustomOperators.swift in Sources */,
+				13B87B701C27DB9400E91FA0 /* CaptureViewController.swift in Sources */,
+				13B87BA81C294A4600E91FA0 /* LineShapeFilteringFilter.swift in Sources */,
+				13B87B6E1C27DA3100E91FA0 /* MetalVideoView.swift in Sources */,
+				13D826EE1C7B3EB300D183A9 /* SPSharpenerDocument.swift in Sources */,
+				138A7BBA1C784FD900D5C96D /* SPBigProgressBar.swift in Sources */,
+				13BCAC8B1C5921C30029DD9F /* SPLineGroupVectorizor.swift in Sources */,
+				13988F011C492C8C000CE61B /* MXNCompositionFilters.swift in Sources */,
+				131337FA1C5F99DF0086C96C /* SPRefineView.swift in Sources */,
+				138C42EA1C7754C400224670 /* SPTwoWaySegmentedControl.swift in Sources */,
+				13EF71A61C7C8A2A00F752B2 /* SPDetailNavigationBar.swift in Sources */,
+				13DDCE001C4CE66700072492 /* XNStack.swift in Sources */,
+				13416C551C297981006CB39A /* UIColor+Custom.swift in Sources */,
+				139EE20B1C2BA4D700E3464F /* MXNVideoProvider.swift in Sources */,
+				13988EEA1C478538000CE61B /* SPGeometricsStore.swift in Sources */,
+				13416C501C296470006CB39A /* Thresholding.metal in Sources */,
+				13DDCDFE1C4BF69B00072492 /* MXNTextureData.swift in Sources */,
+				13204A731C7B67D000544C5B /* FilePreviewCollectionViewCell.swift in Sources */,
+				13988F051C494CE6000CE61B /* LineShapeRefining.metal in Sources */,
+				138A7BBC1C78C56F00D5C96D /* SingleGeometricEditViewController.swift in Sources */,
+				13627CA41C6A1ACF00DFE73C /* LineTrackingFilter.swift in Sources */,
+				13416C521C297803006CB39A /* ShutterButton.swift in Sources */,
+				13D826EA1C7A41D700D183A9 /* FilesViewController.swift in Sources */,
+				139D563F1C5776BC006106D4 /* CVWrapper.mm in Sources */,
+				13EF71A41C7C85D800F752B2 /* SPDetailToolBar.swift in Sources */,
+				139D56481C579BF7006106D4 /* SPCVLine.m in Sources */,
+				13416C4E1C296450006CB39A /* ThresholdingFilter.swift in Sources */,
+				139EE20D1C2FC6B500E3464F /* FilterControlView.swift in Sources */,
+				13DDCDFC1C4BCB9800072492 /* Async.swift in Sources */,
+				13EF71A21C7C82B800F752B2 /* DetailViewController.swift in Sources */,
+				13D826EC1C7A464E00D183A9 /* SPGeometricCountingView.swift in Sources */,
+				13BCAC8F1C5922090029DD9F /* SPSVGGenerator.swift in Sources */,
+				13E7D8351C6B7F8D0036601E /* AnglePointDetectingFilter.swift in Sources */,
+				13481C9F1C32500F00EE9525 /* ProcessingNavigationBar.swift in Sources */,
 				13835D6A1C2013850047F0C0 /* AppDelegate.swift in Sources */,
+				13772AEF1C2AB3B00086CAB3 /* GlobalEnums.swift in Sources */,
+				13D942101C4E1D9000E33663 /* SPGeometricsVectorizor.swift in Sources */,
+				138A7BC01C79921700D5C96D /* SPSmoothControl.swift in Sources */,
+				131C846D1C79A0790041C06F /* GuessTableViewCell.swift in Sources */,
+				133E0A561C26DFCB0058B103 /* MXNTextureConsumerAndProvider.swift in Sources */,
+				13627C9C1C6746D300DFE73C /* LineTrackingFilters.metal in Sources */,
+				1326AE241C4E3D1500FBF36D /* UIBezierPath+Sharpener.swift in Sources */,
+				13988F031C494733000CE61B /* LineShapeRefiningFilter.swift in Sources */,
+				13AA93531C886F6800FB520C /* Direction2D.swift in Sources */,
+				13BCAC871C57D6E40029DD9F /* SPPolygonApproximator.swift in Sources */,
+				13EF71A81C7CB4EC00F752B2 /* CancelCaptureButton.swift in Sources */,
+				13627CA01C68930800DFE73C /* EigenValueCalculatingFilter.swift in Sources */,
+				13416C5A1C29A401006CB39A /* TorchSwitcher.swift in Sources */,
+				13627C9A1C67357700DFE73C /* GradientTensorCalculatingFilter.swift in Sources */,
+				131C846F1C79E2930041C06F /* SPDisplayView.swift in Sources */,
+				13E7D8371C6B7FDF0036601E /* DirectionTensorFilter.swift in Sources */,
+				13918C111C5F408B008DD316 /* SPLineRepresentable.swift in Sources */,
+				133E0A581C26E19F0058B103 /* MXNImageProvider.swift in Sources */,
+				13B87BA61C29469900E91FA0 /* LineShapeFiltering.metal in Sources */,
+				1374CE3D1C72F474003E9D88 /* SPGuess.swift in Sources */,
+				131337FC1C5FBA640086C96C /* SPBezierPathApproximator.swift in Sources */,
+				13D826E61C7A3FAB00D183A9 /* SPNavigationBar.swift in Sources */,
+				13988EFB1C47F802000CE61B /* SPRawGeometricsFinder.swift in Sources */,
+				13416C571C299C6A006CB39A /* CaptureImageView.swift in Sources */,
+				139EE2111C2FDDA600E3464F /* SPStepSlider.swift in Sources */,
+				13988EED1C478694000CE61B /* SPGeometrics.swift in Sources */,
+				139EE2131C2FDE3C00E3464F /* SPSlider.swift in Sources */,
+				13BCAC891C5921B90029DD9F /* SPShapeVectorizor.swift in Sources */,
+				13BCAC8D1C5921EA0029DD9F /* SPSharpenerFileHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		13835D6D1C2013850047F0C0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13835D6E1C2013850047F0C0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		13835D721C2013850047F0C0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -248,23 +813,34 @@
 		};
 		13835D791C2013850047F0C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE6F7B21A31239F24AEB9479 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.SharpenerPresenting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sharpener/Sharpener-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		13835D7A1C2013850047F0C0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B53D86C63D2EB346C29AE6BA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Sharpener/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.Sharpener;
+				PRODUCT_BUNDLE_IDENTIFIER = com.intiicom.SharpenerPresenting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sharpener/Sharpener-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -287,6 +863,7 @@
 				13835D7A1C2013850047F0C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
